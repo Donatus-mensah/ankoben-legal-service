@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKOBEN LEGAL SERVICES | Nana Yaw Ofori Gyasie, Esq.</title>
+    
+    <!-- Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* --- CSS VARIABLES (Strict Black & White Monochrome) --- */
+        :root {
+            --bg-color: #f8f8f8;
+            --text-color: #000000;
+            --text-muted: #666666;
+            --border-color: #e5e5e5;
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --hover-bg: rgba(240, 240, 240, 0.8);
+            --overlay-bg: rgba(255, 255, 255, 0.85); /* Slightly transparent for glass effect */
+            --transition-speed: 0.4s;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #080808;
+            --text-color: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-color: #333333;
+            --card-bg: rgba(20, 20, 20, 0.65);
+            --hover-bg: rgba(31, 31, 31, 0.8);
+            --overlay-bg: rgba(10, 10, 10, 0.85);
+            --shadow-light: 0 4px 20px rgba(255, 255, 255, 0.02);
+            --shadow-hover: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- GLOBAL RESETS & TYPOGRAPHY --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-color);
+            transition: opacity 0.3s;
+        }
+
+        a:hover {
+            opacity: 0.6;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            /* Strict monochrome enforcement for all images */
+            filter: grayscale(100%);
+            transition: filter var(--transition-speed), transform 0.5s ease;
+        }
+
+        [data-theme="dark"] img {
+            filter: grayscale(100%) brightness(0.85);
+        }
+
+        /* --- UI ENHANCEMENTS: SCROLL ANIMATIONS --- */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- BUTTONS & INPUTS --- */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border: 1px solid var(--text-color);
+            font-family: var(--font-body);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--text-color);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 1rem;
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            appearance: none;
+            border-radius: 4px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--text-color);
+            box-shadow: 0 0 0 1px var(--text-color); /* Crisp focus outline */
+            background-color: var(--bg-color);
+        }
+        
+        select option {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            border-bottom: 1px solid transparent;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        /* Glassmorphism on scroll */
+        header.scrolled {
+            background-color: var(--overlay-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 5%;
+            box-shadow: var(--shadow-light);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--text-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            z-index: 1001; /* Above mobile menu */
+        }
+
+        /* --- MAIN LAYOUT & ROUTING --- */
+        main {
+            flex: 1;
+            margin-top: 80px;
+            padding: 2rem 5%;
+            width: 100%;
+        }
+
+        .page-view {
+            display: none;
+            opacity: 0;
+        }
+
+        .page-view.active {
+            display: block;
+            animation: fadeInPage 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- SECTION HEADERS --- */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+        }
+
+        /* --- PAGE: HOME --- */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            min-height: calc(100vh - 150px);
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem); /* Responsive typography */
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 4/5;
+            border-radius: 4px; /* Subtle softening */
+            box-shadow: var(--shadow-light);
+        }
+
+        .home-section {
+            margin-top: 6rem;
+            padding-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .home-summary {
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .home-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-box {
+            text-align: center;
+            padding: 3rem 2rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: all 0.4s ease;
+            border-radius: 8px;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--text-color);
+        }
+
+        .feature-box i {
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover i {
+            transform: scale(1.1);
+        }
+
+        .services-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .cta-banner {
+            text-align: center;
+            padding: 5rem 2rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            margin-top: 4rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-light);
+        }
+
+        /* --- PAGE: ABOUT --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 2rem;
+        }
+
+        .about-content h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .vision-mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .vm-box h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .credentials {
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+        }
+
+        .credentials h3 {
+            margin-bottom: 1rem;
+        }
+
+        .credentials ul {
+            list-style: none;
+        }
+
+        .credentials li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            will-change: transform;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        .gallery-item .overlay-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::after, .gallery-item:hover .overlay-icon {
+            opacity: 1;
+        }
+
+        /* --- PAGE: SERVICES --- */
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            margin-top: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            padding: 3rem 2rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.3s, border-color 0.3s, box-shadow 0.4s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .service-card::after {
+            content: 'Click for details ➔';
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-color);
+            opacity: 0.4;
+            margin-top: auto;
+            padding-top: 1.5rem;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateX(-10px);
+            font-weight: 600;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            background-color: var(--hover-bg);
+            border-color: var(--text-color);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .service-card:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .service-icon {
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- REVIEWS (Homepage Marquee) --- */
+        .reviews-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 4rem;
+        }
+
+        .reviews-list-wrapper {
+            position: relative;
+            max-height: 600px;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+        }
+
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 1rem;
+            padding-bottom: 2rem;
+            /* Hide scrollbar for a clean marquee look */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+            will-change: scroll-position;
+        }
+
+        /* Custom scrollbar hidden for smooth marquee */
+        .reviews-list::-webkit-scrollbar {
+            display: none;
+        }
+
+        .review-card {
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            border-radius: 8px;
+        }
+
+        .stars {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .review-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .review-author {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .review-form-container {
+            position: sticky;
+            top: 120px;
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            height: fit-content;
+        }
+
+        /* --- INTERACTIVE PROFILE ELEMENTS --- */
+        .interactive-card {
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            padding: 1.5rem;
+            border: 1px solid transparent;
+            border-radius: 8px;
+        }
+        .interactive-card::after {
+            content: 'Click to expand ➔';
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.5;
+            margin-top: 1rem;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateX(-10px);
+        }
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            background-color: var(--hover-bg);
+            border-color: var(--border-color);
+            box-shadow: var(--shadow-light);
+        }
+        .interactive-card:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .award-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 1rem !important;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            margin-bottom: 0.5rem !important;
+        }
+        .award-item:hover {
+            background-color: var(--hover-bg);
+            border-color: var(--border-color);
+            transform: translateX(8px);
+        }
+
+        .reputation-block {
+            margin-top: 3rem;
+            padding: 2.5rem;
+            background-color: var(--card-bg);
+            border-left: 4px solid var(--text-color);
+            font-style: italic;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            border-radius: 0 8px 8px 0;
+        }
+        .reputation-block::after {
+            content: 'Read full context ➔';
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0;
+            margin-top: 1rem;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateX(-10px);
+            font-style: normal;
+        }
+        .reputation-block:hover {
+            transform: scale(1.02);
+            background-color: var(--hover-bg);
+            box-shadow: var(--shadow-hover);
+        }
+        .reputation-block:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- PAGES: CONTACT & CONSULTATION --- */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+        }
+
+        .info-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .info-block h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-block p {
+            color: var(--text-muted);
+        }
+
+        .form-container {
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-full {
+            grid-column: 1 / -1;
+        }
+
+        .error-msg {
+            color: #ff3333;
+            font-size: 0.85rem;
+            margin-top: -1rem;
+            margin-bottom: 1rem;
+            display: none;
+            animation: fadeInPage 0.3s forwards;
+        }
+
+        /* --- LEGAL PAGES --- */
+        .legal-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .legal-content h2 {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+        }
+        
+        .legal-content p, .legal-content ul {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .legal-content ul {
+            padding-left: 2rem;
+        }
+
+        /* --- MODALS --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--bg-color);
+            padding: 4rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            transform: translateY(30px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-content.gallery-modal {
+            max-width: 800px;
+            padding: 2rem;
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .modal-content.gallery-modal img {
+            width: 100%;
+            height: auto;
+            max-height: 75vh;
+            object-fit: contain;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .modal-content.gallery-modal p {
+            color: #ffffff;
+            background-color: rgba(0,0,0,0.7);
+            padding: 1rem;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--hover-bg);
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal-btn:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            transform: rotate(90deg);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 5% 2rem;
+            margin-top: auto;
+            background-color: var(--bg-color);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--text-color);
+            opacity: 1;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-links a {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            width: 44px;
+            height: 44px;
+            color: var(--text-color);
+            background-color: transparent;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- UI ENHANCEMENTS: GLASSMORPHISM & ACCORDION --- */
+        .feature-box, .service-card, .review-card, .form-container, .reputation-block, .interactive-card, .cta-banner {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in, margin 0.4s ease;
+            will-change: max-height, opacity;
+        }
+        .expandable-content.expanded {
+            max-height: 2000px;
+            opacity: 1;
+            margin-top: 1rem;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-out, margin 0.4s ease;
+        }
+        .interactive-card.expanded::after {
+            content: 'Click to collapse ➔';
+            opacity: 0.8;
+            transform: translateX(0);
+        }
+
+        /* --- RESPONSIVE DESIGN ENHANCEMENTS --- */
+        /* Tablet Breakpoint */
+        @media (max-width: 992px) {
+            .hero, .about-grid, .split-layout, .vision-mission-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .hero-text {
+                text-align: center;
+            }
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-image {
+                aspect-ratio: 16/9; /* Prevent huge vertical scrolling on mobile */
+            }
+            .reviews-layout {
+                grid-template-columns: 1fr;
+            }
+            .review-form-container {
+                position: static;
+                margin-top: 2rem;
+            }
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        /* Mobile Breakpoint */
+        @media (max-width: 768px) {
+            html {
+                font-size: 14px; /* Scaled down base font for mobile smoothness */
+            }
+            .hamburger {
+                display: block;
+            }
+            header {
+                padding: 1rem 5%;
+                background-color: var(--bg-color); /* Solid bg on mobile to hide menu behind */
+            }
+            header.scrolled {
+                padding: 1rem 5%;
+            }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--overlay-bg);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                flex-direction: column;
+                justify-content: center;
+                padding: 2rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 999;
+            }
+            .nav-links.open {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            .nav-link {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                padding: 2.5rem 1.5rem;
+            }
+            /* Adjust headings on mobile */
+            h1 { font-size: clamp(2rem, 8vw, 2.8rem); }
+            h2 { font-size: clamp(1.8rem, 6vw, 2.2rem); }
+        }
+
+        /* Deep Mobile / Tiny Screens Breakpoint */
+        @media (max-width: 480px) {
+            .hero {
+                gap: 2rem;
+            }
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+            .btn {
+                width: 100%;
+                margin-left: 0 !important;
+                margin-bottom: 1rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr; /* Stack footer elements */
+                gap: 2rem;
+            }
+            .feature-box, .service-card, .review-card {
+                padding: 2rem 1.5rem;
+            }
+            .cta-banner {
+                padding: 3rem 1.5rem;
+            }
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            .form-container {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / NAVIGATION -->
+    <header id="main-header">
+        <div class="logo" onclick="navigate('home')">
+            <i data-lucide="scale" width="28" height="28"></i>
+            AKOBEN LEGAL
+        </div>
+        <nav class="nav-links" id="nav-menu">
+            <a class="nav-link active" onclick="navigate('home')">Home</a>
+            <a class="nav-link" onclick="navigate('about')">Profile</a>
+            <a class="nav-link" onclick="navigate('services')">Expertise</a>
+            <a class="nav-link" onclick="navigate('contact')">Contact</a>
+            <a class="nav-link" onclick="navigate('consultation')">Consultation</a>
+        </nav>
+        <div class="controls">
+            <button class="theme-toggle" id="theme-btn" aria-label="Toggle Dark Mode">
+                <i data-lucide="moon"></i>
+            </button>
+            <button class="hamburger" id="hamburger-btn" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main id="app-content">
+
+        <!-- 1. HOME PAGE -->
+        <section id="home" class="page-view active">
+            <!-- Hero -->
+            <div class="hero">
+                <div class="hero-text reveal-on-scroll">
+                    <h1>Expert Legal Counsel in Ghana.</h1>
+                    <p>Providing uncompromising legal representation, strategic counsel, and unwavering dedication to clients across corporate, real estate, and civil litigation in Accra and beyond.</p>
+                    <button class="btn" onclick="navigate('consultation')">Book Consultation</button>
+                    <button class="btn btn-outline" style="margin-left: 1rem;" onclick="navigate('about')">Learn More</button>
+                </div>
+                <div class="hero-image-container reveal-on-scroll" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=1000" alt="Law Scales" class="hero-image">
+                </div>
+            </div>
+
+            <!-- Profile Brief -->
+            <div class="home-section reveal-on-scroll">
+                <div class="home-summary">
+                    <h2>Excellence in Jurisprudence</h2>
+                    <p>Led by Nana Yaw Ofori Gyasie, Esq., AKOBEN LEGAL SERVICES is a premier law firm in Ghana. Our practice is defined by meticulous preparation, deep knowledge of Ghanaian jurisprudence, and a relentless pursuit of justice and favorable outcomes for our clients.</p>
+                </div>
+                <div class="home-features">
+                    <div class="feature-box reveal-on-scroll" style="transition-delay: 0.1s;">
+                        <i data-lucide="shield" width="40" height="40"></i>
+                        <h3>Fierce Advocacy</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">We protect our clients' interests with uncompromising dedication in and out of the courtroom.</p>
+                    </div>
+                    <div class="feature-box reveal-on-scroll" style="transition-delay: 0.2s;">
+                        <i data-lucide="lightbulb" width="40" height="40"></i>
+                        <h3>Strategic Solutions</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">We provide innovative, pragmatic legal strategies tailored to your unique business or personal challenges.</p>
+                    </div>
+                    <div class="feature-box reveal-on-scroll" style="transition-delay: 0.3s;">
+                        <i data-lucide="handshake" width="40" height="40"></i>
+                        <h3>Absolute Integrity</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">Transparency and ethical practice form the bedrock of our relationships with every client.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Brief -->
+            <div class="home-section">
+                <div class="section-header reveal-on-scroll">
+                    <h2>Core Legal Expertise</h2>
+                    <p style="color: var(--text-muted);">A preview of our specialized practice areas.</p>
+                </div>
+                <div class="services-preview-grid">
+                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Corporate & Commercial Law', 'Our corporate practice handles complex commercial transactions, contract drafting, and representation in commercial litigation. We act as external legal counsel for SMEs and multinational corporations operating in West Africa.', 'building-2')">
+                        <i data-lucide="building-2" class="service-icon" width="32" height="32"></i>
+                        <h3>Corporate & Commercial Law</h3>
+                        <p>Advising businesses on incorporation, regulatory compliance, and commerce in Ghana.</p>
+                    </div>
+                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Real Estate & Conveyancing', 'Navigating Ghana\'s land tenure system requires expertise. We conduct thorough due diligence, draft indentures, handle Lands Commission registrations, and resolve complex land disputes effectively.', 'home')">
+                        <i data-lucide="home" class="service-icon" width="32" height="32"></i>
+                        <h3>Real Estate & Conveyancing</h3>
+                        <p>Guiding clients through property acquisition, land registration, and tenancy agreements.</p>
+                    </div>
+                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="showServiceModal('Dispute Resolution', 'We represent clients vigorously in the Superior Courts of Judicature. Additionally, we are highly skilled in Alternative Dispute Resolution (ADR), helping clients avoid lengthy court battles when arbitration or mediation is beneficial.', 'gavel')">
+                        <i data-lucide="gavel" class="service-icon" width="32" height="32"></i>
+                        <h3>Dispute Resolution</h3>
+                        <p>Expert representation in litigation, arbitration, and mediation proceedings.</p>
+                    </div>
+                </div>
+                <div style="text-align: center;" class="reveal-on-scroll">
+                    <button class="btn btn-outline" onclick="navigate('services')">View All Areas of Practice</button>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="home-section reveal-on-scroll" id="reviews-section">
+                <div class="section-header">
+                    <h2>Client Testimonials</h2>
+                    <p style="color: var(--text-muted);">What our clients say about our standard of representation.</p>
+                </div>
+                <div class="reviews-layout">
+                    <div class="reviews-list-wrapper">
+                        <div class="reviews-list" id="reviews-container">
+                            <div class="review-card">
+                                <div class="stars">★★★★★</div>
+                                <p class="review-text">"Nana Yaw Ofori Gyasie handled our company's incorporation and regulatory compliance flawlessly. His attention to detail and profound knowledge of Ghanaian corporate law is unmatched. Akoben Legal is highly recommended."</p>
+                                <p class="review-author">— Jonathan O., CEO</p>
+                            </div>
+                            <div class="review-card">
+                                <div class="stars">★★★★★</div>
+                                <p class="review-text">"I was facing a highly contentious land dispute in Accra. His strategic approach and authoritative presence in court secured a favorable outcome for my family. A true professional."</p>
+                                <p class="review-author">— Grace M.</p>
+                            </div>
+                            <div class="review-card">
+                                <div class="stars">★★★★★</div>
+                                <p class="review-text">"Outstanding service during our merger. The legal team at Akoben made complex intellectual property and labor issues easy to navigate."</p>
+                                <p class="review-author">— Sarah T., Operations Director</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-form-container">
+                        <h3>Leave a Review</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">Your feedback drives our standard of excellence.</p>
+                        <form id="review-form">
+                            <input type="text" id="rev-name" placeholder="Your Name" required>
+                            <select id="rev-rating" required>
+                                <option value="5">★★★★★ - Excellent</option>
+                                <option value="4">★★★★☆ - Very Good</option>
+                                <option value="3">★★★☆☆ - Average</option>
+                            </select>
+                            <textarea id="rev-text" rows="4" placeholder="Share your experience..." required></textarea>
+                            <button type="submit" class="btn" style="width: 100%;">Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Brief -->
+            <div class="cta-banner reveal-on-scroll">
+                <h2>Ready to Discuss Your Legal Needs?</h2>
+                <p style="color: var(--text-muted); margin: 1rem 0 2rem; font-size: 1.1rem;">Reach out to our chambers or schedule a direct consultation with Nana Yaw Ofori Gyasie.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn" onclick="navigate('consultation')">Schedule Consultation</button>
+                    <button class="btn btn-outline" onclick="navigate('contact')">General Contact</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT PAGE -->
+        <section id="about" class="page-view">
+            <div class="page-header reveal-on-scroll">
+                <h1>Counsel Profile</h1>
+                <p style="color: var(--text-muted); margin-top: 1rem;">Meet the founder and learn about the ethos of Akoben Legal Services.</p>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-content reveal-on-scroll">
+                    <h2>Nana Yaw Ofori Gyasie, Esq.</h2>
+                    <p>As the founding partner of AKOBEN LEGAL SERVICES, Nana Yaw Ofori Gyasie has established a reputation for incisive legal analysis, formidable advocacy, and unwavering client commitment. The firm takes its name from the Adinkra symbol "Akoben" (the war horn), representing vigilance and readiness to defend our clients' rights at all times.</p>
+                    <p>Navigating the complexities of the Ghanaian legal system requires not just knowledge of the law, but an understanding of the socio-economic landscape. We bridge that gap for local and international clients, corporations, and individuals alike.</p>
+                    
+                    <div class="credentials">
+                        <h3>Bar Admissions & Education</h3>
+                        <ul>
+                            <li><i data-lucide="award"></i> Called to the Bar in Ghana (Supreme Court of Ghana)</li>
+                            <li><i data-lucide="graduation-cap"></i> BL, Ghana School of Law, Makola</li>
+                            <li><i data-lucide="book-open"></i> LLB (Hons), University of Ghana, Legon</li>
+                            <li><i data-lucide="briefcase"></i> Member, Ghana Bar Association (GBA)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Awards & Recognitions Section -->
+                    <div class="credentials interactive-card" style="margin-top: 2rem; padding: 2rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;" onclick="toggleExpand('awards-list', this)">
+                        <h3 style="margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; pointer-events: none;">
+                            <i data-lucide="award" width="24" height="24"></i> Awards & Recognitions
+                        </h3>
+                        <div id="awards-list" class="expandable-content">
+                            <ul style="list-style: none;">
+                                <li class="award-item" style="display: flex; gap: 1rem; align-items: flex-start; border-bottom: none; padding: 0;">
+                                    <i data-lucide="trophy" style="color: var(--text-color); flex-shrink: 0; margin-top: 0.2rem;"></i>
+                                    <div>
+                                        <strong style="color: var(--text-color);">Top 50 Legal Practitioners in West Africa</strong>
+                                        <div style="color: var(--text-muted); font-size: 0.9rem;">West African Legal Digest (2025)</div>
+                                        <div style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Recognized for outstanding contributions to corporate jurisprudence and international arbitration across the ECOWAS region.</div>
+                                    </div>
+                                </li>
+                                <li class="award-item" style="display: flex; gap: 1rem; align-items: flex-start; border-bottom: none; padding: 0;">
+                                    <i data-lucide="star" style="color: var(--text-color); flex-shrink: 0; margin-top: 0.2rem;"></i>
+                                    <div>
+                                        <strong style="color: var(--text-color);">Excellence in Corporate Litigation</strong>
+                                        <div style="color: var(--text-muted); font-size: 0.9rem;">Ghana Legal Awards (2024)</div>
+                                        <div style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Awarded for successfully defending a landmark merger and acquisition dispute involving multinational stakeholders.</div>
+                                    </div>
+                                </li>
+                                <li class="award-item" style="display: flex; gap: 1rem; align-items: flex-start; border-bottom: none; padding: 0;">
+                                    <i data-lucide="shield-check" style="color: var(--text-color); flex-shrink: 0; margin-top: 0.2rem;"></i>
+                                    <div>
+                                        <strong style="color: var(--text-color);">Leading Real Estate Counsel</strong>
+                                        <div style="color: var(--text-muted); font-size: 0.9rem;">Accra Business Journal (2023)</div>
+                                        <div style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Voted for pioneering legal frameworks in complex commercial property acquisitions and land tenure security in Ghana.</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-grid reveal-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="gallery-item" onclick="openGalleryModal(this)">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1505664177941-dfce871fbd4f?auto=format&fit=crop&q=80&w=600" alt="Nana Yaw Ofori Gyasie at Court" data-caption="Nana Yaw Ofori Gyasie, Esq. preparing for proceedings at the High Court Complex, Accra.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                    <div class="gallery-item" onclick="openGalleryModal(this)">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?auto=format&fit=crop&q=80&w=600" alt="Akoben Boardroom" data-caption="The main boardroom at Akoben Legal Services, where strategic corporate negotiations take place.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                    <div class="gallery-item" onclick="openGalleryModal(this)">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&q=80&w=600" alt="Law Library" data-caption="Our extensive law library ensures our legal research is always thorough and up-to-date with current jurisprudence.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                    <div class="gallery-item" onclick="openGalleryModal(this)">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=600" alt="Client Meeting" data-caption="A standard consultation session. We prioritize clear communication and confidentiality above all.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                    <div class="gallery-item" onclick="openGalleryModal(this)">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1436450412740-6b988f486c6b?auto=format&fit=crop&q=80&w=600" alt="Legal Documents" data-caption="Meticulous drafting and review of contracts is at the heart of our commercial practice.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                    <div class="gallery-item" onclick="openGalleryModal(this)">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=600" alt="Chambers Team" data-caption="Collaboration and strategic planning among the associates at Akoben Legal.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vision, Mission & Reputation -->
+            <div class="vision-mission-grid">
+                <div class="vm-box interactive-card reveal-on-scroll" onclick="showInfoModal('Our Vision', 'To be the foremost legal institution in West Africa, recognized globally for setting the benchmark in legal excellence, innovative jurisprudence, and unyielding defense of our clients\' rights in a rapidly evolving world. We constantly invest in our people and legal technologies to stay ahead of the curve.', 'eye')">
+                    <h3 style="margin-bottom: 0.5rem;"><i data-lucide="eye" width="24" height="24"></i> Our Vision</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 0;">To be the foremost legal institution in West Africa, recognized globally for setting the benchmark in legal excellence, innovative jurisprudence, and unyielding defense of our clients' rights in a rapidly evolving world.</p>
+                </div>
+                <div class="vm-box interactive-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showInfoModal('Our Mission', 'To provide tailored, high-caliber legal solutions through rigorous advocacy, ethical practice, and a deep understanding of our clients\' business and personal goals, ensuring successful outcomes in every mandate we undertake. We believe in proactive counsel over reactive litigation.', 'target')">
+                    <h3 style="margin-bottom: 0.5rem;"><i data-lucide="target" width="24" height="24"></i> Our Mission</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 0;">To provide tailored, high-caliber legal solutions through rigorous advocacy, ethical practice, and a deep understanding of our clients' business and personal goals, ensuring successful outcomes in every mandate we undertake.</p>
+                </div>
+            </div>
+
+            <div class="reputation-wrapper reveal-on-scroll" style="margin-top: 3rem;">
+                <div class="reputation-block interactive-card" style="margin-top: 0;" onclick="toggleExpand('reputation-full-text', this)">
+                    "Nana Yaw Ofori Gyasie and the team at Akoben Legal Services are not just lawyers; they are strategic partners. Their ability to dissect complex Ghanaian legal challenges and present clear, actionable pathways has earned them a stellar reputation among Accra's business elite. When the stakes are high, they are the firm you want in your corner."
+                    <br><br>
+                    <span style="font-weight: 600; color: var(--text-color); font-style: normal;">— West African Corporate Digest</span>
+                    
+                    <div id="reputation-full-text" class="expandable-content" style="font-style: normal; font-size: 0.9rem;">
+                        <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                            <strong>Extended Context:</strong> We pride ourselves on not just offering legal advice, but providing actionable business intelligence that protects our clients' bottom line while ensuring strict legal compliance. Our reputation is built on trust, confidentiality, and consistent results.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin-top: 1rem;">
+                    <button class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem 1rem; text-transform: none; border-radius: 4px;" onclick="toggleExpand('client-rep-form-container', this)">
+                        <i data-lucide="message-square-plus" width="16" height="16" style="display: inline-block; vertical-align: text-bottom; margin-right: 0.3rem;"></i> 
+                        Add Client Reputation
+                    </button>
+                </div>
+
+                <div id="client-rep-form-container" class="expandable-content form-container" style="padding: 2rem; border: 1px solid var(--border-color); border-radius: 8px; margin-top: 1rem;">
+                    <h4 style="margin-bottom: 1rem; font-family: var(--font-heading); font-size: 1.2rem;">Share Your Experience</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">Your feedback helps us maintain our standard of excellence.</p>
+                    <form id="mini-rep-form">
+                        <div class="form-grid" style="gap: 1rem;">
+                            <input type="text" id="m-rep-name" placeholder="Your Name or Company" required style="margin-bottom: 0;">
+                            <select id="m-rep-rating" required style="margin-bottom: 0;">
+                                <option value="5">★★★★★ - Excellent</option>
+                                <option value="4">★★★★☆ - Very Good</option>
+                                <option value="3">★★★☆☆ - Average</option>
+                            </select>
+                            <div class="form-full" style="margin-bottom: 0;">
+                                <textarea id="m-rep-text" rows="3" placeholder="Tell us about your experience..." required style="margin-bottom: 0;"></textarea>
+                            </div>
+                            <div class="form-full">
+                                <button type="submit" class="btn" style="width: 100%; padding: 0.8rem;">Submit Reputation</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SERVICES PAGE (Fully interactive modal driven) -->
+        <section id="services" class="page-view">
+            <div class="page-header reveal-on-scroll">
+                <h1>Areas of Expertise</h1>
+                <p style="color: var(--text-muted); margin-top: 1rem;">Comprehensive legal solutions tailored to your unique challenges. Click any practice for details.</p>
+            </div>
+            
+            <div class="services-container">
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Corporate & Commercial Law', 'Our corporate practice handles complex commercial transactions, contract drafting, and representation in commercial litigation. We act as external legal counsel for SMEs and multinational corporations operating in West Africa, ensuring full regulatory compliance from incorporation to complex mergers and acquisitions.', 'building-2')">
+                    <i data-lucide="building-2" class="service-icon" width="32" height="32"></i>
+                    <h3>Corporate & Commercial Law</h3>
+                    <p>Advising businesses on incorporation, regulatory compliance, mergers, and commerce in Ghana.</p>
+                </div>
+
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Real Estate & Conveyancing', 'Navigating Ghana\'s land tenure system requires distinct expertise. We conduct thorough due diligence, draft indentures, handle Lands Commission registrations seamlessly, and resolve complex land disputes effectively in court.', 'home')">
+                    <i data-lucide="home" class="service-icon" width="32" height="32"></i>
+                    <h3>Real Estate & Conveyancing</h3>
+                    <p>Guiding clients through property acquisition, land registration, and tenancy agreements.</p>
+                </div>
+
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="showServiceModal('Family & Probate Law', 'We provide sensitive and discreet counsel in matrimonial matters, drafting of wills, processing Letters of Administration, and navigating the nuances of both customary and statutory family law intricacies in Ghana.', 'users')">
+                    <i data-lucide="users" class="service-icon" width="32" height="32"></i>
+                    <h3>Family & Probate Law</h3>
+                    <p>Discreet representation in divorce, child custody, and estate administration.</p>
+                </div>
+
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Dispute Resolution', 'We represent clients vigorously in the Superior Courts of Judicature. Beyond standard litigation, we are highly skilled in Alternative Dispute Resolution (ADR), helping clients avoid lengthy court battles when arbitration or mediation is significantly more beneficial.', 'gavel')">
+                    <i data-lucide="gavel" class="service-icon" width="32" height="32"></i>
+                    <h3>Dispute Resolution</h3>
+                    <p>Expert representation in litigation, arbitration, and mediation proceedings.</p>
+                </div>
+
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Employment & Labour Law', 'We assist companies in drafting robust HR policies and employment contracts that comply strictly with the Ghana Labour Act. We also vigorously represent parties in wrongful termination claims and National Labour Commission hearings.', 'briefcase')">
+                    <i data-lucide="briefcase" class="service-icon" width="32" height="32"></i>
+                    <h3>Employment & Labour Law</h3>
+                    <p>Counsel on employer-employee relations, compliance, and industrial disputes.</p>
+                </div>
+
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="showServiceModal('Intellectual Property Law', 'From trademark and patent registrations at the Registrar General\'s Department to heavily litigating copyright infringements, we ensure your intellectual assets, brand identity, and creative works remain exclusively yours within the Ghanaian market.', 'file-badge-2')">
+                    <i data-lucide="file-badge-2" class="service-icon" width="32" height="32"></i>
+                    <h3>Intellectual Property Law</h3>
+                    <p>Protecting your brand, inventions, and creative assets in the Ghanaian market.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. CONTACT PAGE (General Inquiries) -->
+        <section id="contact" class="page-view">
+            <div class="page-header reveal-on-scroll">
+                <h1>Contact Us</h1>
+                <p style="color: var(--text-muted); margin-top: 1rem;">Get in touch for general inquiries or visit our chambers.</p>
+            </div>
+
+            <div class="split-layout">
+                <div class="contact-info reveal-on-scroll">
+                    <div class="info-block">
+                        <h3><i data-lucide="map-pin"></i> Chambers Location</h3>
+                        <p>Akoben Tower, 4th Floor<br>Independence Avenue<br>Ridge, Accra, Ghana</p>
+                    </div>
+                    <div class="info-block">
+                        <h3><i data-lucide="phone"></i> Telephone</h3>
+                        <p>+233 (0) 30 200 0000<br>+233 (0) 24 000 0000</p>
+                    </div>
+                    <div class="info-block">
+                        <h3><i data-lucide="mail"></i> Email</h3>
+                        <p>counsel@akobenlegal.com.gh<br>info@akobenlegal.com.gh</p>
+                    </div>
+                    <div class="info-block" style="margin-top: 3rem;">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&q=80&w=800" alt="Accra Location Placeholder" style="height: 250px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                </div>
+
+                <div class="form-container reveal-on-scroll" style="transition-delay: 0.2s;">
+                    <h2 style="margin-bottom: 2rem;">General Inquiry</h2>
+                    <form id="general-contact-form">
+                        <input type="text" id="contact-name" placeholder="Full Name" required>
+                        <input type="email" id="contact-email" placeholder="Email Address" required>
+                        <input type="text" id="contact-subject" placeholder="Subject" required>
+                        <textarea id="contact-message" rows="6" placeholder="Your Message..." required></textarea>
+                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CONSULTATION PAGE (Booking) -->
+        <section id="consultation" class="page-view">
+            <div class="page-header reveal-on-scroll">
+                <h1>Schedule a Consultation</h1>
+                <p style="color: var(--text-muted); margin-top: 1rem;">Select a date, time, and your specific area of interest to secure an official legal consultation session.</p>
+            </div>
+
+            <div class="form-container reveal-on-scroll" style="max-width: 800px; margin: 0 auto; transition-delay: 0.1s;">
+                <form id="booking-form">
+                    <div class="form-grid">
+                        <div>
+                            <label for="book-fname" style="display:none;">First Name</label>
+                            <input type="text" id="book-fname" placeholder="First Name" required>
+                            <div id="err-fname" class="error-msg">Please enter your first name.</div>
+                        </div>
+                        <div>
+                            <label for="book-lname" style="display:none;">Last Name</label>
+                            <input type="text" id="book-lname" placeholder="Last Name" required>
+                            <div id="err-lname" class="error-msg">Please enter your last name.</div>
+                        </div>
+                        
+                        <div class="form-full">
+                            <label for="book-email" style="display:none;">Email Address</label>
+                            <input type="email" id="book-email" placeholder="Email Address" required>
+                            <div id="err-email" class="error-msg">Please enter a valid email.</div>
+                        </div>
+
+                        <!-- Practice Area Selection -->
+                        <div class="form-full">
+                            <label for="book-practice" style="display:none;">Practice Area</label>
+                            <select id="book-practice" required>
+                                <option value="" disabled selected>Select Practice Area</option>
+                                <option value="Corporate & Commercial Law">Corporate & Commercial Law</option>
+                                <option value="Real Estate & Conveyancing">Real Estate & Conveyancing</option>
+                                <option value="Family & Probate Law">Family & Probate Law</option>
+                                <option value="Dispute Resolution">Dispute Resolution</option>
+                                <option value="Employment & Labour Law">Employment & Labour Law</option>
+                                <option value="Intellectual Property Law">Intellectual Property Law</option>
+                                <option value="General Legal Inquiry">General Legal Inquiry</option>
+                            </select>
+                            <div id="err-practice" class="error-msg">Please select a practice area.</div>
+                        </div>
+
+                        <div>
+                            <label for="book-date" style="display:none;">Date</label>
+                            <input type="date" id="book-date" required>
+                            <div id="err-date" class="error-msg">Please select a future date.</div>
+                        </div>
+                        <div>
+                            <label for="book-time" style="display:none;">Time Slot</label>
+                            <select id="book-time" required>
+                                <option value="" disabled selected>Select Time Slot</option>
+                                <option value="09:00">09:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="14:00">02:00 PM</option>
+                                <option value="16:00">04:00 PM</option>
+                            </select>
+                            <div id="err-time" class="error-msg">Please select a time slot.</div>
+                        </div>
+
+                        <div class="form-full">
+                            <label for="book-issue" style="display:none;">Briefly describe your legal issue</label>
+                            <textarea id="book-issue" rows="4" placeholder="Briefly describe your legal issue (Confidential)..." required></textarea>
+                            <div id="err-issue" class="error-msg">Please provide more details (min 10 chars).</div>
+                        </div>
+
+                        <div class="form-full">
+                            <button type="submit" class="btn" style="width: 100%;">Confirm Appointment Request</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- 6. PRIVACY POLICY PAGE -->
+        <section id="privacy" class="page-view">
+            <div class="page-header">
+                <h1>Privacy Policy</h1>
+            </div>
+            <div class="legal-content">
+                <h2>1. Introduction</h2>
+                <p>At AKOBEN LEGAL SERVICES, we are committed to protecting the privacy and security of our clients and website visitors. This policy outlines how we collect, use, and safeguard your personal information in accordance with the Data Protection Act, 2012 (Act 843) of Ghana.</p>
+                
+                <h2>2. Information Collection</h2>
+                <p>We collect information that you voluntarily provide to us when scheduling a consultation, submitting an inquiry, or engaging our legal services. This may include your name, email address, phone number, and confidential details pertaining to your legal matters.</p>
+                
+                <h2>3. Use of Information</h2>
+                <p>Your information is used strictly for the purpose of providing legal advice, responding to inquiries, and fulfilling our professional obligations. We maintain strict attorney-client privilege regarding all sensitive case information.</p>
+                
+                <h2>4. Data Security</h2>
+                <p>We implement robust technical and organizational measures to protect your data against unauthorized access, alteration, disclosure, or destruction. However, no internet transmission is entirely secure, and we advise caution when sharing highly sensitive information via unencrypted web forms.</p>
+            </div>
+        </section>
+
+        <!-- 7. TERMS OF ENGAGEMENT PAGE -->
+        <section id="terms" class="page-view">
+            <div class="page-header">
+                <h1>Terms of Engagement</h1>
+            </div>
+            <div class="legal-content">
+                <h2>1. Scope of Representation</h2>
+                <p>The submission of a form through this website does not constitute an attorney-client relationship. An attorney-client relationship with AKOBEN LEGAL SERVICES is only established upon the execution of a formal Letter of Engagement and the payment of any requisite retainer fees.</p>
+                
+                <h2>2. Consultation Fees</h2>
+                <p>Initial consultations scheduled via this website may be subject to a consultation fee, which will be communicated to you by our clerks prior to the confirmation of your appointment slot.</p>
+                
+                <h2>3. Conflict of Interest</h2>
+                <p>Before accepting any mandate, we are ethically bound to conduct a conflict of interest check. We reserve the right to decline representation if it conflicts with our duties to existing or former clients.</p>
+                
+                <h2>4. Client Obligations</h2>
+                <p>Clients are expected to provide full, truthful, and timely disclosures of all facts relevant to their matters to enable us to provide effective legal representation.</p>
+            </div>
+        </section>
+
+        <!-- 8. DISCLAIMER PAGE -->
+        <section id="disclaimer" class="page-view">
+            <div class="page-header">
+                <h1>Legal Disclaimer</h1>
+            </div>
+            <div class="legal-content">
+                <h2>No Legal Advice</h2>
+                <p>The content provided on this website is intended for general informational purposes only and does not constitute legal advice. The legal landscape in Ghana is dynamic, and while we strive to keep information accurate, we make no guarantees regarding its completeness or current validity.</p>
+                
+                <h2>No Attorney-Client Relationship</h2>
+                <p>Viewing this website, downloading resources, or sending messages to AKOBEN LEGAL SERVICES through our contact forms or email addresses does not create an attorney-client relationship.</p>
+                
+                <h2>Third-Party Links</h2>
+                <p>This website may contain links to external websites. We do not endorse, and are not responsible for, the content, privacy policies, or practices of any third-party sites.</p>
+                
+                <h2>Liability</h2>
+                <p>AKOBEN LEGAL SERVICES and Nana Yaw Ofori Gyasie, Esq. disclaim any liability for actions taken or not taken based on the contents of this website. Always seek direct counsel from a qualified legal practitioner regarding your specific circumstances.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER (Persistent across views) -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>AKOBEN LEGAL SERVICES</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Founded by Nana Yaw Ofori Gyasie, Esq.<br>Excellence, Integrity, and Unwavering Advocacy in the heart of Accra.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#" onclick="navigate('home'); return false;">Home</a></li>
+                    <li><a href="#" onclick="navigate('about'); return false;">Profile</a></li>
+                    <li><a href="#" onclick="navigate('services'); return false;">Expertise</a></li>
+                    <li><a href="#" onclick="navigate('consultation'); return false;">Consultation</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#" onclick="navigate('privacy'); return false;">Privacy Policy</a></li>
+                    <li><a href="#" onclick="navigate('terms'); return false;">Terms of Engagement</a></li>
+                    <li><a href="#" onclick="navigate('disclaimer'); return false;">Disclaimer</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect With Us 🌍</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="TikTok" title="TikTok">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+                    </a>
+                    <a href="#" aria-label="Facebook" title="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    </a>
+                    <a href="#" aria-label="Instagram" title="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" title="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; <span id="current-year"></span> AKOBEN LEGAL SERVICES | Nana Yaw Ofori Gyasie. All rights reserved. Designed for excellence.
+        </div>
+    </footer>
+
+    <!-- SUCCESS MODAL (Forms) -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal-btn" onclick="closeModal('success-modal')"><i data-lucide="x"></i></button>
+            <i data-lucide="check-circle" class="modal-icon" style="color: var(--text-color);"></i>
+            <h2 id="modal-title">Request Received</h2>
+            <p id="modal-message" style="margin-top: 1rem; color: var(--text-muted);">Your request has been successfully submitted. We will be in touch shortly.</p>
+            <button class="btn" style="margin-top: 2rem; width: 100%;" onclick="closeModal('success-modal')">Close</button>
+        </div>
+    </div>
+
+    <!-- GALLERY MODAL (Profile Pictures) -->
+    <div id="gallery-modal" class="modal">
+        <div class="modal-content gallery-modal">
+            <button class="close-modal-btn" onclick="closeModal('gallery-modal')"><i data-lucide="x"></i></button>
+            <img id="gallery-modal-img" src="" alt="Gallery Enlarge">
+            <p id="gallery-modal-caption" style="font-size: 1.1rem; font-style: italic;"></p>
+        </div>
+    </div>
+
+    <!-- INFO MODAL (Interactive Elements - Vision, Mission, Awards) -->
+    <div id="info-modal" class="modal">
+        <div class="modal-content" style="max-width: 600px; text-align: left; padding: 3rem;">
+            <button class="close-modal-btn" onclick="closeModal('info-modal')"><i data-lucide="x"></i></button>
+            <i id="info-modal-icon" data-lucide="info" class="modal-icon" style="color: var(--text-color); margin: 0 0 1.5rem 0;"></i>
+            <h2 id="info-modal-title" style="margin-bottom: 1rem;">Details</h2>
+            <p id="info-modal-message" style="color: var(--text-muted); line-height: 1.8; font-size: 1.05rem;"></p>
+        </div>
+    </div>
+
+    <!-- SERVICE DETAIL MODAL (Expertise Details & CTA) -->
+    <div id="service-modal" class="modal">
+        <div class="modal-content" style="max-width: 600px; text-align: left; padding: 3rem;">
+            <button class="close-modal-btn" onclick="closeModal('service-modal')"><i data-lucide="x"></i></button>
+            <i id="service-modal-icon" data-lucide="info" class="modal-icon" style="color: var(--text-color); margin: 0 0 1.5rem 0;"></i>
+            <h2 id="service-modal-title" style="margin-bottom: 1rem;">Service Name</h2>
+            <p id="service-modal-message" style="color: var(--text-muted); line-height: 1.8; font-size: 1.05rem; margin-bottom: 2rem;"></p>
+            <button class="btn" style="width: 100%;" id="service-modal-cta">Book Consultation for this Practice</button>
+        </div>
+    </div>
+
+    <!-- VANILLA JAVASCRIPT -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Set Current Year in Footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // --- SCROLL OBSERVER (Animations) ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const scrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        function initScrollAnimations() {
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+                el.classList.remove('visible');
+                scrollObserver.observe(el);
+            });
+        }
+        
+        // Initialize on first load
+        initScrollAnimations();
+
+        // --- HEADER GLASSMORPHISM ON SCROLL ---
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // --- 1. THEME TOGGLE (Day/Night Mode) ---
+        const themeBtn = document.getElementById('theme-btn');
+        const htmlEl = document.documentElement;
+        
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            htmlEl.setAttribute('data-theme', newTheme);
+            
+            // Toggle Icon
+            themeBtn.innerHTML = newTheme === 'light' ? '<i data-lucide="moon"></i>' : '<i data-lucide="sun"></i>';
+            lucide.createIcons();
+        });
+
+        // --- 2. MOBILE MENU TOGGLE ---
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburgerBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
+            const isOpen = navMenu.classList.contains('open');
+            hamburgerBtn.innerHTML = isOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
+            lucide.createIcons();
+            
+            // Lock body scroll when mobile menu is open
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        // --- 3. SPA ROUTING (Multi-Page functionality in one file) ---
+        function navigate(pageId) {
+            // Close mobile menu if open
+            if(navMenu.classList.contains('open')) {
+                navMenu.classList.remove('open');
+                hamburgerBtn.innerHTML = '<i data-lucide="menu"></i>';
+                lucide.createIcons();
+                document.body.style.overflow = '';
+            }
+
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = Array.from(document.querySelectorAll('.nav-link')).find(l => l.getAttribute('onclick').includes(pageId));
+            if(activeLink) activeLink.classList.add('active');
+
+            // Hide all pages, show target
+            document.querySelectorAll('.page-view').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            const targetPage = document.getElementById(pageId);
+            if(targetPage) {
+                targetPage.classList.add('active');
+                // Re-initialize scroll animations for the new view
+                setTimeout(initScrollAnimations, 100);
+            }
+
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- 4. MODAL LOGIC ---
+        function showSuccessModal(title, message) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            document.getElementById('success-modal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showInfoModal(title, message, iconName) {
+            document.getElementById('info-modal-title').textContent = title;
+            document.getElementById('info-modal-message').textContent = message;
+            
+            const oldIcon = document.getElementById('info-modal-icon');
+            const newIcon = document.createElement('i');
+            newIcon.id = 'info-modal-icon';
+            newIcon.setAttribute('data-lucide', iconName || 'info');
+            newIcon.className = 'modal-icon';
+            newIcon.style.color = 'var(--text-color)';
+            newIcon.style.margin = '0 0 1.5rem 0';
+            oldIcon.parentNode.replaceChild(newIcon, oldIcon);
+            
+            lucide.createIcons();
+            document.getElementById('info-modal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showServiceModal(title, message, iconName) {
+            document.getElementById('service-modal-title').textContent = title;
+            document.getElementById('service-modal-message').textContent = message;
+            
+            const oldIcon = document.getElementById('service-modal-icon');
+            const newIcon = document.createElement('i');
+            newIcon.id = 'service-modal-icon';
+            newIcon.setAttribute('data-lucide', iconName || 'info');
+            newIcon.className = 'modal-icon';
+            newIcon.style.color = 'var(--text-color)';
+            newIcon.style.margin = '0 0 1.5rem 0';
+            oldIcon.parentNode.replaceChild(newIcon, oldIcon);
+            
+            lucide.createIcons();
+
+            const ctaBtn = document.getElementById('service-modal-cta');
+            ctaBtn.onclick = function() {
+                closeModal('service-modal');
+                navigate('consultation');
+                
+                setTimeout(() => {
+                    const practiceSelect = document.getElementById('book-practice');
+                    if(practiceSelect) {
+                        practiceSelect.value = title;
+                        practiceSelect.focus();
+                    }
+                }, 100);
+            };
+
+            document.getElementById('service-modal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openGalleryModal(element) {
+            const imgEl = element.querySelector('img');
+            const imgSrc = imgEl.src;
+            const caption = imgEl.getAttribute('data-caption');
+            
+            document.getElementById('gallery-modal-img').src = imgSrc;
+            document.getElementById('gallery-modal-caption').textContent = caption;
+            document.getElementById('gallery-modal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        // Close modals on outside click or Escape key
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.show').forEach(modal => {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = '';
+                });
+            }
+        });
+
+        // --- ACCORDION TOGGLE LOGIC ---
+        function toggleExpand(targetId, cardElement) {
+            const target = document.getElementById(targetId);
+            if (!target) return;
+            
+            target.classList.toggle('expanded');
+            if (cardElement && cardElement.classList.contains('interactive-card')) {
+                cardElement.classList.toggle('expanded');
+            }
+        }
+
+        // --- 5. FORM SUBMISSIONS & PERFORMANCE-OPTIMIZED MARQUEE LOGIC ---
+
+        // A. Reviews Form & Infinite Scroll Marquee
+        const reviewForm = document.getElementById('review-form');
+        const reviewsContainer = document.getElementById('reviews-container');
+
+        if(reviewForm && reviewsContainer) {
+            const initialCards = Array.from(reviewsContainer.children);
+            initialCards.forEach(card => {
+                reviewsContainer.appendChild(card.cloneNode(true));
+            });
+
+            let isHoveringReviews = false;
+            let scrollPos = 0;
+            const scrollSpeed = 0.8;
+            
+            // Optimization: Calculate dimensions strictly when needed to prevent layout thrashing
+            let firstChildHeight = 0;
+            
+            const updateMetrics = () => {
+                const firstChild = reviewsContainer.firstElementChild;
+                if (firstChild) {
+                    const style = window.getComputedStyle(reviewsContainer);
+                    const gap = parseFloat(style.gap) || 32;
+                    firstChildHeight = firstChild.offsetHeight + gap;
+                }
+            };
+            
+            // Calculate initially and update on window resize
+            updateMetrics();
+            window.addEventListener('resize', updateMetrics);
+
+            const scrollLoop = () => {
+                if (!isHoveringReviews) {
+                    scrollPos += scrollSpeed;
+                    reviewsContainer.scrollTop = scrollPos;
+                    
+                    if (firstChildHeight > 0 && scrollPos >= firstChildHeight) {
+                        reviewsContainer.appendChild(reviewsContainer.firstElementChild);
+                        scrollPos -= firstChildHeight;
+                        reviewsContainer.scrollTop = scrollPos;
+                        updateMetrics(); // Recalculate safely only when element shifts
+                    }
+                } else {
+                    scrollPos = reviewsContainer.scrollTop;
+                }
+                requestAnimationFrame(scrollLoop);
+            };
+
+            reviewsContainer.addEventListener('mouseenter', () => isHoveringReviews = true);
+            reviewsContainer.addEventListener('mouseleave', () => isHoveringReviews = false);
+            reviewsContainer.addEventListener('touchstart', () => isHoveringReviews = true, {passive: true});
+            reviewsContainer.addEventListener('touchend', () => { setTimeout(() => isHoveringReviews = false, 1500); });
+
+            requestAnimationFrame(scrollLoop);
+
+            reviewForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('rev-name').value;
+                const ratingVal = document.getElementById('rev-rating').value;
+                const text = document.getElementById('rev-text').value;
+                
+                let stars = '';
+                for(let i=0; i<5; i++) { stars += i < ratingVal ? '★' : '☆'; }
+
+                const newReview = document.createElement('div');
+                newReview.className = 'review-card';
+                newReview.style.animation = 'fadeInPage 0.5s forwards';
+                newReview.innerHTML = `
+                    <div class="stars">${stars}</div>
+                    <p class="review-text">"${text}"</p>
+                    <p class="review-author">— ${name}</p>
+                `;
+                
+                reviewsContainer.insertBefore(newReview, reviewsContainer.firstChild);
+                scrollPos = 0;
+                reviewsContainer.scrollTop = 0;
+                updateMetrics(); // Refresh layout calculation
+                
+                reviewForm.reset();
+                showSuccessModal("Review Submitted", "Thank you for your feedback! It has been added to our live feed.");
+            });
+        }
+
+        // B. General Contact Form
+        const contactForm = document.getElementById('general-contact-form');
+        if(contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                contactForm.reset();
+                showSuccessModal("Message Sent", "Your inquiry has been sent to our chambers. A representative will contact you shortly.");
+            });
+        }
+
+        // Mini Reputation Form
+        const miniRepForm = document.getElementById('mini-rep-form');
+        if(miniRepForm) {
+            miniRepForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                miniRepForm.reset();
+                toggleExpand('client-rep-form-container'); // close it
+                showSuccessModal("Reputation Submitted", "Thank you! Your feedback has been securely transmitted and will be reviewed to update our live feed.");
+            });
+        }
+
+        // C. Booking/Consultation Form
+        const bookingForm = document.getElementById('booking-form');
+        if(bookingForm) {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('book-date').setAttribute('min', today);
+
+            bookingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let isValid = true;
+                document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
+
+                const fname = document.getElementById('book-fname').value.trim();
+                const lname = document.getElementById('book-lname').value.trim();
+                const email = document.getElementById('book-email').value.trim();
+                const practice = document.getElementById('book-practice').value;
+                const date = document.getElementById('book-date').value;
+                const time = document.getElementById('book-time').value;
+                const issue = document.getElementById('book-issue').value.trim();
+
+                if(!fname) { document.getElementById('err-fname').style.display = 'block'; isValid = false; }
+                if(!lname) { document.getElementById('err-lname').style.display = 'block'; isValid = false; }
+                if(!email || !email.includes('@')) { document.getElementById('err-email').style.display = 'block'; isValid = false; }
+                if(!practice) { document.getElementById('err-practice').style.display = 'block'; isValid = false; }
+                if(!date) { document.getElementById('err-date').style.display = 'block'; isValid = false; }
+                if(!time) { document.getElementById('err-time').style.display = 'block'; isValid = false; }
+                if(issue.length < 10) { document.getElementById('err-issue').style.display = 'block'; isValid = false; }
+
+                if(isValid) {
+                    showSuccessModal("Booking Confirmed", "Your consultation request has been received. Our clerks will contact you shortly to confirm the appointment details.");
+                    bookingForm.reset();
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
