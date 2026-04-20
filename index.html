@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKOBEN LEGAL SERVICES | Nana Yaw Ofori Gyasie, Esq.</title>
+    <title>AKOBEN LEGAL SERVICES | Nana Yaw Gyasi, Esq.</title>
     
     <!-- Premium Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,8 +93,17 @@
             transition: filter var(--transition-speed), transform 0.5s ease;
         }
 
+        /* Reveal original colors on hover and touch (mobile) */
+        img:hover, img:active, img:focus {
+            filter: grayscale(0%);
+        }
+
         [data-theme="dark"] img {
             filter: grayscale(100%) brightness(0.85);
+        }
+
+        [data-theme="dark"] img:hover, [data-theme="dark"] img:active, [data-theme="dark"] img:focus {
+            filter: grayscale(0%) brightness(1);
         }
 
         /* --- UI ENHANCEMENTS: SCROLL ANIMATIONS --- */
@@ -475,8 +484,13 @@
             will-change: transform;
         }
 
-        .gallery-item:hover img {
+        .gallery-item:hover img, .gallery-item:active img {
             transform: scale(1.08);
+            filter: grayscale(0%);
+        }
+
+        [data-theme="dark"] .gallery-item:hover img, [data-theme="dark"] .gallery-item:active img {
+            filter: grayscale(0%) brightness(1);
         }
 
         .gallery-item .overlay-icon {
@@ -838,6 +852,7 @@
             object-fit: contain;
             margin-bottom: 1.5rem;
             border-radius: 8px;
+            filter: grayscale(0%) !important;
         }
 
         .modal-content.gallery-modal p {
@@ -869,6 +884,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            z-index: 10;
         }
 
         .close-modal-btn:hover {
@@ -1094,7 +1110,7 @@
     <header id="main-header">
         <div class="logo" onclick="navigate('home')">
             <i data-lucide="scale" width="28" height="28"></i>
-            AKOBEN LEGAL
+            AKOBEN LEGAL SERVICES
         </div>
         <nav class="nav-links" id="nav-menu">
             <a class="nav-link active" onclick="navigate('home')">Home</a>
@@ -1122,7 +1138,7 @@
             <div class="hero">
                 <div class="hero-text reveal-on-scroll">
                     <h1>Expert Legal Counsel in Ghana.</h1>
-                    <p>Providing uncompromising legal representation, strategic counsel, and unwavering dedication to clients across corporate, real estate, and civil litigation in Accra and beyond.</p>
+                    <p>Providing uncompromising legal representation, strategic counsel, and unwavering dedication to clients across corporate, real estate, and civil litigation in Koforidua and beyond.</p>
                     <button class="btn" onclick="navigate('consultation')">Book Consultation</button>
                     <button class="btn btn-outline" style="margin-left: 1rem;" onclick="navigate('about')">Learn More</button>
                 </div>
@@ -1135,7 +1151,7 @@
             <div class="home-section reveal-on-scroll">
                 <div class="home-summary">
                     <h2>Excellence in Jurisprudence</h2>
-                    <p>Led by Nana Yaw Ofori Gyasie, Esq., AKOBEN LEGAL SERVICES is a premier law firm in Ghana. Our practice is defined by meticulous preparation, deep knowledge of Ghanaian jurisprudence, and a relentless pursuit of justice and favorable outcomes for our clients.</p>
+                    <p>Led by Nana Yaw Gyasi, Esq., AKOBEN LEGAL SERVICES is a premier law firm in Ghana. Our practice is defined by meticulous preparation, deep knowledge of Ghanaian jurisprudence, and a relentless pursuit of justice and favorable outcomes for our clients.</p>
                 </div>
                 <div class="home-features">
                     <div class="feature-box reveal-on-scroll" style="transition-delay: 0.1s;">
@@ -1195,7 +1211,7 @@
                         <div class="reviews-list" id="reviews-container">
                             <div class="review-card">
                                 <div class="stars">★★★★★</div>
-                                <p class="review-text">"Nana Yaw Ofori Gyasie handled our company's incorporation and regulatory compliance flawlessly. His attention to detail and profound knowledge of Ghanaian corporate law is unmatched. Akoben Legal is highly recommended."</p>
+                                <p class="review-text">"Nana Yaw Gyasi handled our company's incorporation and regulatory compliance flawlessly. His attention to detail and profound knowledge of Ghanaian corporate law is unmatched. Akoben Legal is highly recommended."</p>
                                 <p class="review-author">— Jonathan O., CEO</p>
                             </div>
                             <div class="review-card">
@@ -1231,7 +1247,7 @@
             <!-- CTA Brief -->
             <div class="cta-banner reveal-on-scroll">
                 <h2>Ready to Discuss Your Legal Needs?</h2>
-                <p style="color: var(--text-muted); margin: 1rem 0 2rem; font-size: 1.1rem;">Reach out to our chambers or schedule a direct consultation with Nana Yaw Ofori Gyasie.</p>
+                <p style="color: var(--text-muted); margin: 1rem 0 2rem; font-size: 1.1rem;">Reach out to our chambers or schedule a direct consultation with Nana Yaw Gyasi.</p>
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <button class="btn" onclick="navigate('consultation')">Schedule Consultation</button>
                     <button class="btn btn-outline" onclick="navigate('contact')">General Contact</button>
@@ -1248,8 +1264,8 @@
             
             <div class="about-grid">
                 <div class="about-content reveal-on-scroll">
-                    <h2>Nana Yaw Ofori Gyasie, Esq.</h2>
-                    <p>As the founding partner of AKOBEN LEGAL SERVICES, Nana Yaw Ofori Gyasie has established a reputation for incisive legal analysis, formidable advocacy, and unwavering client commitment. The firm takes its name from the Adinkra symbol "Akoben" (the war horn), representing vigilance and readiness to defend our clients' rights at all times.</p>
+                    <h2>Nana Yaw Gyasi, Esq.</h2>
+                    <p>As the founding partner of AKOBEN LEGAL SERVICES, Nana Yaw Gyasi has established a reputation for incisive legal analysis, formidable advocacy, and unwavering client commitment. The firm takes its name from the Adinkra symbol "Akoben" (the war horn), representing vigilance and readiness to defend our clients' rights at all times.</p>
                     <p>Navigating the complexities of the Ghanaian legal system requires not just knowledge of the law, but an understanding of the socio-economic landscape. We bridge that gap for local and international clients, corporations, and individuals alike.</p>
                     
                     <div class="credentials">
@@ -1300,7 +1316,7 @@
                 
                 <div class="gallery-grid reveal-on-scroll" style="transition-delay: 0.2s;">
                     <div class="gallery-item" onclick="openGalleryModal(this)">
-                        <img loading="lazy" src="https://images.unsplash.com/photo-1505664177941-dfce871fbd4f?auto=format&fit=crop&q=80&w=600" alt="Nana Yaw Ofori Gyasie at Court" data-caption="Nana Yaw Ofori Gyasie, Esq. preparing for proceedings at the High Court Complex, Accra.">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1505664177941-dfce871fbd4f?auto=format&fit=crop&q=80&w=600" alt="Nana Yaw Gyasi at Court" data-caption="Nana Yaw Gyasi, Esq. preparing for proceedings at the High Court Complex, Accra.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
                     <div class="gallery-item" onclick="openGalleryModal(this)">
@@ -1340,7 +1356,7 @@
 
             <div class="reputation-wrapper reveal-on-scroll" style="margin-top: 3rem;">
                 <div class="reputation-block interactive-card" style="margin-top: 0;" onclick="toggleExpand('reputation-full-text', this)">
-                    "Nana Yaw Ofori Gyasie and the team at Akoben Legal Services are not just lawyers; they are strategic partners. Their ability to dissect complex Ghanaian legal challenges and present clear, actionable pathways has earned them a stellar reputation among Accra's business elite. When the stakes are high, they are the firm you want in your corner."
+                    "Nana Yaw Gyasi and the team at Akoben Legal Services are not just lawyers; they are strategic partners. Their ability to dissect complex Ghanaian legal challenges and present clear, actionable pathways has earned them a stellar reputation among the Eastern Region's business elite. When the stakes are high, they are the firm you want in your corner."
                     <br><br>
                     <span style="font-weight: 600; color: var(--text-color); font-style: normal;">— West African Corporate Digest</span>
                     
@@ -1424,6 +1440,12 @@
                     <h3>Intellectual Property Law</h3>
                     <p>Protecting your brand, inventions, and creative assets in the Ghanaian market.</p>
                 </div>
+
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Other / Custom Inquiry', 'The law is vast and highly interconnected. If your specific legal need is not listed above, please do not hesitate to reach out. Describe your unique situation to us, and we will evaluate how we can best assist you, or refer you to a trusted specialist within our extensive network.', 'message-circle')">
+                    <i data-lucide="message-circle" class="service-icon" width="32" height="32"></i>
+                    <h3>Other / Custom Inquiry</h3>
+                    <p>Have a unique legal situation? Let us know the specifics and we will evaluate how best to assist.</p>
+                </div>
             </div>
         </section>
 
@@ -1438,18 +1460,23 @@
                 <div class="contact-info reveal-on-scroll">
                     <div class="info-block">
                         <h3><i data-lucide="map-pin"></i> Chambers Location</h3>
-                        <p>Akoben Tower, 4th Floor<br>Independence Avenue<br>Ridge, Accra, Ghana</p>
+                        <p>KOFORIDUA OLD ESTATE<br>Enkaakyi junction<br>Eastern Region of Ghana</p>
                     </div>
                     <div class="info-block">
                         <h3><i data-lucide="phone"></i> Telephone</h3>
-                        <p>+233 (0) 30 200 0000<br>+233 (0) 24 000 0000</p>
+                        <p>0244526944</p>
                     </div>
                     <div class="info-block">
                         <h3><i data-lucide="mail"></i> Email</h3>
                         <p>counsel@akobenlegal.com.gh<br>info@akobenlegal.com.gh</p>
                     </div>
                     <div class="info-block" style="margin-top: 3rem;">
-                        <img loading="lazy" src="https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&q=80&w=800" alt="Accra Location Placeholder" style="height: 250px; object-fit: cover; border-radius: 8px;">
+                        <div style="border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); height: 250px;">
+                            <iframe src="https://www.google.com/maps?q=Koforidua+Old+Estate,+Enkaakyi+junction,+Eastern+Region,+Ghana&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Koforidua+Old+Estate,+Enkaakyi+junction,+Eastern+Region,+Ghana" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 1rem; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8rem; font-size: 0.9rem;">
+                            <i data-lucide="navigation" width="18" height="18"></i> Get Directions
+                        </a>
                     </div>
                 </div>
 
@@ -1505,6 +1532,7 @@
                                 <option value="Employment & Labour Law">Employment & Labour Law</option>
                                 <option value="Intellectual Property Law">Intellectual Property Law</option>
                                 <option value="General Legal Inquiry">General Legal Inquiry</option>
+                                <option value="Other / Custom Inquiry">Other / Custom Legal Inquiry</option>
                             </select>
                             <div id="err-practice" class="error-msg">Please select a practice area.</div>
                         </div>
@@ -1528,7 +1556,7 @@
 
                         <div class="form-full">
                             <label for="book-issue" style="display:none;">Briefly describe your legal issue</label>
-                            <textarea id="book-issue" rows="4" placeholder="Briefly describe your legal issue (Confidential)..." required></textarea>
+                            <textarea id="book-issue" rows="6" placeholder="Please describe your legal issue in detail. If you selected 'Other', use this space to freely express your specific situation and what you hope to achieve (Confidential)..." required></textarea>
                             <div id="err-issue" class="error-msg">Please provide more details (min 10 chars).</div>
                         </div>
 
@@ -1555,8 +1583,11 @@
                 <h2>3. Use of Information</h2>
                 <p>Your information is used strictly for the purpose of providing legal advice, responding to inquiries, and fulfilling our professional obligations. We maintain strict attorney-client privilege regarding all sensitive case information.</p>
                 
-                <h2>4. Data Security</h2>
-                <p>We implement robust technical and organizational measures to protect your data against unauthorized access, alteration, disclosure, or destruction. However, no internet transmission is entirely secure, and we advise caution when sharing highly sensitive information via unencrypted web forms.</p>
+                <h2>4. Data Security & Retention</h2>
+                <p>We implement robust technical and organizational measures to protect your data against unauthorized access, alteration, disclosure, or destruction. However, no internet transmission is entirely secure, and we advise caution when sharing highly sensitive information via unencrypted web forms. Client data is retained only for as long as is necessary to fulfill the purposes for which it was collected, or as required by applicable laws and professional regulations.</p>
+                
+                <h2>5. Client Rights</h2>
+                <p>Under the Data Protection Act, you have the right to request access to, correction of, or deletion of your personal data held by our firm. To exercise these rights, please contact our administrative desk.</p>
             </div>
         </section>
 
@@ -1570,13 +1601,16 @@
                 <p>The submission of a form through this website does not constitute an attorney-client relationship. An attorney-client relationship with AKOBEN LEGAL SERVICES is only established upon the execution of a formal Letter of Engagement and the payment of any requisite retainer fees.</p>
                 
                 <h2>2. Consultation Fees</h2>
-                <p>Initial consultations scheduled via this website may be subject to a consultation fee, which will be communicated to you by our clerks prior to the confirmation of your appointment slot.</p>
+                <p>Initial consultations scheduled via this website may be subject to a consultation fee, which will be communicated to you by our clerks prior to the confirmation of your appointment slot. This fee may be credited toward your retainer should you formally engage our services.</p>
                 
                 <h2>3. Conflict of Interest</h2>
                 <p>Before accepting any mandate, we are ethically bound to conduct a conflict of interest check. We reserve the right to decline representation if it conflicts with our duties to existing or former clients.</p>
                 
-                <h2>4. Client Obligations</h2>
-                <p>Clients are expected to provide full, truthful, and timely disclosures of all facts relevant to their matters to enable us to provide effective legal representation.</p>
+                <h2>4. Client Obligations & Communication</h2>
+                <p>Clients are expected to provide full, truthful, and timely disclosures of all facts relevant to their matters to enable us to provide effective legal representation. We commit to keeping clients reasonably informed about the status of their matters and promptly complying with reasonable requests for information.</p>
+                
+                <h2>5. Termination of Services</h2>
+                <p>Either party may terminate the engagement subject to the terms outlined in the formal Letter of Engagement. Upon termination, the client remains responsible for payment of all fees and disbursements incurred up to the date of termination.</p>
             </div>
         </section>
 
@@ -1590,13 +1624,84 @@
                 <p>The content provided on this website is intended for general informational purposes only and does not constitute legal advice. The legal landscape in Ghana is dynamic, and while we strive to keep information accurate, we make no guarantees regarding its completeness or current validity.</p>
                 
                 <h2>No Attorney-Client Relationship</h2>
-                <p>Viewing this website, downloading resources, or sending messages to AKOBEN LEGAL SERVICES through our contact forms or email addresses does not create an attorney-client relationship.</p>
+                <p>Viewing this website, downloading resources, or sending messages to AKOBEN LEGAL SERVICES through our contact forms or email addresses does not create an attorney-client relationship. Confidential or time-sensitive information should not be sent through these forms.</p>
                 
                 <h2>Third-Party Links</h2>
                 <p>This website may contain links to external websites. We do not endorse, and are not responsible for, the content, privacy policies, or practices of any third-party sites.</p>
                 
-                <h2>Liability</h2>
-                <p>AKOBEN LEGAL SERVICES and Nana Yaw Ofori Gyasie, Esq. disclaim any liability for actions taken or not taken based on the contents of this website. Always seek direct counsel from a qualified legal practitioner regarding your specific circumstances.</p>
+                <h2>Liability Limitation</h2>
+                <p>AKOBEN LEGAL SERVICES and Nana Yaw Gyasi, Esq. disclaim any liability for actions taken or not taken based on the contents of this website. Always seek direct counsel from a qualified legal practitioner regarding your specific circumstances before making legal or business decisions.</p>
+            </div>
+        </section>
+
+        <!-- 9. FAQ PAGE -->
+        <section id="faq" class="page-view">
+            <div class="page-header">
+                <h1>Frequently Asked Questions</h1>
+            </div>
+            <div class="legal-content">
+                <div class="interactive-card" style="margin-bottom: 1rem; border: 1px solid var(--border-color); background-color: var(--card-bg);" onclick="toggleExpand('faq-1', this)">
+                    <h3 style="margin-bottom: 0; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
+                        <span>What should I bring to my initial consultation?</span>
+                        <i data-lucide="chevron-down" width="20" height="20"></i>
+                    </h3>
+                    <div id="faq-1" class="expandable-content">
+                        <p style="margin-top: 1rem; color: var(--text-muted);">Please bring a valid form of identification (Ghana Card or Passport) and any documents relevant to your case. This includes contracts, correspondence, court documents, or property deeds. The more information you provide, the better we can assess your situation.</p>
+                    </div>
+                </div>
+
+                <div class="interactive-card" style="margin-bottom: 1rem; border: 1px solid var(--border-color); background-color: var(--card-bg);" onclick="toggleExpand('faq-2', this)">
+                    <h3 style="margin-bottom: 0; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
+                        <span>Do you charge for initial consultations?</span>
+                        <i data-lucide="chevron-down" width="20" height="20"></i>
+                    </h3>
+                    <div id="faq-2" class="expandable-content">
+                        <p style="margin-top: 1rem; color: var(--text-muted);">Yes, we generally charge a nominal fee for formal legal consultations, as this involves providing preliminary legal advice and strategy. However, if you subsequently retain our firm for the matter discussed, the consultation fee is often credited toward your initial retainer.</p>
+                    </div>
+                </div>
+
+                <div class="interactive-card" style="margin-bottom: 1rem; border: 1px solid var(--border-color); background-color: var(--card-bg);" onclick="toggleExpand('faq-3', this)">
+                    <h3 style="margin-bottom: 0; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
+                        <span>How are your legal fees structured?</span>
+                        <i data-lucide="chevron-down" width="20" height="20"></i>
+                    </h3>
+                    <div id="faq-3" class="expandable-content">
+                        <p style="margin-top: 1rem; color: var(--text-muted);">Our fees are structured based on the Scale of Fees provided by the Ghana Bar Association. Depending on the matter, we may bill on an hourly basis, offer a flat fixed fee (for specific services like incorporation or deed drafting), or work on a retainer basis for corporate clients.</p>
+                    </div>
+                </div>
+
+                <div class="interactive-card" style="margin-bottom: 1rem; border: 1px solid var(--border-color); background-color: var(--card-bg);" onclick="toggleExpand('faq-4', this)">
+                    <h3 style="margin-bottom: 0; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
+                        <span>Do you represent international clients?</span>
+                        <i data-lucide="chevron-down" width="20" height="20"></i>
+                    </h3>
+                    <div id="faq-4" class="expandable-content">
+                        <p style="margin-top: 1rem; color: var(--text-muted);">Absolutely. We act as external counsel for several multinational corporations and foreign investors seeking to do business in Ghana, navigating them through local regulatory frameworks, the Ghana Investment Promotion Centre (GIPC) registrations, and local content laws.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. AML & COMPLIANCE PAGE -->
+        <section id="compliance" class="page-view">
+            <div class="page-header">
+                <h1>AML & Regulatory Compliance</h1>
+            </div>
+            <div class="legal-content">
+                <h2>Anti-Money Laundering (AML) Policy</h2>
+                <p>AKOBEN LEGAL SERVICES strictly adheres to the Anti-Money Laundering Act, 2020 (Act 1044) of Ghana and global best practices regarding financial compliance. As legal practitioners, we are designated as accountable institutions under the law.</p>
+                
+                <h2>Know Your Client (KYC) Requirements</h2>
+                <p>Before accepting any mandate, particularly those involving financial transactions, real estate conveyancing, or corporate structuring, we are legally mandated to conduct thorough due diligence. Clients will be required to provide:</p>
+                <ul>
+                    <li>Valid government-issued identification (e.g., Ghana Card).</li>
+                    <li>Proof of residential or registered business address.</li>
+                    <li>Information regarding the source of funds for specific transactions.</li>
+                    <li>Beneficial ownership declarations for corporate entities.</li>
+                </ul>
+
+                <h2>Anti-Bribery and Corruption</h2>
+                <p>Our firm operates with absolute integrity. We maintain a zero-tolerance policy towards bribery and corruption. We do not engage in any improper payments or inducements to public officials, judicial officers, or private individuals to secure unfair advantages for our clients.</p>
             </div>
         </section>
 
@@ -1607,7 +1712,7 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <h4>AKOBEN LEGAL SERVICES</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Founded by Nana Yaw Ofori Gyasie, Esq.<br>Excellence, Integrity, and Unwavering Advocacy in the heart of Accra.</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Founded by Nana Yaw Gyasi, Esq.<br>Excellence, Integrity, and Unwavering Advocacy in the heart of Koforidua.</p>
             </div>
             <div class="footer-col">
                 <h4>Quick Links</h4>
@@ -1624,6 +1729,8 @@
                     <li><a href="#" onclick="navigate('privacy'); return false;">Privacy Policy</a></li>
                     <li><a href="#" onclick="navigate('terms'); return false;">Terms of Engagement</a></li>
                     <li><a href="#" onclick="navigate('disclaimer'); return false;">Disclaimer</a></li>
+                    <li><a href="#" onclick="navigate('compliance'); return false;">AML & Compliance</a></li>
+                    <li><a href="#" onclick="navigate('faq'); return false;">FAQ's</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -1645,7 +1752,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; <span id="current-year"></span> AKOBEN LEGAL SERVICES | Nana Yaw Ofori Gyasie. All rights reserved. Designed for excellence.
+            &copy; <span id="current-year"></span> AKOBEN LEGAL SERVICES | Nana Yaw Gyasi. All rights reserved. Designed for excellence.
         </div>
     </footer>
 
