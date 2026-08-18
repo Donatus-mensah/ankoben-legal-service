@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const nodemailer = require('nodemailer');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -11,19 +12,24 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.use(express.static(__dirname));
+
 // These keys will be hidden safely inside Render's dashboard
 const ARKESEL_API_KEY = process.env.ARKESEL_API_KEY;
 const EMAIL_USER = process.env.EMAIL_USER; 
 const EMAIL_PASS = process.env.EMAIL_PASS; // Using Yahoo App Password
 const COUNSEL_EMAIL = process.env.COUNSEL_EMAIL;
 
-// Configure Nodemailer for Yahoo
 const transporter = nodemailer.createTransport({
     service: 'yahoo',
     auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASS
     }
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.post('/api/notify-consultation', async (req, res) => {
