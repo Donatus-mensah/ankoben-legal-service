@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AKOBEN LEGAL SERVICES | Nana Yaw Gyasi, Esq.</title>
     
     <link rel="icon" type="image/png" href="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/logo.png">
@@ -44,7 +44,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; }
+        html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
         
         body {
             font-family: var(--font-body);
@@ -84,7 +84,6 @@
         [data-theme="dark"] img:hover, [data-theme="dark"] img:active, [data-theme="dark"] img:focus { filter: grayscale(0%) brightness(1); }
         img.custom-logo { filter: none !important; max-height: 45px; width: auto; object-fit: contain; }
         
-        /* NEW: Invert logo color in dark mode so it remains visible */
         [data-theme="dark"] img.custom-logo {
             filter: invert(1) brightness(2) !important; 
         }
@@ -107,6 +106,7 @@
             text-align: center; 
             border-radius: 4px;
             width: fit-content;
+            touch-action: manipulation;
         }
         .btn:hover { background-color: transparent; color: var(--text-color); transform: translateY(-2px); }
         .btn:active { transform: scale(0.98); }
@@ -169,12 +169,19 @@
         .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; min-height: calc(100vh - 150px); align-items: center; }
         .hero-text h1 { font-size: clamp(2.2rem, 5vw, 4.5rem); margin-bottom: 1.5rem; line-height: 1.1; }
         .hero-text p { font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted); margin-bottom: 2.5rem; max-width: 90%; }
-        .hero-image { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/5; border-radius: 8px; box-shadow: var(--shadow-light); }
+        
+        /* Updated Hero Image Container for Interactive Modal popup */
+        .hero-image-container { position: relative; cursor: pointer; overflow: hidden; border-radius: 8px; box-shadow: var(--shadow-light); transition: transform 0.4s ease; }
+        .hero-image-container:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+        .hero-image { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/5; }
+        .hero-image-container::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .hero-image-container:hover::after { opacity: 1; }
+        .hero-overlay-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #ffffff; opacity: 0; transition: opacity 0.3s ease; z-index: 2; pointer-events: none; }
+        .hero-image-container:hover .hero-overlay-icon { opacity: 1; }
 
         .home-section { margin-top: 6rem; padding-top: 4rem; border-top: 1px solid var(--border-color); }
         .home-summary { text-align: center; max-width: 800px; margin-left: auto; margin-right: auto; }
         
-        /* Strict fluid grids to prevent mobile overflow */
         .home-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 2rem; margin-top: 4rem; }
         .services-preview-grid, .services-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 2rem; margin-bottom: 3rem; }
         
@@ -248,7 +255,7 @@
         .info-block h3 { font-size: 1.2rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
         .info-block p { color: var(--text-muted); word-break: break-word; }
         
-        .form-container { background-color: var(--card-bg); padding: 3rem; border: 1px solid var(--border-color); border-radius: 8px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .form-container { background-color: var(--card-bg); padding: 3rem; border: 1px solid var(--border-color); border-radius: 8px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); width: 100%; overflow: hidden; }
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 1.5rem; }
         .form-full { grid-column: 1 / -1; }
         .error-msg { color: #ff3333; font-size: 0.85rem; margin-top: -0.8rem; margin-bottom: 1rem; display: none; animation: fadeInPage 0.3s forwards; }
@@ -284,21 +291,27 @@
         .profile-list li { margin-bottom: 1rem; padding-left: 1.5rem; position: relative; word-break: break-word; }
         .profile-list li::before { content: '▹'; position: absolute; left: 0; color: var(--text-muted); }
 
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.4s ease; padding: 1rem; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.4s ease; padding: 1rem; }
         .modal.show { opacity: 1; visibility: visible; }
         .modal-content { background-color: var(--bg-color); padding: 3rem; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; width: 100%; max-width: 500px; transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
         .modal.show .modal-content { transform: translateY(0) scale(1); }
 
-        .modal-content.gallery-modal { max-width: 800px; padding: 1rem; background-color: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; }
-        .modal-content.gallery-modal img { width: 100%; height: auto; max-height: 75vh; object-fit: contain; margin-bottom: 1rem; border-radius: 8px; filter: grayscale(0%) !important; }
-        .modal-content.gallery-modal p { color: #ffffff; background-color: rgba(0,0,0,0.8); padding: 1rem; border-radius: 8px; display: inline-block; font-size: 0.95rem; }
+        .modal-content.gallery-modal { max-width: 900px; padding: 1rem; background-color: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; }
+        .modal-content.gallery-modal img { width: 100%; height: auto; max-height: 80vh; object-fit: contain; margin-bottom: 1rem; border-radius: 8px; filter: grayscale(0%) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .modal-content.gallery-modal p { color: #ffffff; background-color: rgba(0,0,0,0.8); padding: 1rem; border-radius: 8px; display: inline-block; font-size: 1rem; max-width: 90%; }
         
         .modal-icon { width: 64px; height: 64px; margin: 0 auto 1.5rem; }
         .close-modal-btn { position: absolute; top: 1rem; right: 1rem; background: var(--hover-bg); border: none; color: var(--text-color); cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 10; }
         .close-modal-btn:hover { background-color: var(--text-color); color: var(--bg-color); transform: rotate(90deg); }
 
         footer { border-top: 1px solid var(--border-color); padding: 4rem 5% 2rem; margin-top: auto; background-color: var(--bg-color); width: 100%; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 3rem; margin-bottom: 3rem; }
+        /* Improved footer grid for better mobile stacking */
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 2.5rem; 
+            margin-bottom: 3rem; 
+        }
         .footer-col h4 { margin-bottom: 1.5rem; font-size: 1.1rem; }
         .footer-col ul { list-style: none; }
         .footer-col li { margin-bottom: 0.8rem; }
@@ -319,10 +332,12 @@
         
         .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.9rem; }
 
+        /* --- ENHANCED MOBILE RESPONSIVENESS --- */
         @media (max-width: 992px) {
             .hero { grid-template-columns: 1fr; gap: 3rem; min-height: auto; padding-top: 2rem; }
             .hero-text { text-align: center; }
             .hero-text p { margin-left: auto; margin-right: auto; }
+            .hero-image-container { max-width: 600px; margin: 0 auto; aspect-ratio: 16/9; }
             .hero-image { aspect-ratio: 16/9; max-height: 500px; }
             
             .about-grid, .split-layout, .vision-mission-grid { grid-template-columns: 1fr; gap: 3rem; }
@@ -336,34 +351,48 @@
         }
 
         @media (max-width: 768px) {
-            html { font-size: 15px; } /* Slightly reduce base font size for more breathing room */
+            html { font-size: 15px; } 
             main { padding: 1.5rem 5%; margin-top: 70px; }
             .hamburger { display: block; }
             header { padding: 1rem 5%; background-color: var(--bg-color); }
             header.scrolled { padding: 1rem 5%; }
             
-            /* Mobile Navigation Overlay */
             .nav-links { 
                 position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
-                background-color: var(--bg-color); /* Solid background on mobile is better than blur to prevent overlap issues */
+                background-color: var(--bg-color); 
                 flex-direction: column; justify-content: center; padding: 2rem; 
                 transform: translateY(-100%); opacity: 0; 
                 transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001; 
             }
             .nav-links.open { transform: translateY(0); opacity: 1; }
             .nav-link { font-size: 1.5rem; margin-bottom: 1.5rem; width: 100%; text-align: center; padding: 1rem; }
-            .nav-link::after { display: none; } /* Remove underline effect on mobile block links */
+            .nav-link::after { display: none; }
             .nav-link:active { background-color: var(--hover-bg); border-radius: 8px; }
 
             .home-section { margin-top: 4rem; padding-top: 3rem; }
             .section-header h2 { font-size: 2rem; }
             
-            .form-grid { grid-template-columns: 1fr; }
-            .form-container, .feature-box, .service-card, .review-card, .reputation-block { padding: 1.8rem 1.2rem; }
+            .form-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .form-container { padding: 2rem 1.5rem; }
+            .feature-box, .service-card, .review-card, .reputation-block { padding: 1.8rem 1.2rem; }
             .cta-banner { padding: 3rem 1.5rem; }
             
             .modal-content { padding: 2.5rem 1.5rem; }
-            .close-modal-btn { top: 0.5rem; right: 0.5rem; width: 35px; height: 35px; } /* Easier reach, less intrusion */
+            .close-modal-btn { top: 0.5rem; right: 0.5rem; width: 35px; height: 35px; } 
+            
+            .hero-image-container:active::after, .hero-image-container:active .hero-overlay-icon { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+             /* Adjust footer for smaller phones to ensure single column layout */
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+            .footer-team { align-items: center; }
+            .team-member-mini { text-align: left; width: 100%; max-width: 250px; }
+            .social-links { justify-content: center; }
         }
 
         @media (max-width: 480px) {
@@ -374,17 +403,15 @@
             .hero { gap: 2rem; }
             .hero-text h1 { font-size: 2.2rem; }
             .hero-text p { width: 100%; max-width: 100%; }
+            .hero-image-container { aspect-ratio: 1; max-height: 350px; }
             .hero-image { aspect-ratio: 1; max-height: 350px; }
             
             .btn { width: 100%; margin-left: 0 !important; margin-bottom: 1rem; display: block; }
             
             .gallery-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
-            .footer-team { align-items: center; }
-            .team-member-mini { text-align: left; width: 100%; max-width: 250px; }
-            .social-links { justify-content: center; }
             
             .profile-sidebar img { aspect-ratio: 1; }
+            .form-container { padding: 1.5rem 1rem; }
         }
     </style>
 </head>
@@ -424,8 +451,10 @@
                     <button class="btn" onclick="navigate('consultation')">Book Consultation</button>
                     <button class="btn btn-outline" style="margin-left: 1rem;" onclick="navigate('about')">Learn More</button>
                 </div>
-                <div class="hero-image-container reveal-on-scroll" style="transition-delay: 0.2s;">
-                    <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/NANA_GYASI.jpeg" alt="Law Scales" class="hero-image">
+                
+                <div class="hero-image-container reveal-on-scroll" style="transition-delay: 0.2s;" onclick="openGalleryModal(this)">
+                    <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/NANA_GYASI.jpeg" alt="Nana Yaw Gyasi" class="hero-image" data-caption="Nana Yaw Gyasi, Esq. - Principal & Founder of Akoben Legal Services">
+                    <i data-lucide="maximize-2" class="overlay-icon hero-overlay-icon" width="48" height="48"></i>
                 </div>
             </div>
 
