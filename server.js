@@ -12,8 +12,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.use(express.static(__dirname));
-
 // These keys will be hidden safely inside Render's dashboard
 const ARKESEL_API_KEY = process.env.ARKESEL_API_KEY;
 const EMAIL_USER = process.env.EMAIL_USER; 
@@ -28,8 +26,61 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+// Graphical Interface for Backend Status
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    // Check if vital env variables exist to determine true "healthy" state
+    const isConfigured = Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.ARKESEL_API_KEY);
+    
+    const statusColor = isConfigured ? '#22c55e' : '#ef4444';
+    const statusBg = isConfigured ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.15)';
+    const iconSymbol = isConfigured ? '✓' : '⚠';
+    const titleText = isConfigured ? 'YOUR WEBSITE BACKEND IS LIVE' : 'YOUR WEBSITE BACKEND IS NOT LIVE';
+    const descText = isConfigured 
+        ? 'The API server for Akoben Legal Services is running perfectly and ready to accept connections from your frontend.' 
+        : 'RESOLVE THE CONFIGURATION ISSUE: Missing critical Environment Variables (e.g., EMAIL_USER, ARKESEL_API_KEY). Please add them in the Render dashboard to restore full functionality.';
+
+    const htmlContent = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Backend Status | Akoben Legal</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+        <style>
+            body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: #0f172a; color: #f8fafc; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+            .container { text-align: center; background: rgba(255, 255, 255, 0.03); padding: 4rem 2rem; border-radius: 24px; backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; max-width: 500px; width: 90%; }
+            .container:hover { transform: translateY(-8px); border-color: rgba(255, 255, 255, 0.1); }
+            .status-icon { width: 90px; height: 90px; border-radius: 50%; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; position: relative; background: ${statusBg}; color: ${statusColor}; border: 2px solid ${statusColor}; box-shadow: 0 0 30px ${statusBg}; transition: transform 0.2s; cursor: pointer; }
+            .status-icon:active { transform: scale(0.9); }
+            .ripple { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 2px solid ${statusColor}; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; box-sizing: border-box; }
+            @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
+            h1 { margin: 0 0 1rem; font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
+            p { color: #94a3b8; font-size: 1.05rem; line-height: 1.6; margin: 0 auto; max-width: 400px; }
+            .interactive-btn { margin-top: 2.5rem; padding: 0.8rem 2rem; background: transparent; color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: 'Inter', sans-serif; font-size: 0.95rem; }
+            .interactive-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.4); transform: translateY(-2px); }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="status-icon" onclick="pingAnim(this)">
+                <div class="ripple"></div>
+                ${iconSymbol}
+            </div>
+            <h1 style="color: ${statusColor}">${titleText}</h1>
+            <p>${descText}</p>
+            <button class="interactive-btn" onclick="window.location.reload()">Ping Server Check</button>
+        </div>
+        <script>
+            function pingAnim(el) {
+                el.style.transform = 'scale(0.85)';
+                setTimeout(() => el.style.transform = 'scale(1)', 150);
+            }
+        </script>
+    </body>
+    </html>
+    `;
+    res.send(htmlContent);
 });
 
 app.post('/api/notify-consultation', async (req, res) => {
