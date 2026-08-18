@@ -173,7 +173,7 @@
         /* Updated Hero Image Container for Interactive Modal popup */
         .hero-image-container { position: relative; cursor: pointer; overflow: hidden; border-radius: 8px; box-shadow: var(--shadow-light); transition: transform 0.4s ease; }
         .hero-image-container:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
-        .hero-image { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/5; }
+        .hero-image { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/5; background-color: var(--hover-bg); }
         .hero-image-container::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
         .hero-image-container:hover::after { opacity: 1; }
         .hero-overlay-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #ffffff; opacity: 0; transition: opacity 0.3s ease; z-index: 2; pointer-events: none; }
@@ -211,8 +211,10 @@
         .credentials li { padding: 0.8rem 0; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 1rem; word-break: break-word; }
 
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 1rem; }
-        .gallery-item { position: relative; cursor: pointer; overflow: hidden; border-radius: 8px; }
-        .gallery-item img { width: 100%; aspect-ratio: 1; object-fit: cover; will-change: transform; }
+        .gallery-item { position: relative; cursor: pointer; overflow: hidden; border-radius: 8px; aspect-ratio: 1; background-color: var(--hover-bg); }
+        
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+        
         .gallery-item:hover img, .gallery-item:active img { transform: scale(1.08); filter: grayscale(0%); }
         [data-theme="dark"] .gallery-item:hover img, [data-theme="dark"] .gallery-item:active img { filter: grayscale(0%) brightness(1); }
         .gallery-item .overlay-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; opacity: 0; transition: opacity 0.3s ease; z-index: 2; pointer-events: none; }
@@ -268,7 +270,9 @@
         .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 2.5rem; margin-top: 2rem; }
         .team-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; display: flex; flex-direction: column; }
         .team-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: var(--text-color); }
-        .team-card-img { width: 100%; height: 300px; object-fit: cover; }
+        
+        .team-card-img { width: 100%; height: 300px; object-fit: cover; background-color: var(--hover-bg); }
+        
         .team-card-content { padding: 1.5rem; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
         .team-card-content h3 { margin-bottom: 0.5rem; font-size: 1.25rem; }
         .team-card-role { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
@@ -296,13 +300,16 @@
         .modal-content { background-color: var(--bg-color); padding: 3rem; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; width: 100%; max-width: 500px; transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
         .modal.show .modal-content { transform: translateY(0) scale(1); }
 
-        .modal-content.gallery-modal { max-width: 900px; padding: 1rem; background-color: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; }
-        .modal-content.gallery-modal img { width: 100%; height: auto; max-height: 80vh; object-fit: contain; margin-bottom: 1rem; border-radius: 8px; filter: grayscale(0%) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .modal-content.gallery-modal p { color: #ffffff; background-color: rgba(0,0,0,0.8); padding: 1rem; border-radius: 8px; display: inline-block; font-size: 1rem; max-width: 90%; }
+        /* Gallery Modal Fixes: Removed scrollbars, constrained heights, neat layout */
+        .modal-content.gallery-modal { max-width: 900px; padding: 0; background-color: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: visible; }
+        .modal-content.gallery-modal img { width: auto; height: auto; max-width: 100%; max-height: 70vh; object-fit: contain; margin-bottom: 1.5rem; border-radius: 8px; filter: grayscale(0%) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .modal-content.gallery-modal p { color: #ffffff; background-color: rgba(0,0,0,0.8); padding: 1rem 1.5rem; border-radius: 8px; display: inline-block; font-size: 1rem; max-width: 90%; margin: 0; line-height: 1.4; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         
         .modal-icon { width: 64px; height: 64px; margin: 0 auto 1.5rem; }
         .close-modal-btn { position: absolute; top: 1rem; right: 1rem; background: var(--hover-bg); border: none; color: var(--text-color); cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 10; }
         .close-modal-btn:hover { background-color: var(--text-color); color: var(--bg-color); transform: rotate(90deg); }
+        .modal-content.gallery-modal .close-modal-btn { top: -15px; right: 0; background-color: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+        .modal-content.gallery-modal .close-modal-btn:hover { background-color: #fff; color: #000; }
 
         footer { border-top: 1px solid var(--border-color); padding: 4rem 5% 2rem; margin-top: auto; background-color: var(--bg-color); width: 100%; }
         /* Improved footer grid for better mobile stacking */
@@ -461,7 +468,7 @@
             <div class="home-section reveal-on-scroll">
                 <div class="home-summary">
                     <h2>Excellence in Jurisprudence</h2>
-                    <p>Led by Nana Yaw Gyasi, Esq., AKOBEN LEGAL SERVICES is a premier law firm in Ghana. Our practice is defined by meticulous preparation, deep knowledge of Ghanaian jurisprudence, and a relentless pursuit of justice and favorable outcomes for our clients.</p>
+                    <p>Led by Nana Yaw Ofori Gyasi, Esq., AKOBEN LEGAL SERVICES is a premier law firm in Ghana. Our practice is defined by meticulous preparation, deep knowledge of Ghanaian jurisprudence, and a relentless pursuit of justice and favorable outcomes for our clients.</p>
                 </div>
                 <div class="home-features">
                     <div class="feature-box reveal-on-scroll" style="transition-delay: 0.1s;">
@@ -488,19 +495,19 @@
                     <p style="color: var(--text-muted);">A preview of our specialized practice areas.</p>
                 </div>
                 <div class="services-preview-grid">
-                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Corporate & Commercial Law', 'Our corporate practice handles complex commercial transactions, contract drafting, and representation in commercial litigation. We act as external legal counsel for SMEs and multinational corporations operating in West Africa.', 'building-2')">
+                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Corporate and business law', 'Our corporate practice handles complex commercial transactions, contract drafting, and representation in commercial litigation. We act as external legal counsel for SMEs and multinational corporations operating in West Africa.', 'building-2')">
                         <i data-lucide="building-2" class="service-icon" width="32" height="32"></i>
-                        <h3>Corporate & Commercial Law</h3>
+                        <h3>Corporate and business law</h3>
                         <p>Advising businesses on incorporation, regulatory compliance, and commerce in Ghana.</p>
                     </div>
-                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Real Estate & Conveyancing', 'Navigating Ghana\'s land tenure system requires expertise. We conduct thorough due diligence, draft indentures, handle Lands Commission registrations, and resolve complex land disputes effectively.', 'home')">
+                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Property and real estate transactions', 'Navigating Ghana\'s land tenure system requires expertise. We conduct thorough due diligence, draft indentures, handle Lands Commission registrations, and resolve complex land disputes effectively.', 'home')">
                         <i data-lucide="home" class="service-icon" width="32" height="32"></i>
-                        <h3>Real Estate & Conveyancing</h3>
+                        <h3>Property and real estate transactions</h3>
                         <p>Guiding clients through property acquisition, land registration, and tenancy agreements.</p>
                     </div>
-                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="showServiceModal('Dispute Resolution', 'We represent clients vigorously in the Superior Courts of Judicature. Additionally, we are highly skilled in Alternative Dispute Resolution (ADR), helping clients avoid lengthy court battles when arbitration or mediation is beneficial.', 'gavel')">
+                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="showServiceModal('Civil litigation and dispute resolution', 'We represent clients vigorously in the Superior Courts of Judicature. Additionally, we are highly skilled in Alternative Dispute Resolution (ADR), helping clients avoid lengthy court battles when arbitration or mediation is beneficial.', 'gavel')">
                         <i data-lucide="gavel" class="service-icon" width="32" height="32"></i>
-                        <h3>Dispute Resolution</h3>
+                        <h3>Civil litigation and dispute resolution</h3>
                         <p>Expert representation in litigation, arbitration, and mediation proceedings.</p>
                     </div>
                 </div>
@@ -622,11 +629,11 @@
                 
                 <div class="gallery-grid reveal-on-scroll" style="transition-delay: 0.2s;">
                     <div class="gallery-item" onclick="openGalleryModal(this)">
-                        <img loading="lazy" src="https://images.unsplash.com/photo-1505664177941-dfce871fbd4f?auto=format&fit=crop&q=80&w=600" alt="Nana Yaw Gyasi at Court" data-caption="Nana Yaw Gyasi, Esq. preparing for proceedings at the High Court Complex, Accra.">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/signing.jpg" alt="Nana Yaw Gyasi at Court" data-caption="Nana Yaw Gyasi, Esq. preparing for proceedings at the High Court Complex, Accra.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
                     <div class="gallery-item" onclick="openGalleryModal(this)">
-                        <img loading="lazy" src="https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?auto=format&fit=crop&q=80&w=600" alt="Akoben Boardroom" data-caption="The main boardroom at Akoben Legal Services, where strategic corporate negotiations take place.">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/decen.jpg" alt="Akoben Boardroom" data-caption="The main boardroom at Akoben Legal Services, where strategic corporate negotiations take place.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
                     <div class="gallery-item" onclick="openGalleryModal(this)">
@@ -642,7 +649,7 @@
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
                     <div class="gallery-item" onclick="openGalleryModal(this)">
-                        <img loading="lazy" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=600" alt="Chambers Team" data-caption="Collaboration and strategic planning among the associates at Akoben Legal.">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/speech.jpg" alt="Chambers Team" data-caption="Collaboration and strategic planning among the associates at Akoben Legal.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
                 </div>
@@ -710,15 +717,15 @@
             </div>
             
             <div class="services-container">
-                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Corporate & Commercial Law', 'Our corporate practice handles complex commercial transactions, contract drafting, and representation in commercial litigation. We act as external legal counsel for SMEs and multinational corporations operating in West Africa, ensuring full regulatory compliance from incorporation to complex mergers and acquisitions.', 'building-2')">
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Corporate and business law', 'Our corporate practice handles complex commercial transactions, contract drafting, and representation in commercial litigation. We act as external legal counsel for SMEs and multinational corporations operating in West Africa, ensuring full regulatory compliance from incorporation to complex mergers and acquisitions.', 'building-2')">
                     <i data-lucide="building-2" class="service-icon" width="32" height="32"></i>
-                    <h3>Corporate & Commercial Law</h3>
+                    <h3>Corporate and business law</h3>
                     <p>Advising businesses on incorporation, regulatory compliance, mergers, and commerce in Ghana.</p>
                 </div>
 
-                <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Real Estate & Conveyancing', 'Navigating Ghana\'s land tenure system requires distinct expertise. We conduct thorough due diligence, draft indentures, handle Lands Commission registrations seamlessly, and resolve complex land disputes effectively in court.', 'home')">
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Property and real estate transactions', 'Navigating Ghana\'s land tenure system requires distinct expertise. We conduct thorough due diligence, draft indentures, handle Lands Commission registrations seamlessly, and resolve complex land disputes effectively in court.', 'home')">
                     <i data-lucide="home" class="service-icon" width="32" height="32"></i>
-                    <h3>Real Estate & Conveyancing</h3>
+                    <h3>Property and real estate transactions</h3>
                     <p>Guiding clients through property acquisition, land registration, and tenancy agreements.</p>
                 </div>
 
@@ -728,9 +735,9 @@
                     <p>Discreet representation in divorce, child custody, and estate administration.</p>
                 </div>
 
-                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Dispute Resolution', 'We represent clients vigorously in the Superior Courts of Judicature. Beyond standard litigation, we are highly skilled in Alternative Dispute Resolution (ADR), helping clients avoid lengthy court battles when arbitration or mediation is significantly more beneficial.', 'gavel')">
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Civil litigation and dispute resolution', 'We represent clients vigorously in the Superior Courts of Judicature. Beyond standard litigation, we are highly skilled in Alternative Dispute Resolution (ADR), helping clients avoid lengthy court battles when arbitration or mediation is significantly more beneficial.', 'gavel')">
                     <i data-lucide="gavel" class="service-icon" width="32" height="32"></i>
-                    <h3>Dispute Resolution</h3>
+                    <h3>Civil litigation and dispute resolution</h3>
                     <p>Expert representation in litigation, arbitration, and mediation proceedings.</p>
                 </div>
 
@@ -1006,10 +1013,10 @@
                             <label for="book-practice" style="display:none;">Practice Area</label>
                             <select id="book-practice" required>
                                 <option value="" disabled selected>Select Practice Area</option>
-                                <option value="Corporate & Commercial Law">Corporate & Commercial Law</option>
-                                <option value="Real Estate & Conveyancing">Real Estate & Conveyancing</option>
+                                <option value="Corporate & Commercial Law">Corporate and business law</option>
+                                <option value="Real Estate & Conveyancing">Property and real estate transactions</option>
                                 <option value="Family & Probate Law">Family & Probate Law</option>
-                                <option value="Dispute Resolution">Dispute Resolution</option>
+                                <option value="Dispute Resolution">Civil litigation and dispute resolution</option>
                                 <option value="Employment & Labour Law">Employment & Labour Law</option>
                                 <option value="Intellectual Property Law">Intellectual Property Law</option>
                                 <option value="General Legal Inquiry">General Legal Inquiry</option>
@@ -1250,7 +1257,7 @@
                     <a href="#" aria-label="Instagram" title="Instagram">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                     </a>
-                    <a href="#" aria-label="LinkedIn" title="LinkedIn">
+                    <a href="https://www.linkedin.com/in/akoben-legal-services-7027a9355" aria-label="LinkedIn" title="LinkedIn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                     </a>
                 </div>
@@ -1590,9 +1597,9 @@
         if(miniRepForm) {
             miniRepForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const name = document.getElementById('m-rep-name').value;
+                const name = document.getElementById('m-rep-name').value.trim();
                 const ratingVal = document.getElementById('m-rep-rating').value;
-                const text = document.getElementById('m-rep-text').value;
+                const text = document.getElementById('m-rep-text').value.trim();
 
                 try {
                     if (supabaseClient && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
