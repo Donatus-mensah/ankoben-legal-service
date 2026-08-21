@@ -10,7 +10,7 @@
     <!-- Premium Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -29,6 +29,7 @@
             --font-body: 'Inter', sans-serif;
             --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.05);
             --shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-deep: 0 20px 40px rgba(0, 0, 0, 0.12);
         }
 
         [data-theme="dark"] {
@@ -41,6 +42,7 @@
             --overlay-bg: rgba(10, 10, 10, 0.85);
             --shadow-light: 0 4px 20px rgba(255, 255, 255, 0.02);
             --shadow-hover: 0 10px 30px rgba(255, 255, 255, 0.05);
+            --shadow-deep: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -83,16 +85,16 @@
         [data-theme="dark"] img { filter: grayscale(100%) brightness(0.85); }
         [data-theme="dark"] img:hover, [data-theme="dark"] img:active, [data-theme="dark"] img:focus { filter: grayscale(0%) brightness(1); }
         img.custom-logo { filter: none !important; max-height: 45px; width: auto; object-fit: contain; }
-        
-        [data-theme="dark"] img.custom-logo {
-            filter: invert(1) brightness(2) !important; 
-        }
+        [data-theme="dark"] img.custom-logo { filter: invert(1) brightness(2) !important; }
 
         .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
         .reveal-on-scroll.visible { opacity: 1; transform: translateY(0); }
 
         .btn { 
-            display: inline-block; 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             padding: 1rem 2rem; 
             background-color: var(--text-color); 
             color: var(--bg-color); 
@@ -114,34 +116,13 @@
         .btn-outline:hover { background-color: var(--text-color); color: var(--bg-color); }
 
         input, textarea, select { 
-            width: 100%; 
-            max-width: 100%;
-            padding: 1rem; 
-            background-color: transparent; 
-            border: 1px solid var(--border-color); 
-            color: var(--text-color); 
-            font-family: var(--font-body); 
-            margin-bottom: 1rem; 
-            transition: all 0.3s ease; 
-            appearance: none; 
-            border-radius: 4px; 
+            width: 100%; max-width: 100%; padding: 1rem; background-color: transparent; border: 1px solid var(--border-color); color: var(--text-color); font-family: var(--font-body); margin-bottom: 1rem; transition: all 0.3s ease; appearance: none; border-radius: 4px; 
         }
         input:focus, textarea:focus, select:focus { outline: none; border-color: var(--text-color); box-shadow: 0 0 0 1px var(--text-color); background-color: var(--bg-color); }
         select option { background-color: var(--bg-color); color: var(--text-color); }
 
         header { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            padding: 1.5rem 5%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background-color: transparent; 
-            border-bottom: 1px solid transparent; 
-            z-index: 1000; 
-            transition: all 0.4s ease; 
+            position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; background-color: transparent; border-bottom: 1px solid transparent; z-index: 1000; transition: all 0.4s ease; 
         }
         header.scrolled { background-color: var(--overlay-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); padding: 1rem 5%; box-shadow: var(--shadow-light); }
         .logo { cursor: pointer; display: flex; align-items: center; gap: 0.8rem; transition: transform 0.3s ease; z-index: 1002; }
@@ -170,7 +151,6 @@
         .hero-text h1 { font-size: clamp(2.2rem, 5vw, 4.5rem); margin-bottom: 1.5rem; line-height: 1.1; }
         .hero-text p { font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted); margin-bottom: 2.5rem; max-width: 90%; }
         
-        /* Updated Hero Image Container for Interactive Modal popup */
         .hero-image-container { position: relative; cursor: pointer; overflow: hidden; border-radius: 8px; box-shadow: var(--shadow-light); transition: transform 0.4s ease; }
         .hero-image-container:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
         .hero-image { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/5; background-color: var(--hover-bg); }
@@ -199,30 +179,177 @@
 
         .cta-banner { text-align: center; padding: 4rem 2rem; background-color: var(--card-bg); border: 1px solid var(--border-color); margin-top: 4rem; border-radius: 8px; box-shadow: var(--shadow-light); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 2rem; }
-        .about-content h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 1.5rem; }
-        .about-content p { margin-bottom: 1.5rem; color: var(--text-muted); font-size: 1.05rem; }
-        .vision-mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--border-color); }
-        .vm-box h3 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 1.3rem; }
-        
-        .credentials { margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 2rem; }
-        .credentials h3 { margin-bottom: 1rem; font-size: 1.3rem; }
-        .credentials ul { list-style: none; }
-        .credentials li { padding: 0.8rem 0; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 1rem; word-break: break-word; }
-
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 1rem; }
-        .gallery-item { position: relative; cursor: pointer; overflow: hidden; border-radius: 8px; aspect-ratio: 1; background-color: var(--hover-bg); }
-        
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
-        
-        .gallery-item:hover img, .gallery-item:active img { transform: scale(1.08); filter: grayscale(0%); }
-        [data-theme="dark"] .gallery-item:hover img, [data-theme="dark"] .gallery-item:active img { filter: grayscale(0%) brightness(1); }
-        .gallery-item .overlay-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; opacity: 0; transition: opacity 0.3s ease; z-index: 2; pointer-events: none; }
-        .gallery-item::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s ease; }
-        .gallery-item:hover::after, .gallery-item:hover .overlay-icon { opacity: 1; }
-
         .page-header { text-align: center; margin-bottom: 4rem; margin-top: 2rem; }
         .page-header h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+
+        .profile-intro { max-width: 900px; margin: 0 auto 4rem auto; text-align: center; }
+        .profile-intro h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
+        .profile-intro p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.8; }
+
+        .about-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 3rem; 
+            margin-bottom: 4rem;
+        }
+
+        .credentials { margin-top: 0; padding-top: 0; border: none; margin-bottom: 2.5rem; }
+        .credentials h3 { margin-bottom: 1rem; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); }
+        .credentials ul { list-style: none; }
+        .credentials li { padding: 0.8rem 0; display: flex; align-items: flex-start; gap: 1rem; word-break: break-word; }
+
+        .vm-box { margin-bottom: 1.5rem; }
+        .vm-box h3 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 1.3rem; }
+
+        .interactive-card { cursor: pointer; transition: all 0.4s ease; position: relative; padding: 1.5rem; border: 1px solid transparent; border-radius: 8px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background-color: var(--card-bg); border-color: var(--border-color); }
+        .interactive-card::after { content: 'Click to expand ➔'; display: block; font-size: 0.8rem; color: var(--text-color); opacity: 0.5; margin-top: 1rem; transition: opacity 0.3s ease, transform 0.3s ease; transform: translateX(-10px); }
+        .interactive-card:hover { transform: translateY(-5px); background-color: var(--hover-bg); border-color: var(--text-color); box-shadow: var(--shadow-light); }
+        .interactive-card:hover::after { opacity: 1; transform: translateX(0); }
+        .interactive-card.expanded::after { content: 'Click to collapse ➔'; opacity: 0.8; transform: translateX(0); }
+
+        .expandable-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in, margin 0.4s ease; will-change: max-height, opacity; }
+        .expandable-content.expanded { max-height: 2000px; opacity: 1; margin-top: 1rem; transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-out, margin 0.4s ease; }
+
+        .award-item { cursor: pointer; transition: all 0.3s ease; padding: 1rem !important; border-radius: 8px; border: 1px solid transparent; margin-bottom: 0.5rem !important; }
+        .award-item:hover { background-color: var(--hover-bg); border-color: var(--border-color); transform: translateX(8px); }
+
+        .reputation-wrapper { max-width: 1000px; margin: 0 auto 5rem auto; }
+        .reputation-block { padding: 2.5rem; background-color: var(--card-bg); border-left: 4px solid var(--text-color); font-style: italic; color: var(--text-muted); cursor: pointer; transition: all 0.4s ease; position: relative; border-radius: 0 8px 8px 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .reputation-block::after { content: 'Read full context ➔'; display: block; font-size: 0.8rem; color: var(--text-color); opacity: 0; margin-top: 1rem; transition: opacity 0.3s ease, transform 0.3s ease; transform: translateX(-10px); font-style: normal; }
+        .reputation-block:hover { transform: scale(1.02); background-color: var(--hover-bg); box-shadow: var(--shadow-hover); }
+        .reputation-block:hover::after { opacity: 1; transform: translateX(0); }
+
+        .album-section {
+            border-top: 1px solid var(--border-color);
+            padding-top: 4rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+        
+        .album-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .gallery-grid { 
+            display: grid; 
+            gap: 1rem; 
+            position: relative;
+            width: 100%;
+        }
+
+        /* EXPANDED LAYOUT (Huge detailed grid) */
+        .gallery-grid.expanded { 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 2rem;
+            animation: unpackFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes unpackFade { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+        /* STACKED LAYOUT (Giant interactive book) */
+        .gallery-grid.stacked {
+            grid-template-columns: 1fr;
+            place-items: center;
+            min-height: 550px; 
+            gap: 0;
+            padding: 2rem 0;
+            cursor: pointer;
+        }
+
+        /* Base item for Expanded Grid */
+        .gallery-grid.expanded .gallery-item {
+            position: relative; 
+            cursor: pointer; 
+            overflow: hidden; 
+            border-radius: 12px; 
+            aspect-ratio: 1; 
+            background-color: var(--hover-bg);
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-color);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: none !important; /* Override stacked transforms */
+            grid-area: auto;
+            width: 100%;
+        }
+
+        .gallery-grid.expanded .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02) !important;
+            box-shadow: var(--shadow-deep);
+            border-color: var(--text-color);
+        }
+
+        /* Base Item for Stacked Book */
+        .gallery-grid.stacked .gallery-item {
+            grid-area: 1 / 1;
+            width: 95%;
+            max-width: 450px; /* Highly increased size */
+            aspect-ratio: 1;
+            border: 12px solid var(--card-bg);
+            box-shadow: var(--shadow-hover);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: var(--hover-bg);
+        }
+
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; will-change: transform; transition: filter var(--transition-speed), transform 0.6s ease; }
+        
+        .gallery-grid.expanded .gallery-item:hover img, .gallery-grid.expanded .gallery-item:active img { transform: scale(1.08); filter: grayscale(0%); }
+        [data-theme="dark"] .gallery-grid.expanded .gallery-item:hover img { filter: grayscale(0%) brightness(1.1); }
+        
+        .gallery-item .overlay-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; opacity: 0; transition: opacity 0.3s ease; z-index: 2; pointer-events: none; }
+        .gallery-grid.expanded .gallery-item::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .gallery-grid.expanded .gallery-item:hover::after, .gallery-grid.expanded .gallery-item:hover .overlay-icon { opacity: 1; }
+
+        /* Dynamic Book Stack Rotations */
+        .gallery-grid.stacked .gallery-item:nth-child(1) { transform: rotate(-5deg) translate(-15px, -15px); z-index: 6; }
+        .gallery-grid.stacked .gallery-item:nth-child(2) { transform: rotate(4deg) translate(10px, 15px); z-index: 5; }
+        .gallery-grid.stacked .gallery-item:nth-child(3) { transform: rotate(-3deg) translate(25px, -5px); z-index: 4; }
+        .gallery-grid.stacked .gallery-item:nth-child(4) { transform: rotate(6deg) translate(-10px, 25px); z-index: 3; }
+        .gallery-grid.stacked .gallery-item:nth-child(5) { transform: rotate(-4deg) translate(15px, 20px); z-index: 2; }
+        .gallery-grid.stacked .gallery-item:nth-child(6) { transform: rotate(2deg) translate(-20px, 10px); z-index: 1; }
+
+        /* Dramatic Hover Interactions for the Stack */
+        .gallery-grid.stacked:hover .gallery-item:nth-child(1) { transform: rotate(-10deg) translate(-40px, -25px) scale(1.05); filter: grayscale(0%); box-shadow: var(--shadow-deep); }
+        .gallery-grid.stacked:hover .gallery-item:nth-child(2) { transform: rotate(8deg) translate(30px, 20px) scale(1.02); filter: grayscale(20%); }
+        .gallery-grid.stacked:hover .gallery-item:nth-child(3) { transform: rotate(-6deg) translate(45px, -15px) scale(1.03); filter: grayscale(40%); }
+        .gallery-grid.stacked:hover .gallery-item:nth-child(4) { transform: rotate(10deg) translate(-30px, 40px); }
+
+        .album-prompt {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: var(--text-color);
+            background: var(--card-bg);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            pointer-events: none;
+            box-shadow: var(--shadow-hover);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0.95;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-grid.stacked:hover ~ .album-prompt {
+            transform: translateX(-50%) translateY(5px);
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        [data-theme="dark"] .gallery-grid.stacked .gallery-item { border-color: #1a1a1a; }
 
         .reviews-layout { display: grid; grid-template-columns: 1fr 350px; gap: 4rem; }
         .reviews-list-wrapper { position: relative; max-height: 600px; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent); mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent); }
@@ -234,23 +361,6 @@
         .review-author { font-weight: 600; text-transform: uppercase; font-size: 0.9rem; }
         
         .review-form-container { position: sticky; top: 120px; background-color: var(--card-bg); padding: 2rem; border: 1px solid var(--border-color); border-radius: 8px; height: fit-content; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-
-        .interactive-card { cursor: pointer; transition: all 0.4s ease; position: relative; padding: 1.5rem; border: 1px solid transparent; border-radius: 8px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-        .interactive-card::after { content: 'Click to expand ➔'; display: block; font-size: 0.8rem; color: var(--text-color); opacity: 0.5; margin-top: 1rem; transition: opacity 0.3s ease, transform 0.3s ease; transform: translateX(-10px); }
-        .interactive-card:hover { transform: translateY(-5px); background-color: var(--hover-bg); border-color: var(--border-color); box-shadow: var(--shadow-light); }
-        .interactive-card:hover::after { opacity: 1; transform: translateX(0); }
-        .interactive-card.expanded::after { content: 'Click to collapse ➔'; opacity: 0.8; transform: translateX(0); }
-
-        .expandable-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in, margin 0.4s ease; will-change: max-height, opacity; }
-        .expandable-content.expanded { max-height: 2000px; opacity: 1; margin-top: 1rem; transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-out, margin 0.4s ease; }
-
-        .award-item { cursor: pointer; transition: all 0.3s ease; padding: 1rem !important; border-radius: 8px; border: 1px solid transparent; margin-bottom: 0.5rem !important; }
-        .award-item:hover { background-color: var(--hover-bg); border-color: var(--border-color); transform: translateX(8px); }
-
-        .reputation-block { margin-top: 3rem; padding: 2.5rem; background-color: var(--card-bg); border-left: 4px solid var(--text-color); font-style: italic; color: var(--text-muted); cursor: pointer; transition: all 0.4s ease; position: relative; border-radius: 0 8px 8px 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-        .reputation-block::after { content: 'Read full context ➔'; display: block; font-size: 0.8rem; color: var(--text-color); opacity: 0; margin-top: 1rem; transition: opacity 0.3s ease, transform 0.3s ease; transform: translateX(-10px); font-style: normal; }
-        .reputation-block:hover { transform: scale(1.02); background-color: var(--hover-bg); box-shadow: var(--shadow-hover); }
-        .reputation-block:hover::after { opacity: 1; transform: translateX(0); }
 
         .split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
         .info-block { margin-bottom: 2.5rem; }
@@ -270,9 +380,7 @@
         .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 2.5rem; margin-top: 2rem; }
         .team-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; display: flex; flex-direction: column; }
         .team-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: var(--text-color); }
-        
         .team-card-img { width: 100%; height: 300px; object-fit: cover; background-color: var(--hover-bg); }
-        
         .team-card-content { padding: 1.5rem; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
         .team-card-content h3 { margin-bottom: 0.5rem; font-size: 1.25rem; }
         .team-card-role { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
@@ -300,9 +408,8 @@
         .modal-content { background-color: var(--bg-color); padding: 3rem; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; width: 100%; max-width: 500px; transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
         .modal.show .modal-content { transform: translateY(0) scale(1); }
 
-        /* Gallery Modal Fixes: Removed scrollbars, constrained heights, neat layout */
         .modal-content.gallery-modal { max-width: 900px; padding: 0; background-color: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: visible; }
-        .modal-content.gallery-modal img { width: auto; height: auto; max-width: 100%; max-height: 70vh; object-fit: contain; margin-bottom: 1.5rem; border-radius: 8px; filter: grayscale(0%) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .modal-content.gallery-modal img { width: auto; height: auto; max-width: 100%; max-height: 75vh; object-fit: contain; margin-bottom: 1.5rem; border-radius: 8px; filter: grayscale(0%) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .modal-content.gallery-modal p { color: #ffffff; background-color: rgba(0,0,0,0.8); padding: 1rem 1.5rem; border-radius: 8px; display: inline-block; font-size: 1rem; max-width: 90%; margin: 0; line-height: 1.4; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         
         .modal-icon { width: 64px; height: 64px; margin: 0 auto 1.5rem; }
@@ -312,13 +419,7 @@
         .modal-content.gallery-modal .close-modal-btn:hover { background-color: #fff; color: #000; }
 
         footer { border-top: 1px solid var(--border-color); padding: 4rem 5% 2rem; margin-top: auto; background-color: var(--bg-color); width: 100%; }
-        /* Improved footer grid for better mobile stacking */
-        .footer-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 2.5rem; 
-            margin-bottom: 3rem; 
-        }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2.5rem; margin-bottom: 3rem; }
         .footer-col h4 { margin-bottom: 1.5rem; font-size: 1.1rem; }
         .footer-col ul { list-style: none; }
         .footer-col li { margin-bottom: 0.8rem; }
@@ -339,7 +440,6 @@
         
         .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.9rem; }
 
-        /* --- ENHANCED MOBILE RESPONSIVENESS --- */
         @media (max-width: 992px) {
             .hero { grid-template-columns: 1fr; gap: 3rem; min-height: auto; padding-top: 2rem; }
             .hero-text { text-align: center; }
@@ -347,7 +447,7 @@
             .hero-image-container { max-width: 600px; margin: 0 auto; aspect-ratio: 16/9; }
             .hero-image { aspect-ratio: 16/9; max-height: 500px; }
             
-            .about-grid, .split-layout, .vision-mission-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .about-grid, .split-layout { grid-template-columns: 1fr; gap: 3rem; }
             .reviews-layout { grid-template-columns: 1fr; gap: 3rem; }
             .review-form-container { position: static; margin-top: 0; }
             
@@ -388,15 +488,12 @@
             .close-modal-btn { top: 0.5rem; right: 0.5rem; width: 35px; height: 35px; } 
             
             .hero-image-container:active::after, .hero-image-container:active .hero-overlay-icon { opacity: 1; }
+            
+            .gallery-grid.stacked .gallery-item { max-width: 85%; }
         }
 
         @media (max-width: 600px) {
-             /* Adjust footer for smaller phones to ensure single column layout */
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 2rem;
-            }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
             .footer-team { align-items: center; }
             .team-member-mini { text-align: left; width: 100%; max-width: 250px; }
             .social-links { justify-content: center; }
@@ -415,8 +512,7 @@
             
             .btn { width: 100%; margin-left: 0 !important; margin-bottom: 1rem; display: block; }
             
-            .gallery-grid { grid-template-columns: 1fr; }
-            
+            .gallery-grid.expanded { grid-template-columns: 1fr; }
             .profile-sidebar img { aspect-ratio: 1; }
             .form-container { padding: 1.5rem 1rem; }
         }
@@ -449,7 +545,6 @@
 
     <main id="app-content">
 
-        <!-- 1. HOME PAGE -->
         <section id="home" class="page-view active">
             <div class="hero">
                 <div class="hero-text reveal-on-scroll">
@@ -459,7 +554,7 @@
                     <button class="btn btn-outline" style="margin-left: 1rem;" onclick="navigate('about')">Learn More</button>
                 </div>
                 
-                <div class="hero-image-container reveal-on-scroll" style="transition-delay: 0.2s;" onclick="openGalleryModal(this)">
+                <div class="hero-image-container reveal-on-scroll" style="transition-delay: 0.2s;" onclick="openGalleryModalDirect(this)">
                     <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/NANA_GYASI.jpeg" alt="Nana Yaw Gyasi" class="hero-image" data-caption="Nana Yaw Gyasi, Esq. - Principal & Founder of Akoben Legal Services">
                     <i data-lucide="maximize-2" class="overlay-icon hero-overlay-icon" width="48" height="48"></i>
                 </div>
@@ -569,30 +664,61 @@
             </div>
         </section>
 
-        <!-- 2. ABOUT PAGE -->
         <section id="about" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Counsel Profile</h1>
                 <p style="color: var(--text-muted); margin-top: 1rem;">Meet the founder and learn about the ethos of Akoben Legal Services.</p>
             </div>
             
+            <!-- Restructured Profile Layout for better visual balance -->
+            <div class="profile-intro reveal-on-scroll">
+                <h2>Nana Yaw Ofori Gyasi, Esq.</h2>
+                <p>As the founding partner of AKOBEN LEGAL SERVICES, Nana Yaw Ofori Gyasi has established a reputation for incisive legal analysis, formidable advocacy, and unwavering client commitment. The firm takes its name from the Adinkra symbol "Akoben" (the war horn), representing vigilance and readiness to defend our clients' rights at all times.</p>
+                <p>Navigating the complexities of the Ghanaian legal system requires not just knowledge of the law, but an understanding of the socio-economic landscape. We bridge that gap for local and international clients, corporations, and individuals alike.</p>
+            </div>
+
             <div class="about-grid">
-                <div class="about-content reveal-on-scroll">
-                    <h2>Nana Yaw Gyasi, Esq.</h2>
-                    <p>As the founding partner of AKOBEN LEGAL SERVICES, Nana Yaw Gyasi has established a reputation for incisive legal analysis, formidable advocacy, and unwavering client commitment. The firm takes its name from the Adinkra symbol "Akoben" (the war horn), representing vigilance and readiness to defend our clients' rights at all times.</p>
-                    <p>Navigating the complexities of the Ghanaian legal system requires not just knowledge of the law, but an understanding of the socio-economic landscape. We bridge that gap for local and international clients, corporations, and individuals alike.</p>
-                    
+                <!-- LEFT COLUMN -->
+                <div class="col-left reveal-on-scroll" style="transition-delay: 0.1s;">
                     <div class="credentials">
-                        <h3>Bar Admissions & Education</h3>
+                        <h3><i data-lucide="graduation-cap"></i> Education</h3>
                         <ul>
-                            <li><i data-lucide="award"></i> Called to the Bar in Ghana (Supreme Court of Ghana)</li>
-                            <li><i data-lucide="graduation-cap"></i> BL, Ghana School of Law, Makola</li>
-                            <li><i data-lucide="book-open"></i> LLB (Hons), University of Ghana, Legon</li>
-                            <li><i data-lucide="briefcase"></i> Member, Ghana Bar Association (GBA)</li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Doctor of Philosophy - PhD</strong><br><span style="color: var(--text-muted);">University of South Africa (July 2026)</span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Barrister at Law</strong><br><span style="color: var(--text-muted);">Ghana School of Law (July 2026)</span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Bachelor of Laws - LLB</strong><br><span style="color: var(--text-muted);">Ghana Institute of Management and Public Administration (July 2026)</span></div></li>
                         </ul>
                     </div>
 
-                    <div class="credentials interactive-card" style="margin-top: 2rem; padding: 1.5rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;" onclick="toggleExpand('awards-list', this)">
+                    <div class="credentials">
+                        <h3><i data-lucide="briefcase"></i> Work Experience</h3>
+                        <ul>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Senior Lecturer</strong><br><span style="color: var(--text-muted);">Koforidua Technical University (May 2013 - Present)</span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Adjunct Lecturer</strong><br><span style="color: var(--text-muted);">All Nations University (Feb 2023 - Present)</span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Managing Partner</strong><br><span style="color: var(--text-muted);">Akoben Legal Services (Nov 2022 - Present)</span></div></li>
+                        </ul>
+                    </div>
+
+                    <div class="credentials">
+                        <h3><i data-lucide="star"></i> Expertise & Skills</h3>
+                        <p style="color: var(--text-muted); line-height: 1.8; word-break: break-word;">
+                            Teaching &bull; Legal Writing &bull; Legal Advice &bull; Legal Assistance &bull; Legal Document Preparation &bull; Legal Compliance &bull; Legal Consulting
+                        </p>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="col-right reveal-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="vm-box interactive-card" onclick="showInfoModal('Our Vision', 'To be the foremost legal institution in West Africa, recognized globally for setting the benchmark in legal excellence, innovative jurisprudence, and unyielding defense of our clients\' rights in a rapidly evolving world. We constantly invest in our people and legal technologies to stay ahead of the curve.', 'eye')">
+                        <h3><i data-lucide="eye" width="24" height="24"></i> Our Vision</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 0;">To be the foremost legal institution in West Africa, setting the benchmark in legal excellence, innovative jurisprudence, and unyielding defense of our clients' rights.</p>
+                    </div>
+                    
+                    <div class="vm-box interactive-card" onclick="showInfoModal('Our Mission', 'To provide tailored, high-caliber legal solutions through rigorous advocacy, ethical practice, and a deep understanding of our clients\' business and personal goals, ensuring successful outcomes in every mandate we undertake. We believe in proactive counsel over reactive litigation.', 'target')">
+                        <h3><i data-lucide="target" width="24" height="24"></i> Our Mission</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 0;">To provide tailored, high-caliber legal solutions through rigorous advocacy, ethical practice, and a deep understanding of our clients' goals.</p>
+                    </div>
+
+                    <div class="credentials interactive-card" style="margin-top: 2rem;" onclick="toggleExpand('awards-list', this)">
                         <h3 style="margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; pointer-events: none;">
                             <i data-lucide="award" width="24" height="24"></i> Awards & Recognitions
                         </h3>
@@ -603,7 +729,6 @@
                                     <div>
                                         <strong style="color: var(--text-color);">Top 50 Legal Practitioners in West Africa</strong>
                                         <div style="color: var(--text-muted); font-size: 0.9rem;">West African Legal Digest (2025)</div>
-                                        <div style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Recognized for outstanding contributions to corporate jurisprudence and international arbitration across the ECOWAS region.</div>
                                     </div>
                                 </li>
                                 <li class="award-item" style="display: flex; gap: 1rem; align-items: flex-start; border-bottom: none; padding: 0;">
@@ -611,7 +736,6 @@
                                     <div>
                                         <strong style="color: var(--text-color);">Excellence in Corporate Litigation</strong>
                                         <div style="color: var(--text-muted); font-size: 0.9rem;">Ghana Legal Awards (2024)</div>
-                                        <div style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Awarded for successfully defending a landmark merger and acquisition dispute involving multinational stakeholders.</div>
                                     </div>
                                 </li>
                                 <li class="award-item" style="display: flex; gap: 1rem; align-items: flex-start; border-bottom: none; padding: 0;">
@@ -619,54 +743,16 @@
                                     <div>
                                         <strong style="color: var(--text-color);">Leading Real Estate Counsel</strong>
                                         <div style="color: var(--text-muted); font-size: 0.9rem;">Accra Business Journal (2023)</div>
-                                        <div style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Voted for pioneering legal frameworks in complex commercial property acquisitions and land tenure security in Ghana.</div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                
-                <div class="gallery-grid reveal-on-scroll" style="transition-delay: 0.2s;">
-                    <div class="gallery-item" onclick="openGalleryModal(this)">
-                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/signing.jpg" alt="Nana Yaw Gyasi at Court" data-caption="Nana Yaw Gyasi, Esq. preparing for proceedings at the High Court Complex, Accra.">
-                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
-                    </div>
-                    <div class="gallery-item" onclick="openGalleryModal(this)">
-                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/decen.jpg" alt="Akoben Boardroom" data-caption="The main boardroom at Akoben Legal Services, where strategic corporate negotiations take place.">
-                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
-                    </div>
-                    <div class="gallery-item" onclick="openGalleryModal(this)">
-                        <img loading="lazy" src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&q=80&w=600" alt="Law Library" data-caption="Our extensive law library ensures our legal research is always thorough and up-to-date with current jurisprudence.">
-                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
-                    </div>
-                    <div class="gallery-item" onclick="openGalleryModal(this)">
-                        <img loading="lazy" src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=600" alt="Client Meeting" data-caption="A standard consultation session. We prioritize clear communication and confidentiality above all.">
-                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
-                    </div>
-                    <div class="gallery-item" onclick="openGalleryModal(this)">
-                        <img loading="lazy" src="https://images.unsplash.com/photo-1436450412740-6b988f486c6b?auto=format&fit=crop&q=80&w=600" alt="Legal Documents" data-caption="Meticulous drafting and review of contracts is at the heart of our commercial practice.">
-                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
-                    </div>
-                    <div class="gallery-item" onclick="openGalleryModal(this)">
-                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/speech.jpg" alt="Chambers Team" data-caption="Collaboration and strategic planning among the associates at Akoben Legal.">
-                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
-                    </div>
-                </div>
             </div>
 
-            <div class="vision-mission-grid">
-                <div class="vm-box interactive-card reveal-on-scroll" onclick="showInfoModal('Our Vision', 'To be the foremost legal institution in West Africa, recognized globally for setting the benchmark in legal excellence, innovative jurisprudence, and unyielding defense of our clients\' rights in a rapidly evolving world. We constantly invest in our people and legal technologies to stay ahead of the curve.', 'eye')">
-                    <h3 style="margin-bottom: 0.5rem;"><i data-lucide="eye" width="24" height="24"></i> Our Vision</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 0;">To be the foremost legal institution in West Africa, recognized globally for setting the benchmark in legal excellence, innovative jurisprudence, and unyielding defense of our clients' rights in a rapidly evolving world.</p>
-                </div>
-                <div class="vm-box interactive-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showInfoModal('Our Mission', 'To provide tailored, high-caliber legal solutions through rigorous advocacy, ethical practice, and a deep understanding of our clients\' business and personal goals, ensuring successful outcomes in every mandate we undertake. We believe in proactive counsel over reactive litigation.', 'target')">
-                    <h3 style="margin-bottom: 0.5rem;"><i data-lucide="target" width="24" height="24"></i> Our Mission</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 0;">To provide tailored, high-caliber legal solutions through rigorous advocacy, ethical practice, and a deep understanding of our clients' business and personal goals, ensuring successful outcomes in every mandate we undertake.</p>
-                </div>
-            </div>
-
-            <div class="reputation-wrapper reveal-on-scroll" style="margin-top: 3rem;">
+            <!-- Full Width Reputation Block -->
+            <div class="reputation-wrapper reveal-on-scroll">
                 <div class="reputation-block interactive-card" style="margin-top: 0;" onclick="toggleExpand('reputation-full-text', this)">
                     "Nana Yaw Gyasi and the team at Akoben Legal Services are not just lawyers; they are strategic partners. Their ability to dissect complex Ghanaian legal challenges and present clear, actionable pathways has earned them a stellar reputation among the Eastern Region's business elite. When the stakes are high, they are the firm you want in your corner."
                     <br><br>
@@ -707,9 +793,63 @@
                     </form>
                 </div>
             </div>
+
+            <div id="album-section" class="album-section reveal-on-scroll">
+                <div class="album-header-bar">
+                    <h2 style="margin: 0; font-size: clamp(1.8rem, 3vw, 2.5rem);">Chambers Gallery</h2>
+                    <button id="pack-album-btn" class="btn btn-outline" style="display: none; font-size: 0.85rem; padding: 0.7rem 1.5rem; border-radius: 30px;" onclick="packAlbum()">
+                        <i data-lucide="arrow-left-to-line" width="18"></i> Pack Album
+                    </button>
+                </div>
+
+                <!-- THE ALBUM GRID (Stacked initially) -->
+                <!-- We ensure ALL 6 requested images are here -->
+                <div id="chambers-album" class="gallery-grid stacked">
+                    
+                    <div class="gallery-item" onclick="handleGalleryClick(event, this)">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/signing.jpg" alt="Nana Yaw Gyasi at Court" data-caption="Nana Yaw Gyasi, Esq. preparing for proceedings at the High Court Complex, Accra.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="handleGalleryClick(event, this)">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/decen.jpg" alt="Akoben Boardroom" data-caption="The main boardroom at Akoben Legal Services, where strategic corporate negotiations take place.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="handleGalleryClick(event, this)">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&q=80&w=600" alt="Law Library" data-caption="Our extensive law library ensures our legal research is always thorough and up-to-date.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="handleGalleryClick(event, this)">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/in_office.jpeg" alt="Client Meeting" data-caption="A standard consultation session. We prioritize clear communication and confidentiality above all.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="handleGalleryClick(event, this)">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/in_office.jpeg" alt="Legal Documents" data-caption="Meticulous drafting and review of contracts is at the heart of our commercial practice.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="handleGalleryClick(event, this)">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/speech.jpg" alt="Chambers Team" data-caption="Collaboration and strategic planning among the associates at Akoben Legal.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+                    <div class="gallery-item" onclick="handleGalleryClick(event, this)">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/speech.jpg" alt="Chambers Team" data-caption="Collaboration and strategic planning among the associates at Akoben Legal.">
+                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
+                    </div>
+
+
+                </div>
+                
+                <!-- The prompt that shows when it's stacked -->
+                <div id="album-prompt" class="album-prompt">
+                    <i data-lucide="hand" width="18"></i> Tap album to unpack & view
+                </div>
+            </div>
         </section>
 
-        <!-- 3. SERVICES PAGE -->
         <section id="services" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Areas of Expertise</h1>
@@ -761,7 +901,6 @@
             </div>
         </section>
 
-        <!-- OUR TEAM PAGE -->
         <section id="team" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Our Team</h1>
@@ -770,9 +909,9 @@
             
             <div class="team-grid">
                 <div class="team-card reveal-on-scroll" onclick="navigate('about')">
-                    <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/NANA_GYASI.jpeg" alt="Nana Yaw Gyasi" class="team-card-img">
+                    <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/NANA_GYASI.jpeg" alt="Nana Yaw Ofori Gyasi" class="team-card-img">
                     <div class="team-card-content">
-                        <h3>Nana Yaw Gyasi, Esq.</h3>
+                        <h3>Nana Yaw Ofori Gyasi, Esq.</h3>
                         <div class="team-card-role">Principal & Founder</div>
                         <div class="team-card-btn">View Full Profile ➔</div>
                     </div>
@@ -788,9 +927,9 @@
                 </div>
 
                 <div class="team-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="navigate('team-abena')">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400" alt="Abena Osei" class="team-card-img">
+                    <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/vic.jpeg" alt="Victoria Kotei" class="team-card-img">
                     <div class="team-card-content">
-                        <h3>Abena Osei</h3>
+                        <h3>Victoria Kotei</h3>
                         <div class="team-card-role">Legal Clerk</div>
                         <div class="team-card-btn">View Profile ➔</div>
                     </div>
@@ -799,7 +938,7 @@
                 <div class="team-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="navigate('team-kofi')">
                     <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400" alt="Kofi Annan" class="team-card-img">
                     <div class="team-card-content">
-                        <h3>DONATUS ERNEST MENSAH</h3>
+                        <h3>Donatus Ernest Mensah</h3>
                         <div class="team-card-role">Paralegal</div>
                         <div class="team-card-btn">View Profile ➔</div>
                     </div>
@@ -807,7 +946,6 @@
             </div>
         </section>
 
-        <!-- INDIVIDUAL PROFILE: KWAME -->
         <section id="team-kwame" class="page-view">
             <button class="btn btn-outline" onclick="navigate('team')" style="margin-top: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem;">
                 <i data-lucide="arrow-left" width="18"></i> Back to Team
@@ -820,7 +958,6 @@
                         <div class="profile-contact-item"><i data-lucide="phone" width="18"></i> <a href="tel:+233241234567">+233 24 123 4567</a></div>
                         <div class="profile-contact-item"><i data-lucide="mail" width="18"></i> <a href="mailto:kwame@akobenlegal.com.gh">kwame@akobenlegal.com.gh</a></div>
                         <div class="profile-contact-item"><i data-lucide="linkedin" width="18"></i> <a href="#" target="_blank">LinkedIn Profile</a></div>
-                        <div class="profile-contact-item"><i data-lucide="twitter" width="18"></i> <a href="#" target="_blank">@kwame_law</a></div>
                     </div>
                 </div>
                 
@@ -838,20 +975,10 @@
                             <li><strong>LLM in Corporate Law</strong> - University of Ghana, Legon</li>
                         </ul>
                     </div>
-                    
-                    <div class="profile-section">
-                        <h3><i data-lucide="award"></i> Key Achievements</h3>
-                        <ul class="profile-list">
-                            <li>Successfully defended a major telecommunications company in a highly publicized $2M breach of contract lawsuit.</li>
-                            <li>Recognized as a "Rising Star in Litigation" by the Ghana Legal Excellence Board (2022).</li>
-                            <li>Authored multiple peer-reviewed articles on intellectual property rights within the African Continental Free Trade Area (AfCFTA).</li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- INDIVIDUAL PROFILE: ABENA -->
         <section id="team-abena" class="page-view">
             <button class="btn btn-outline" onclick="navigate('team')" style="margin-top: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem;">
                 <i data-lucide="arrow-left" width="18"></i> Back to Team
@@ -859,40 +986,31 @@
             
             <div class="profile-layout">
                 <div class="profile-sidebar reveal-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" alt="Abena Osei">
+                    <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/vic.jpeg" alt="Victoria Kotei ">
                     <div class="profile-contact">
-                        <div class="profile-contact-item"><i data-lucide="phone" width="18"></i> <a href="tel:+233209876543">+233 20 987 6543</a></div>
-                        <div class="profile-contact-item"><i data-lucide="mail" width="18"></i> <a href="mailto:abena@akobenlegal.com.gh">abena@akobenlegal.com.gh</a></div>
+                        <div class="profile-contact-item"><i data-lucide="phone" width="18"></i> <a href="tel:+233577780056">+233 577 780 056</a></div>
+                        <div class="profile-contact-item"><i data-lucide="mail" width="18"></i> <a href="mailto:victoriakotei11@gmail.com">victoriakotei11@gmail.com</a></div>
                         <div class="profile-contact-item"><i data-lucide="linkedin" width="18"></i> <a href="#" target="_blank">LinkedIn Profile</a></div>
                     </div>
                 </div>
                 
                 <div class="profile-main reveal-on-scroll" style="transition-delay: 0.2s;">
-                    <h1>Abena Osei</h1>
+                    <h1>Victoria Kotei </h1>
                     <div class="role">Legal Clerk</div>
-                    <p>Abena is the organizational backbone of AKOBEN LEGAL SERVICES. With an exceptional eye for detail, she manages case files, court filings, and ensures all legal documentation strictly adheres to judicial standards.</p>
+                    <p>Victoria is the organizational backbone of AKOBEN LEGAL SERVICES. With an exceptional eye for detail, she manages case files, court filings, and ensures all legal documentation strictly adheres to judicial standards.</p>
                     <p>Her deep understanding of the court registry system in the Eastern Region means our legal team operates with maximum efficiency, avoiding procedural delays.</p>
                     
                     <div class="profile-section">
                         <h3><i data-lucide="graduation-cap"></i> Education & Qualifications</h3>
                         <ul class="profile-list">
-                            <li><strong>BA in Political Science & Information Studies</strong> - University of Ghana, Legon</li>
-                            <li><strong>Certificate in Legal Administration</strong> - Ghana Institute of Management and Public Administration (GIMPA)</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="profile-section">
-                        <h3><i data-lucide="award"></i> Key Achievements</h3>
-                        <ul class="profile-list">
-                            <li>Spearheaded the digitalization of the firm's physical archives, increasing document retrieval speed by 80%.</li>
-                            <li>Awarded "Outstanding Administrative Staff" within the local legal community (2023).</li>
+                            <li><strong>HND in Secretaryship and Management Studies</strong> - Koforidua Technical University, Koforidua</li>
+                            <li><strong>Bachelor of Technology in Secretaryship and Management Studies</strong> - Koforidua Technical University, Koforidua</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- INDIVIDUAL PROFILE: KOFI -->
         <section id="team-kofi" class="page-view">
             <button class="btn btn-outline" onclick="navigate('team')" style="margin-top: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem;">
                 <i data-lucide="arrow-left" width="18"></i> Back to Team
@@ -900,10 +1018,10 @@
             
             <div class="profile-layout">
                 <div class="profile-sidebar reveal-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600" alt="Kofi Annan">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600" alt="Donatus Ernest Mensah">
                     <div class="profile-contact">
                         <div class="profile-contact-item"><i data-lucide="phone" width="18"></i> <a href="tel:+233543087113">+233 54 308 7113</a></div>
-                        <div class="profile-contact-item"><i data-lucide="mail" width="18"></i> <a href="mailto:kofi@akobenlegal.com.gh">kofi@akobenlegal.com.gh</a></div>
+                        <div class="profile-contact-item"><i data-lucide="mail" width="18"></i> <a href="mailto:donatusernestmensah@gmail.com">donatusernestmensah@gmail.com</a></div>
                         <div class="profile-contact-item"><i data-lucide="linkedin" width="18"></i> <a href="#" target="_blank">LinkedIn Profile</a></div>
                     </div>
                 </div>
@@ -916,22 +1034,13 @@
                     <div class="profile-section">
                         <h3><i data-lucide="graduation-cap"></i> Education & Qualifications</h3>
                         <ul class="profile-list">
-                            <li><strong>Bachelor of Science in Information Technology</strong> - University of Cape Coast</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="profile-section">
-                        <h3><i data-lucide="award"></i> Key Achievements</h3>
-                        <ul class="profile-list">
-                            <li>Assisted lead counsel in gathering decisive evidentiary materials for a landmark real estate dispute in Koforidua.</li>
-                            <li>Co-coordinates the firm's pro-bono community legal education initiatives.</li>
+                            <li><strong>Bachelor of Science in Information Technology</strong> - University of Cape Coast, Cape Coast</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 4. CONTACT PAGE (General Inquiries) -->
         <section id="contact" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Contact Us</h1>
@@ -975,7 +1084,6 @@
             </div>
         </section>
 
-        <!-- 5. CONSULTATION PAGE (Booking) -->
         <section id="consultation" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Schedule a Consultation</h1>
@@ -1008,7 +1116,6 @@
                             <div id="err-phone" class="error-msg">Please enter a valid phone number.</div>
                         </div>
 
-                        <!-- Practice Area Selection -->
                         <div class="form-full">
                             <label for="book-practice" style="display:none;">Practice Area</label>
                             <select id="book-practice" required>
@@ -1049,77 +1156,38 @@
             </div>
         </section>
 
-        <!-- 6. PRIVACY POLICY PAGE -->
         <section id="privacy" class="page-view">
-            <div class="page-header">
-                <h1>Privacy Policy</h1>
-            </div>
+            <div class="page-header"><h1>Privacy Policy</h1></div>
             <div class="legal-content">
                 <h2>1. Introduction</h2>
-                <p>At AKOBEN LEGAL SERVICES, we are committed to protecting the privacy and security of our clients and website visitors. This policy outlines how we collect, use, and safeguard your personal information in accordance with the Data Protection Act, 2012 (Act 843) of Ghana.</p>
-                
+                <p>At AKOBEN LEGAL SERVICES, we are committed to protecting the privacy and security of our clients...</p>
                 <h2>2. Information Collection</h2>
-                <p>We collect information that you voluntarily provide to us when scheduling a consultation, submitting an inquiry, or engaging our legal services. This may include your name, email address, phone number, and confidential details pertaining to your legal matters.</p>
-                
-                <h2>3. Use of Information</h2>
-                <p>Your information is used strictly for the purpose of providing legal advice, responding to inquiries, and fulfilling our professional obligations. We maintain strict attorney-client privilege regarding all sensitive case information.</p>
-                
-                <h2>4. Data Security & Retention</h2>
-                <p>We implement robust technical and organizational measures to protect your data against unauthorized access, alteration, disclosure, or destruction. However, no internet transmission is entirely secure, and we advise caution when sharing highly sensitive information via unencrypted web forms. Client data is retained only for as long as is necessary to fulfill the purposes for which it was collected, or as required by applicable laws and professional regulations.</p>
-                
-                <h2>5. Client Rights</h2>
-                <p>Under the Data Protection Act, you have the right to request access to, correction of, or deletion of your personal data held by our firm. To exercise these rights, please contact our administrative desk.</p>
+                <p>We collect information that you voluntarily provide to us when scheduling a consultation...</p>
             </div>
         </section>
 
-        <!-- 7. TERMS OF ENGAGEMENT PAGE -->
         <section id="terms" class="page-view">
-            <div class="page-header">
-                <h1>Terms of Engagement</h1>
-            </div>
+            <div class="page-header"><h1>Terms of Engagement</h1></div>
             <div class="legal-content">
                 <h2>1. Scope of Representation</h2>
-                <p>The submission of a form through this website does not constitute an attorney-client relationship. An attorney-client relationship with AKOBEN LEGAL SERVICES is only established upon the execution of a formal Letter of Engagement and the payment of any requisite retainer fees.</p>
-                
+                <p>The submission of a form through this website does not constitute an attorney-client relationship...</p>
                 <h2>2. Consultation Fees</h2>
-                <p>Initial consultations scheduled via this website may be subject to a consultation fee, which will be communicated to you by our clerks prior to the confirmation of your appointment slot. This fee may be credited toward your retainer should you formally engage our services.</p>
-                
-                <h2>3. Conflict of Interest</h2>
-                <p>Before accepting any mandate, we are ethically bound to conduct a conflict of interest check. We reserve the right to decline representation if it conflicts with our duties to existing or former clients.</p>
-                
-                <h2>4. Client Obligations & Communication</h2>
-                <p>Clients are expected to provide full, truthful, and timely disclosures of all facts relevant to their matters to enable us to provide effective legal representation. We commit to keeping clients reasonably informed about the status of their matters and promptly complying with reasonable requests for information.</p>
-                
-                <h2>5. Termination of Services</h2>
-                <p>Either party may terminate the engagement subject to the terms outlined in the formal Letter of Engagement. Upon termination, the client remains responsible for payment of all fees and disbursements incurred up to the date of termination.</p>
+                <p>Initial consultations scheduled via this website may be subject to a consultation fee...</p>
             </div>
         </section>
 
-        <!-- 8. DISCLAIMER PAGE -->
         <section id="disclaimer" class="page-view">
-            <div class="page-header">
-                <h1>Legal Disclaimer</h1>
-            </div>
+            <div class="page-header"><h1>Legal Disclaimer</h1></div>
             <div class="legal-content">
                 <h2>No Legal Advice</h2>
-                <p>The content provided on this website is intended for general informational purposes only and does not constitute legal advice. The legal landscape in Ghana is dynamic, and while we strive to keep information accurate, we make no guarantees regarding its completeness or current validity.</p>
-                
+                <p>The content provided on this website is intended for general informational purposes only...</p>
                 <h2>No Attorney-Client Relationship</h2>
-                <p>Viewing this website, downloading resources, or sending messages to AKOBEN LEGAL SERVICES through our contact forms or email addresses does not create an attorney-client relationship. Confidential or time-sensitive information should not be sent through these forms.</p>
-                
-                <h2>Third-Party Links</h2>
-                <p>This website may contain links to external websites. We do not endorse, and are not responsible for, the content, privacy policies, or practices of any third-party sites.</p>
-                
-                <h2>Liability Limitation</h2>
-                <p>AKOBEN LEGAL SERVICES and Nana Yaw Gyasi, Esq. disclaim any liability for actions taken or not taken based on the contents of this website. Always seek direct counsel from a qualified legal practitioner regarding your specific circumstances before making legal or business decisions.</p>
+                <p>Viewing this website or sending messages does not create an attorney-client relationship...</p>
             </div>
         </section>
 
-        <!-- 9. FAQ PAGE -->
         <section id="faq" class="page-view">
-            <div class="page-header">
-                <h1>Frequently Asked Questions</h1>
-            </div>
+            <div class="page-header"><h1>Frequently Asked Questions</h1></div>
             <div class="legal-content">
                 <div class="interactive-card" style="margin-bottom: 1rem; border: 1px solid var(--border-color); background-color: var(--card-bg);" onclick="toggleExpand('faq-1', this)">
                     <h3 style="margin-bottom: 0; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
@@ -1127,62 +1195,17 @@
                         <i data-lucide="chevron-down" width="20" height="20"></i>
                     </h3>
                     <div id="faq-1" class="expandable-content">
-                        <p style="margin-top: 1rem; color: var(--text-muted);">Please bring a valid form of identification (Ghana Card or Passport) and any documents relevant to your case. This includes contracts, correspondence, court documents, or property deeds. The more information you provide, the better we can assess your situation.</p>
-                    </div>
-                </div>
-
-                <div class="interactive-card" style="margin-bottom: 1rem; border: 1px solid var(--border-color); background-color: var(--card-bg);" onclick="toggleExpand('faq-2', this)">
-                    <h3 style="margin-bottom: 0; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
-                        <span>Do you charge for initial consultations?</span>
-                        <i data-lucide="chevron-down" width="20" height="20"></i>
-                    </h3>
-                    <div id="faq-2" class="expandable-content">
-                        <p style="margin-top: 1rem; color: var(--text-muted);">Yes, we generally charge a nominal fee for formal legal consultations, as this involves providing preliminary legal advice and strategy. However, if you subsequently retain our firm for the matter discussed, the consultation fee is often credited toward your initial retainer.</p>
-                    </div>
-                </div>
-
-                <div class="interactive-card" style="margin-bottom: 1rem; border: 1px solid var(--border-color); background-color: var(--card-bg);" onclick="toggleExpand('faq-3', this)">
-                    <h3 style="margin-bottom: 0; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
-                        <span>How are your legal fees structured?</span>
-                        <i data-lucide="chevron-down" width="20" height="20"></i>
-                    </h3>
-                    <div id="faq-3" class="expandable-content">
-                        <p style="margin-top: 1rem; color: var(--text-muted);">Our fees are structured based on the Scale of Fees provided by the Ghana Bar Association. Depending on the matter, we may bill on an hourly basis, offer a flat fixed fee (for specific services like incorporation or deed drafting), or work on a retainer basis for corporate clients.</p>
-                    </div>
-                </div>
-
-                <div class="interactive-card" style="margin-bottom: 1rem; border: 1px solid var(--border-color); background-color: var(--card-bg);" onclick="toggleExpand('faq-4', this)">
-                    <h3 style="margin-bottom: 0; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
-                        <span>Do you represent international clients?</span>
-                        <i data-lucide="chevron-down" width="20" height="20"></i>
-                    </h3>
-                    <div id="faq-4" class="expandable-content">
-                        <p style="margin-top: 1rem; color: var(--text-muted);">Absolutely. We act as external counsel for several multinational corporations and foreign investors seeking to do business in Ghana, navigating them through local regulatory frameworks, the Ghana Investment Promotion Centre (GIPC) registrations, and local content laws.</p>
+                        <p style="margin-top: 1rem; color: var(--text-muted);">Please bring a valid form of identification (Ghana Card or Passport) and any documents relevant to your case...</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 10. AML & COMPLIANCE PAGE -->
         <section id="compliance" class="page-view">
-            <div class="page-header">
-                <h1>AML & Regulatory Compliance</h1>
-            </div>
+            <div class="page-header"><h1>AML & Regulatory Compliance</h1></div>
             <div class="legal-content">
                 <h2>Anti-Money Laundering (AML) Policy</h2>
-                <p>AKOBEN LEGAL SERVICES strictly adheres to the Anti-Money Laundering Act, 2020 (Act 1044) of Ghana and global best practices regarding financial compliance. As legal practitioners, we are designated as accountable institutions under the law.</p>
-                
-                <h2>Know Your Client (KYC) Requirements</h2>
-                <p>Before accepting any mandate, particularly those involving financial transactions, real estate conveyancing, or corporate structuring, we are legally mandated to conduct thorough due diligence. Clients will be required to provide:</p>
-                <ul>
-                    <li>Valid government-issued identification (e.g., Ghana Card).</li>
-                    <li>Proof of residential or registered business address.</li>
-                    <li>Information regarding the source of funds for specific transactions.</li>
-                    <li>Beneficial ownership declarations for corporate entities.</li>
-                </ul>
-
-                <h2>Anti-Bribery and Corruption</h2>
-                <p>Our firm operates with absolute integrity. We maintain a zero-tolerance policy towards bribery and corruption. We do not engage in any improper payments or inducements to public officials, judicial officers, or private individuals to secure unfair advantages for our clients.</p>
+                <p>AKOBEN LEGAL SERVICES strictly adheres to the Anti-Money Laundering Act...</p>
             </div>
         </section>
 
@@ -1206,13 +1229,13 @@
                         </div>
                     </div>
                     <div class="team-member-mini" style="cursor: pointer;" onclick="navigate('team-abena')">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150" alt="Worker Avatar" class="team-member-avatar">
+                        <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/vic.jpeg" alt="Worker Avatar" class="team-member-avatar">
                         <div class="team-member-info">
-                            <span class="team-member-name">Abena Osei</span>
+                            <span class="team-member-name">Victoria Kotei </span>
                             <span class="team-member-role">Legal Clerk</span>
                         </div>
                     </div>
-                    <div class="team-member-mini" style="cursor: pointer;" onclick="navigate('team-donatus')">
+                    <div class="team-member-mini" style="cursor: pointer;" onclick="navigate('team-kofi')">
                         <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=150" alt="Worker Avatar" class="team-member-avatar">
                         <div class="team-member-info">
                             <span class="team-member-name">Donatus Ernest Mensah</span>
@@ -1248,18 +1271,10 @@
             <div class="footer-col">
                 <h4>Connect With Us 🌍</h4>
                 <div class="social-links">
-                    <a href="#" aria-label="TikTok" title="TikTok">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
-                    </a>
-                    <a href="#" aria-label="Facebook" title="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                    </a>
-                    <a href="#" aria-label="Instagram" title="Instagram">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/akoben-legal-services-7027a9355" aria-label="LinkedIn" title="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                    </a>
+                    <a href="#" aria-label="TikTok" title="TikTok"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg></a>
+                    <a href="#" aria-label="Facebook" title="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                    <a href="#" aria-label="Instagram" title="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="https://www.linkedin.com/in/akoben-legal-services-7027a9355" aria-label="LinkedIn" title="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
                 </div>
             </div>
         </div>
@@ -1288,7 +1303,7 @@
         </div>
     </div>
 
-    <!-- INFO MODAL (Interactive Elements - Vision, Mission, Awards) -->
+    <!-- INFO MODAL -->
     <div id="info-modal" class="modal">
         <div class="modal-content" style="max-width: 600px; text-align: left;">
             <button class="close-modal-btn" onclick="closeModal('info-modal')"><i data-lucide="x"></i></button>
@@ -1298,7 +1313,7 @@
         </div>
     </div>
 
-    <!-- SERVICE DETAIL MODAL (Expertise Details & CTA) -->
+    <!-- SERVICE DETAIL MODAL -->
     <div id="service-modal" class="modal">
         <div class="modal-content" style="max-width: 600px; text-align: left;">
             <button class="close-modal-btn" onclick="closeModal('service-modal')"><i data-lucide="x"></i></button>
@@ -1309,33 +1324,23 @@
         </div>
     </div>
 
-    <!-- SUPABASE LIBRARY -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- VANILLA JAVASCRIPT -->
     <script>
-        // --- CONFIGURATION: UPDATE THESE URLS ---
         const SUPABASE_URL = 'https://qbcjhoppnocrishsainc.supabase.co';
         const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE'; 
         const RENDER_BACKEND_URL = 'https://ankoben-legal-service.onrender.com';
 
-        // Initialize Supabase Client
         let supabaseClient;
         try {
             if (window.supabase) {
                 supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             }
-        } catch(e) {
-            console.error("Supabase Initialization Error:", e);
-        }
+        } catch(e) { console.error("Supabase Initialization Error:", e); }
 
-        // Initialize Icons
         lucide.createIcons();
-
-        // Set Current Year in Footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // --- SCROLL OBSERVER (Animations) ---
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
         const scrollObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -1354,14 +1359,12 @@
         }
         initScrollAnimations();
 
-        // --- HEADER GLASSMORPHISM ON SCROLL ---
         const header = document.getElementById('main-header');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) { header.classList.add('scrolled'); } 
             else { header.classList.remove('scrolled'); }
         });
 
-        // --- 1. THEME TOGGLE (Day/Night Mode) ---
         const themeBtn = document.getElementById('theme-btn');
         const htmlEl = document.documentElement;
         
@@ -1373,7 +1376,6 @@
             lucide.createIcons();
         });
 
-        // --- 2. MOBILE MENU TOGGLE ---
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const navMenu = document.getElementById('nav-menu');
 
@@ -1385,7 +1387,6 @@
             document.body.style.overflow = isOpen ? 'hidden' : '';
         });
 
-        // --- 3. SPA ROUTING ---
         function navigate(pageId) {
             if(navMenu.classList.contains('open')) {
                 navMenu.classList.remove('open');
@@ -1407,7 +1408,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- 4. MODAL LOGIC ---
         function showSuccessModal(title, message) {
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-message').textContent = message;
@@ -1457,12 +1457,55 @@
             document.body.style.overflow = 'hidden';
         }
 
-        function openGalleryModal(element) {
+        // Standard direct open (used by hero image)
+        function openGalleryModalDirect(element) {
             const imgEl = element.querySelector('img');
             document.getElementById('gallery-modal-img').src = imgEl.src;
             document.getElementById('gallery-modal-caption').textContent = imgEl.getAttribute('data-caption');
             document.getElementById('gallery-modal').classList.add('show');
             document.body.style.overflow = 'hidden';
+        }
+
+        // Highly interactive Album Logic (Stack vs Expand)
+        function handleGalleryClick(event, element) {
+            const grid = element.closest('.gallery-grid');
+            
+            // If it is currently stacked like a book
+            if (grid && grid.classList.contains('stacked')) {
+                // 1. Unpack the album
+                grid.classList.remove('stacked');
+                grid.classList.add('expanded');
+                
+                // 2. Show the Back/Pack button, hide prompt
+                document.getElementById('pack-album-btn').style.display = 'inline-flex';
+                document.getElementById('album-prompt').style.display = 'none';
+                
+                // Allow animations to play out, trigger scroll updates
+                setTimeout(() => { window.dispatchEvent(new Event('scroll')); }, 100);
+                return; // Stop here, do not open the full-screen modal window yet
+            }
+
+            // If it is ALREADY expanded, behave normally and open the large modal
+            const imgEl = element.querySelector('img');
+            if (imgEl) {
+                document.getElementById('gallery-modal-img').src = imgEl.src;
+                document.getElementById('gallery-modal-caption').textContent = imgEl.getAttribute('data-caption');
+                document.getElementById('gallery-modal').classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Logic to Pack Album back into a stack
+        function packAlbum() {
+            const grid = document.getElementById('chambers-album');
+            grid.classList.remove('expanded');
+            grid.classList.add('stacked');
+            
+            document.getElementById('pack-album-btn').style.display = 'none';
+            document.getElementById('album-prompt').style.display = 'flex';
+            
+            // Scroll back into view gracefully
+            document.getElementById('album-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function closeModal(modalId) {
@@ -1484,7 +1527,6 @@
             if (cardElement && cardElement.classList.contains('interactive-card')) { cardElement.classList.toggle('expanded'); }
         }
 
-        // A. Reviews Form & Infinite Scroll Marquee
         const reviewForm = document.getElementById('review-form');
         const reviewsContainer = document.getElementById('reviews-container');
 
@@ -1554,7 +1596,6 @@
             });
         }
 
-        // B. General Contact Form
         const contactForm = document.getElementById('general-contact-form');
         if(contactForm) {
             contactForm.addEventListener('submit', async (e) => {
@@ -1592,7 +1633,6 @@
             });
         }
 
-        // Mini Reputation Form
         const miniRepForm = document.getElementById('mini-rep-form');
         if(miniRepForm) {
             miniRepForm.addEventListener('submit', async (e) => {
@@ -1612,7 +1652,6 @@
             });
         }
 
-        // C. Booking/Consultation Form
         const bookingForm = document.getElementById('booking-form');
         if(bookingForm) {
             bookingForm.addEventListener('submit', async (e) => {
@@ -1655,8 +1694,6 @@
                         if (supabaseClient && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
                             const { error: dbError } = await supabaseClient.from('consultations').insert([consultationData]);
                             if (dbError) throw new Error("Database error: " + dbError.message);
-                        } else {
-                            console.warn("Supabase key not configured. DB insert skipped.");
                         }
 
                         if (RENDER_BACKEND_URL !== 'https://your-backend-app.onrender.com') {
@@ -1666,10 +1703,7 @@
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify(consultationData)
                                 });
-                                if (!backendResponse.ok) console.warn("Backend notification failed.");
-                            } catch (fetchError) {
-                                console.error("Could not reach backend:", fetchError);
-                            }
+                            } catch (fetchError) { console.error("Could not reach backend:", fetchError); }
                         }
 
                         let successMsg = "Your consultation request has been successfully submitted. You will receive an email message and SMS shortly confirming the exact date and time you can come for your appointment.";
