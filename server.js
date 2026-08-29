@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const nodemailer = require('nodemailer');
-const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
 const app = express();
@@ -12,12 +12,22 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// These keys will be hidden safely inside Render's dashboard
+// These keys will be hidden safely inside Render's dashboard or your local .env
 const ARKESEL_API_KEY = process.env.ARKESEL_API_KEY;
 const EMAIL_USER = process.env.EMAIL_USER; 
 const EMAIL_PASS = process.env.EMAIL_PASS; // Using Yahoo App Password
 const COUNSEL_EMAIL = process.env.COUNSEL_EMAIL;
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
 
+// Initialize Supabase Client for backend database syncing
+let supabase = null;
+if (SUPABASE_URL && SUPABASE_KEY) {
+    supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    console.log('Supabase client initialized successfully.');
+}
+
+// Initialize Mailer
 const transporter = nodemailer.createTransport({
     service: 'yahoo',
     auth: {
@@ -29,15 +39,15 @@ const transporter = nodemailer.createTransport({
 // Graphical Interface for Backend Status
 app.get('/', (req, res) => {
     // Check if vital env variables exist to determine true "healthy" state
-    const isConfigured = Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.ARKESEL_API_KEY);
+    const isConfigured = Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.ARKESEL_API_KEY && process.env.SUPABASE_KEY);
     
     const statusColor = isConfigured ? '#22c55e' : '#ef4444';
     const statusBg = isConfigured ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.15)';
     const iconSymbol = isConfigured ? '✓' : '⚠';
     const titleText = isConfigured ? 'YOUR WEBSITE BACKEND IS LIVE' : 'YOUR WEBSITE BACKEND IS NOT LIVE';
     const descText = isConfigured 
-        ? 'The API server for Akoben Legal Services is running perfectly and ready to accept connections from your frontend.' 
-        : 'RESOLVE THE CONFIGURATION ISSUE: Missing critical Environment Variables (e.g., EMAIL_USER, ARKESEL_API_KEY). Please add them in the Render dashboard to restore full functionality.';
+        ? 'The API server for Akoben Legal Services is running perfectly, connected to Supabase, and ready to accept connections from your frontend.' 
+        : 'RESOLVE THE CONFIGURATION ISSUE: Missing critical Environment Variables (e.g., EMAIL_USER, ARKESEL_API_KEY, SUPABASE_KEY). Please add them in the Render dashboard to restore full functionality.';
 
     const htmlContent = `
     <!DOCTYPE html>
@@ -90,7 +100,19 @@ app.post('/api/notify-consultation', async (req, res) => {
     } = req.body;
 
     try {
-        // 1. Send Generic Receipt SMS to Client via Arkesel
+        // 1. Sync data securely to Supabase Backend
+        if (supabase) {
+            const { error: dbError } = await supabase
+                .from('consultations')
+                .insert([{
+                    first_name, last_name, email, phone, 
+                    practice_area, consultation_type, issue_description
+                }]);
+            
+            if (dbError) console.error('Supabase DB Insert Error:', dbError.message);
+        }
+
+        // 2. Send Generic Receipt SMS to Client via Arkesel
         const smsMessage = `Hello ${first_name}, your ${consultation_type} consultation request has been received by Akoben Legal Services. We will contact you shortly to confirm your appointment date and time.`;
         
         await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
@@ -101,7 +123,7 @@ app.post('/api/notify-consultation', async (req, res) => {
             headers: { 'api-key': ARKESEL_API_KEY }
         });
 
-        // 2. Send Immediate Email Alert to Counsel
+        // 3. Send Immediate Email Alert to Counsel
         const mailOptions = {
             from: EMAIL_USER,
             to: COUNSEL_EMAIL,
@@ -111,7 +133,7 @@ app.post('/api/notify-consultation', async (req, res) => {
         
         await transporter.sendMail(mailOptions);
 
-        res.status(200).json({ success: true, message: 'Notifications deployed securely.' });
+        res.status(200).json({ success: true, message: 'Database synced and Notifications deployed securely.' });
     } catch (error) {
         console.error('Notification Error:', error?.response?.data || error.message);
         res.status(500).json({ success: false, error: 'Failed to process notifications' });
@@ -122,7 +144,16 @@ app.post('/api/notify-contact', async (req, res) => {
     const { name, email, subject, message } = req.body;
 
     try {
-        // 1. Send Auto-Reply Feedback Email TO THE CLIENT
+        // 1. Sync data securely to Supabase Backend
+        if (supabase) {
+            const { error: dbError } = await supabase
+                .from('contacts')
+                .insert([{ name, email, subject, message }]);
+            
+            if (dbError) console.error('Supabase DB Insert Error:', dbError.message);
+        }
+
+        // 2. Send Auto-Reply Feedback Email TO THE CLIENT
         const clientFeedbackMail = {
             from: EMAIL_USER,
             to: email, // Sending to the person who filled the form
@@ -131,7 +162,7 @@ app.post('/api/notify-contact', async (req, res) => {
         };
         await transporter.sendMail(clientFeedbackMail);
 
-        // 2. Forward the actual message TO COUNSEL
+        // 3. Forward the actual message TO COUNSEL
         const counselAlertMail = {
             from: EMAIL_USER,
             to: COUNSEL_EMAIL,
@@ -140,7 +171,7 @@ app.post('/api/notify-contact', async (req, res) => {
         };
         await transporter.sendMail(counselAlertMail);
 
-        res.status(200).json({ success: true, message: 'Contact emails sent successfully.' });
+        res.status(200).json({ success: true, message: 'Database synced and Contact emails sent successfully.' });
     } catch (error) {
         console.error('Contact Notification Error:', error.message);
         res.status(500).json({ success: false, error: 'Failed to process contact emails' });

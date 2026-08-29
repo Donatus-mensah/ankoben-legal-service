@@ -184,7 +184,7 @@
 
         .profile-intro { max-width: 900px; margin: 0 auto 4rem auto; text-align: center; }
         .profile-intro h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
-        .profile-intro p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.8; }
+        .profile-intro p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.8; text-align: justify; }
 
         .about-grid { 
             display: grid; 
@@ -374,7 +374,7 @@
 
         .legal-content { max-width: 800px; margin: 0 auto; width: 100%; }
         .legal-content h2 { margin-top: 2rem; font-size: clamp(1.3rem, 3vw, 1.5rem); }
-        .legal-content p, .legal-content ul { color: var(--text-muted); margin-bottom: 1rem; }
+        .legal-content p, .legal-content ul { color: var(--text-muted); margin-bottom: 1rem; line-height: 1.8; text-align: justify; }
         .legal-content ul { padding-left: 1.5rem; }
 
         .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 2.5rem; margin-top: 2rem; }
@@ -388,7 +388,18 @@
         .team-card:hover .team-card-btn { opacity: 0.6; }
 
         .profile-layout { display: grid; grid-template-columns: 350px 1fr; gap: 4rem; margin-top: 1rem; }
-        .profile-sidebar img { width: 100%; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 2rem; }
+        
+        .profile-sidebar-img-wrapper { position: relative; overflow: hidden; border-radius: 8px; margin-bottom: 2rem; cursor: pointer; box-shadow: var(--shadow-light); transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        .profile-sidebar-img-wrapper::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; border-radius: 8px; }
+        .profile-sidebar-img-wrapper:hover::after { opacity: 1; }
+        .profile-sidebar-img-wrapper .zoom-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; z-index: 2; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .profile-sidebar-img-wrapper:hover .zoom-icon { opacity: 1; }
+        .profile-sidebar-img-wrapper:hover { transform: scale(1.02); box-shadow: var(--shadow-hover); }
+        
+        .profile-sidebar img { margin-bottom: 0; width: 100%; max-height: 500px; object-fit: cover; object-position: top center; border-radius: 8px; border: 1px solid var(--border-color); transition: transform 0.5s ease, filter 0.5s ease; display: block; }
+        .profile-sidebar-img-wrapper:hover img { transform: scale(1.05); filter: grayscale(0%); }
+        [data-theme="dark"] .profile-sidebar-img-wrapper:hover img { filter: grayscale(0%) brightness(1.1); }
+
         .profile-contact { background-color: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); }
         .profile-contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; color: var(--text-color); font-size: 0.95rem; word-break: break-word; }
         .profile-contact-item:last-child { margin-bottom: 0; }
@@ -408,8 +419,8 @@
         .modal-content { background-color: var(--bg-color); padding: 3rem; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; width: 100%; max-width: 500px; transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
         .modal.show .modal-content { transform: translateY(0) scale(1); }
 
-        .modal-content.gallery-modal { max-width: 900px; padding: 0; background-color: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: visible; }
-        .modal-content.gallery-modal img { width: auto; height: auto; max-width: 100%; max-height: 75vh; object-fit: contain; margin-bottom: 1.5rem; border-radius: 8px; filter: grayscale(0%) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .modal-content.gallery-modal { max-width: 90vw; padding: 0; background-color: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: visible; }
+        .modal-content.gallery-modal img { width: auto; height: auto; max-width: 100%; max-height: 85vh; object-fit: contain; margin-bottom: 1.5rem; border-radius: 8px; filter: grayscale(0%) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .modal-content.gallery-modal p { color: #ffffff; background-color: rgba(0,0,0,0.8); padding: 1rem 1.5rem; border-radius: 8px; display: inline-block; font-size: 1rem; max-width: 90%; margin: 0; line-height: 1.4; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         
         .modal-icon { width: 64px; height: 64px; margin: 0 auto 1.5rem; }
@@ -452,7 +463,8 @@
             .review-form-container { position: static; margin-top: 0; }
             
             .profile-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-            .profile-sidebar img { max-width: 100%; aspect-ratio: 16/9; object-fit: cover; margin: 0 auto 1.5rem; display: block; }
+            .profile-sidebar-img-wrapper { max-width: 400px; margin-left: auto; margin-right: auto; }
+            .profile-sidebar img { max-width: 100%; max-height: 500px; object-fit: cover; margin: 0 auto; display: block; }
             
             .nav-links { gap: 1.5rem; }
         }
@@ -513,7 +525,7 @@
             .btn { width: 100%; margin-left: 0 !important; margin-bottom: 1rem; display: block; }
             
             .gallery-grid.expanded { grid-template-columns: 1fr; }
-            .profile-sidebar img { aspect-ratio: 1; }
+            .profile-sidebar-img-wrapper { max-width: 100%; }
             .form-container { padding: 1.5rem 1rem; }
         }
     </style>
@@ -563,7 +575,7 @@
             <div class="home-section reveal-on-scroll">
                 <div class="home-summary">
                     <h2>Excellence in Jurisprudence</h2>
-                    <p>Led by Nana Yaw Ofori Gyasi, Esq., AKOBEN LEGAL SERVICES is a premier law firm in Ghana. Our practice is defined by meticulous preparation, deep knowledge of Ghanaian jurisprudence, and a relentless pursuit of justice and favorable outcomes for our clients.</p>
+                    <p>Nana Gyasi is committed to providing legal services founded on professionalism, integrity, sound legal reasoning and practical results, with each matter approached with diligence and a clear understanding of the client's interests.</p>
                 </div>
                 <div class="home-features">
                     <div class="feature-box reveal-on-scroll" style="transition-delay: 0.1s;">
@@ -590,20 +602,20 @@
                     <p style="color: var(--text-muted);">A preview of our specialized practice areas.</p>
                 </div>
                 <div class="services-preview-grid">
-                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Corporate and business law', 'Our corporate practice handles complex commercial transactions, contract drafting, and representation in commercial litigation. We act as external legal counsel for SMEs and multinational corporations operating in West Africa.', 'building-2')">
-                        <i data-lucide="building-2" class="service-icon" width="32" height="32"></i>
-                        <h3>Corporate and business law</h3>
-                        <p>Advising businesses on incorporation, regulatory compliance, and commerce in Ghana.</p>
+                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Criminal law', 'Representing individuals and organizations in complex criminal matters, ensuring rigorous defense and protection of fundamental rights under Ghanaian law.', 'scale')">
+                        <i data-lucide="scale" class="service-icon" width="32" height="32"></i>
+                        <h3>Criminal law</h3>
+                        <p>Providing rigorous defense and legal counsel for individuals and entities facing criminal charges.</p>
                     </div>
-                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Property and real estate transactions', 'Navigating Ghana\'s land tenure system requires expertise. We conduct thorough due diligence, draft indentures, handle Lands Commission registrations, and resolve complex land disputes effectively.', 'home')">
-                        <i data-lucide="home" class="service-icon" width="32" height="32"></i>
-                        <h3>Property and real estate transactions</h3>
-                        <p>Guiding clients through property acquisition, land registration, and tenancy agreements.</p>
-                    </div>
-                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="showServiceModal('Civil litigation and dispute resolution', 'We represent clients vigorously in the Superior Courts of Judicature. Additionally, we are highly skilled in Alternative Dispute Resolution (ADR), helping clients avoid lengthy court battles when arbitration or mediation is beneficial.', 'gavel')">
+                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Civil and commercial litigation', 'We represent clients vigorously in the Superior Courts of Judicature. We handle complex commercial transactions, contract drafting, and representation in commercial litigation.', 'gavel')">
                         <i data-lucide="gavel" class="service-icon" width="32" height="32"></i>
-                        <h3>Civil litigation and dispute resolution</h3>
-                        <p>Expert representation in litigation, arbitration, and mediation proceedings.</p>
+                        <h3>Civil and commercial litigation</h3>
+                        <p>Expert representation in litigation, contractual claims, and corporate business-related matters.</p>
+                    </div>
+                    <div class="service-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="showServiceModal('Land and property disputes', 'Navigating Ghana\'s land tenure system requires distinct expertise. We handle complex land and property disputes, tenancy agreements, and conveyancing effectively in court.', 'map')">
+                        <i data-lucide="map" class="service-icon" width="32" height="32"></i>
+                        <h3>Land and property disputes</h3>
+                        <p>Resolving complex property claims, land registration issues, and real estate litigation.</p>
                     </div>
                 </div>
                 <div style="text-align: center;" class="reveal-on-scroll">
@@ -618,22 +630,9 @@
                 </div>
                 <div class="reviews-layout">
                     <div class="reviews-list-wrapper">
+                        <!-- We leave this container empty by default. Reviews will be dynamically inserted here via JS. -->
                         <div class="reviews-list" id="reviews-container">
-                            <div class="review-card">
-                                <div class="stars">★★★★★</div>
-                                <p class="review-text">"Nana Yaw Gyasi handled our company's incorporation and regulatory compliance flawlessly. His attention to detail and profound knowledge of Ghanaian corporate law is unmatched. Akoben Legal is highly recommended."</p>
-                                <p class="review-author">— Jonathan O., CEO</p>
-                            </div>
-                            <div class="review-card">
-                                <div class="stars">★★★★★</div>
-                                <p class="review-text">"I was facing a highly contentious land dispute in Accra. His strategic approach and authoritative presence in court secured a favorable outcome for my family. A true professional."</p>
-                                <p class="review-author">— Grace M.</p>
-                            </div>
-                            <div class="review-card">
-                                <div class="stars">★★★★★</div>
-                                <p class="review-text">"Outstanding service during our merger. The legal team at Akoben made complex intellectual property and labor issues easy to navigate."</p>
-                                <p class="review-author">— Sarah T., Operations Director</p>
-                            </div>
+                            <p style="color: var(--text-muted); font-style: italic; text-align: center; padding: 2rem;">No testimonials available yet. Be the first to leave a review below!</p>
                         </div>
                     </div>
 
@@ -670,11 +669,12 @@
                 <p style="color: var(--text-muted); margin-top: 1rem;">Meet the founder and learn about the ethos of Akoben Legal Services.</p>
             </div>
             
-            <!-- Restructured Profile Layout for better visual balance -->
             <div class="profile-intro reveal-on-scroll">
                 <h2>Nana Yaw Ofori Gyasi, Esq.</h2>
-                <p>As the founding partner of AKOBEN LEGAL SERVICES, Nana Yaw Ofori Gyasi has established a reputation for incisive legal analysis, formidable advocacy, and unwavering client commitment. The firm takes its name from the Adinkra symbol "Akoben" (the war horn), representing vigilance and readiness to defend our clients' rights at all times.</p>
-                <p>Navigating the complexities of the Ghanaian legal system requires not just knowledge of the law, but an understanding of the socio-economic landscape. We bridge that gap for local and international clients, corporations, and individuals alike.</p>
+                <p>Nana Yaw Ofori Gyasi is a Ghanaian lawyer with experience in criminal law, civil litigation, dispute resolution, legal advisory and advocacy. His practice involves representing individuals, families, traditional authorities, businesses and corporate entities in a broad range of legal matters before the courts and other adjudicatory bodies in Ghana.</p>
+                <p>He has particular experience in criminal law, civil and commercial litigation, land and property disputes, chieftaincy and traditional authority matters, family and succession disputes, contractual claims, corporate and business-related matters, and employment and institutional disputes. He also advises clients on legal rights and obligations, risk management, contractual relationships and strategies for resolving disputes effectively.</p>
+                <p>Beyond courtroom advocacy, he places considerable emphasis on preventive legal advice and strategic representation, helping clients understand their legal position and take appropriate steps before disputes escalate.</p>
+                <p>Nana Gyasi is committed to providing legal services founded on professionalism, integrity, sound legal reasoning and practical results, with each matter approached with diligence and a clear understanding of the client's interests.</p>
             </div>
 
             <div class="about-grid">
@@ -708,14 +708,14 @@
 
                 <!-- RIGHT COLUMN -->
                 <div class="col-right reveal-on-scroll" style="transition-delay: 0.2s;">
-                    <div class="vm-box interactive-card" onclick="showInfoModal('Our Vision', 'To be the foremost legal institution in West Africa, recognized globally for setting the benchmark in legal excellence, innovative jurisprudence, and unyielding defense of our clients\' rights in a rapidly evolving world. We constantly invest in our people and legal technologies to stay ahead of the curve.', 'eye')">
+                    <div class="vm-box interactive-card" onclick="showInfoModal('Our Vision', 'To provide legal services founded on professionalism, integrity, sound legal reasoning and practical results.', 'eye')">
                         <h3><i data-lucide="eye" width="24" height="24"></i> Our Vision</h3>
-                        <p style="color: var(--text-muted); margin-bottom: 0;">To be the foremost legal institution in West Africa, setting the benchmark in legal excellence, innovative jurisprudence, and unyielding defense of our clients' rights.</p>
+                        <p style="color: var(--text-muted); margin-bottom: 0;">To provide legal services founded on professionalism, integrity, sound legal reasoning and practical results.</p>
                     </div>
                     
-                    <div class="vm-box interactive-card" onclick="showInfoModal('Our Mission', 'To provide tailored, high-caliber legal solutions through rigorous advocacy, ethical practice, and a deep understanding of our clients\' business and personal goals, ensuring successful outcomes in every mandate we undertake. We believe in proactive counsel over reactive litigation.', 'target')">
+                    <div class="vm-box interactive-card" onclick="showInfoModal('Our Mission', 'To approach each matter with diligence and a clear understanding of the client\'s interests, placing considerable emphasis on preventive legal advice and strategic representation to ensure successful outcomes.', 'target')">
                         <h3><i data-lucide="target" width="24" height="24"></i> Our Mission</h3>
-                        <p style="color: var(--text-muted); margin-bottom: 0;">To provide tailored, high-caliber legal solutions through rigorous advocacy, ethical practice, and a deep understanding of our clients' goals.</p>
+                        <p style="color: var(--text-muted); margin-bottom: 0;">To approach each matter with diligence and a clear understanding of the client's interests, emphasizing preventive legal advice and strategic representation.</p>
                     </div>
 
                     <div class="credentials interactive-card" style="margin-top: 2rem;" onclick="toggleExpand('awards-list', this)">
@@ -802,52 +802,33 @@
                     </button>
                 </div>
 
-                <!-- THE ALBUM GRID (Stacked initially) -->
-                <!-- We ensure ALL 6 requested images are here -->
                 <div id="chambers-album" class="gallery-grid stacked">
-                    
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
                         <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/signing.jpg" alt="Nana Yaw Gyasi at Court" data-caption="Nana Yaw Gyasi, Esq. preparing for proceedings at the High Court Complex, Accra.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
-                    
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
                         <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/decen.jpg" alt="Akoben Boardroom" data-caption="The main boardroom at Akoben Legal Services, where strategic corporate negotiations take place.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
-                    
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
                         <img loading="lazy" src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&q=80&w=600" alt="Law Library" data-caption="Our extensive law library ensures our legal research is always thorough and up-to-date.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
-                    
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
                         <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/wig.jpg" alt="Client Meeting" data-caption="A standard consultation session. We prioritize clear communication and confidentiality above all.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
-                    
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
                         <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/in_office.jpeg" alt="Legal Documents" data-caption="Meticulous drafting and review of contracts is at the heart of our commercial practice.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
-                    
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
                         <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/speech.jpg" alt="Chambers Team" data-caption="Collaboration and strategic planning among the associates at Akoben Legal.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
-                    <div class="gallery-item" onclick="handleGalleryClick(event, this)">
-                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/speech.jpg" alt="Chambers Team" data-caption="Collaboration and strategic planning among the associates at Akoben Legal.">
-                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
-                    </div>
-                    <div class="gallery-item" onclick="handleGalleryClick(event, this)">
-                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/speech.jpg" alt="Chambers Team" data-caption="Collaboration and strategic planning among the associates at Akoben Legal.">
-                        <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
-                    </div>
-
-
                 </div>
                 
-                <!-- The prompt that shows when it's stacked -->
                 <div id="album-prompt" class="album-prompt">
                     <i data-lucide="hand" width="18"></i> Tap album to unpack & view
                 </div>
@@ -861,46 +842,52 @@
             </div>
             
             <div class="services-container">
-                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Corporate and business law', 'Our corporate practice handles complex commercial transactions, contract drafting, and representation in commercial litigation. We act as external legal counsel for SMEs and multinational corporations operating in West Africa, ensuring full regulatory compliance from incorporation to complex mergers and acquisitions.', 'building-2')">
-                    <i data-lucide="building-2" class="service-icon" width="32" height="32"></i>
-                    <h3>Corporate and business law</h3>
-                    <p>Advising businesses on incorporation, regulatory compliance, mergers, and commerce in Ghana.</p>
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Criminal law', 'Representing individuals and organizations in complex criminal matters. We ensure a rigorous defense, protection of fundamental rights under Ghanaian law, and expert navigation of criminal proceedings at all levels.', 'scale')">
+                    <i data-lucide="scale" class="service-icon" width="32" height="32"></i>
+                    <h3>Criminal law</h3>
+                    <p>Rigorous defense and legal counsel for individuals and entities facing criminal charges.</p>
                 </div>
 
-                <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Property and real estate transactions', 'Navigating Ghana\'s land tenure system requires distinct expertise. We conduct thorough due diligence, draft indentures, handle Lands Commission registrations seamlessly, and resolve complex land disputes effectively in court.', 'home')">
-                    <i data-lucide="home" class="service-icon" width="32" height="32"></i>
-                    <h3>Property and real estate transactions</h3>
-                    <p>Guiding clients through property acquisition, land registration, and tenancy agreements.</p>
-                </div>
-
-                <div class="service-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="showServiceModal('Family & Probate Law', 'We provide sensitive and discreet counsel in matrimonial matters, drafting of wills, processing Letters of Administration, and navigating the nuances of both customary and statutory family law intricacies in Ghana.', 'users')">
-                    <i data-lucide="users" class="service-icon" width="32" height="32"></i>
-                    <h3>Family & Probate Law</h3>
-                    <p>Discreet representation in divorce, child custody, and estate administration.</p>
-                </div>
-
-                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Civil litigation and dispute resolution', 'We represent clients vigorously in the Superior Courts of Judicature. Beyond standard litigation, we are highly skilled in Alternative Dispute Resolution (ADR), helping clients avoid lengthy court battles when arbitration or mediation is significantly more beneficial.', 'gavel')">
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Civil and commercial litigation', 'Expert representation in civil and commercial litigation in the Superior Courts of Judicature, handling complex business disputes, corporate liability, and commercial breach of duty claims.', 'gavel')">
                     <i data-lucide="gavel" class="service-icon" width="32" height="32"></i>
-                    <h3>Civil litigation and dispute resolution</h3>
-                    <p>Expert representation in litigation, arbitration, and mediation proceedings.</p>
+                    <h3>Civil and commercial litigation</h3>
+                    <p>Vigorous courtroom representation and advocacy in both civil and commercial disputes.</p>
                 </div>
 
-                <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Employment & Labour Law', 'We assist companies in drafting robust HR policies and employment contracts that comply strictly with the Ghana Labour Act. We also vigorously represent parties in wrongful termination claims and National Labour Commission hearings.', 'briefcase')">
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="showServiceModal('Land and property disputes', 'Navigating Ghana\'s complex land tenure system. We represent clients in high-stakes land boundary disputes, title contestations, and recovery of premises.', 'map')">
+                    <i data-lucide="map" class="service-icon" width="32" height="32"></i>
+                    <h3>Land and property disputes</h3>
+                    <p>Resolving complex property claims, land registration issues, and real estate litigation.</p>
+                </div>
+
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Chieftaincy and traditional authority matters', 'Specialized counsel and representation before Traditional Councils and the National House of Chiefs regarding chieftaincy succession, stool lands, and traditional authority disputes.', 'crown')">
+                    <i data-lucide="crown" class="service-icon" width="32" height="32"></i>
+                    <h3>Chieftaincy and traditional authority matters</h3>
+                    <p>Expert legal guidance on traditional succession, stool/skin lands, and traditional council dispute resolution.</p>
+                </div>
+
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Family and succession disputes', 'Handling sensitive matters involving customary and statutory marriage dissolution, child custody, probate, letters of administration, and contested wills.', 'users')">
+                    <i data-lucide="users" class="service-icon" width="32" height="32"></i>
+                    <h3>Family and succession disputes</h3>
+                    <p>Discreet and compassionate representation in divorce, probate, and estate administration.</p>
+                </div>
+
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="showServiceModal('Contractual claims', 'Enforcing contractual rights, defending against breach of contract allegations, and negotiating settlements for complex commercial and private agreements.', 'file-signature')">
+                    <i data-lucide="file-signature" class="service-icon" width="32" height="32"></i>
+                    <h3>Contractual claims</h3>
+                    <p>Litigation and dispute resolution for breach of contract and enforcement of obligations.</p>
+                </div>
+                
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Corporate and business-related matters', 'Acting as external legal counsel for businesses, ensuring regulatory compliance, managing risk, handling incorporations, and advising on general corporate governance in Ghana.', 'building-2')">
+                    <i data-lucide="building-2" class="service-icon" width="32" height="32"></i>
+                    <h3>Corporate and business-related matters</h3>
+                    <p>Advising on incorporation, risk management, and overall regulatory compliance for businesses.</p>
+                </div>
+
+                <div class="service-card reveal-on-scroll" style="transition-delay: 0.2s;" onclick="showServiceModal('Employment and institutional disputes', 'Counsel on employer-employee relations, wrongful termination claims, disciplinary proceedings, and robust representation at the National Labour Commission.', 'briefcase')">
                     <i data-lucide="briefcase" class="service-icon" width="32" height="32"></i>
-                    <h3>Employment & Labour Law</h3>
-                    <p>Counsel on employer-employee relations, compliance, and industrial disputes.</p>
-                </div>
-
-                <div class="service-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="showServiceModal('Intellectual Property Law', 'From trademark and patent registrations at the Registrar General\'s Department to heavily litigating copyright infringements, we ensure your intellectual assets, brand identity, and creative works remain exclusively yours within the Ghanaian market.', 'file-badge-2')">
-                    <i data-lucide="file-badge-2" class="service-icon" width="32" height="32"></i>
-                    <h3>Intellectual Property Law</h3>
-                    <p>Protecting your brand, inventions, and creative assets in the Ghanaian market.</p>
-                </div>
-
-                <div class="service-card reveal-on-scroll" style="transition-delay: 0.1s;" onclick="showServiceModal('Other / Custom Inquiry', 'The law is vast and highly interconnected. If your specific legal need is not listed above, please do not hesitate to reach out. Describe your unique situation to us, and we will evaluate how we can best assist you, or refer you to a trusted specialist within our extensive network.', 'message-circle')">
-                    <i data-lucide="message-circle" class="service-icon" width="32" height="32"></i>
-                    <h3>Other / Custom Inquiry</h3>
-                    <p>Have a unique legal situation? Let us know the specifics and we will evaluate how best to assist.</p>
+                    <h3>Employment and institutional disputes</h3>
+                    <p>Navigating labor laws, resolving workplace disputes, and handling institutional compliance issues.</p>
                 </div>
             </div>
         </section>
@@ -940,7 +927,7 @@
                 </div>
 
                 <div class="team-card reveal-on-scroll" style="transition-delay: 0.3s;" onclick="navigate('team-kofi')">
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400" alt="Kofi Annan" class="team-card-img">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400" alt="Donatus Ernest Mensah" class="team-card-img">
                     <div class="team-card-content">
                         <h3>Donatus Ernest Mensah</h3>
                         <div class="team-card-role">Paralegal</div>
@@ -957,7 +944,10 @@
             
             <div class="profile-layout">
                 <div class="profile-sidebar reveal-on-scroll">
-                    <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/dinah.jpg" alt="Dinah Agyapong Ohenebemah">
+                    <div class="profile-sidebar-img-wrapper" onclick="openGalleryModalDirect(this)">
+                        <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/dinah.jpg" alt="Dinah Agyapong Ohenebemah" data-caption="Ms. Dinah Agyapong Ohenebemah, Esq. - Senior Associate">
+                        <i data-lucide="maximize" class="zoom-icon" width="32" height="32"></i>
+                    </div>
                     <div class="profile-contact">
                         <div class="profile-contact-item"><i data-lucide="phone" width="18"></i> <a href="tel:+233556799253">+233 55 679 9253</a></div>
                         <div class="profile-contact-item"><i data-lucide="mail" width="18"></i> <a href="mailto:dinagy@yahoo.com">dinagy@yahoo.com</a></div>
@@ -972,13 +962,24 @@
                     <p>Before bringing her immense talents to her current role, she served as a key legal consultant for several leading financial institutions in Accra, providing vital advice on regulatory compliance and risk management. Her unique blend of multidisciplinary, international education and deep legal expertise makes her a truly inspiring and highly capable leader in her field.</p>
                     
                     <div class="profile-section">
-                        <h3><i data-lucide="graduation-cap"></i> Education & Qualifications</h3>
+                        <h3><i data-lucide="briefcase"></i> Work Experience</h3>
+                        <ul class="profile-list">
+                            <li><strong>Senior Associate</strong> - Akoben Legal Services (Present)</li>
+                            <li><strong>Legal Consultant</strong> - Accra Financial Institutions</li>
+                        </ul>
+
+                        <h3 style="margin-top: 2rem;"><i data-lucide="graduation-cap"></i> Education & Qualifications</h3>
                         <ul class="profile-list">
                             <li><strong>BL (Barrister at Law)</strong> - Ghana School of Law, Accra</li>
                             <li><strong>LLB (Hons)</strong> - University of Ghana</li>
                             <li><strong>Bachelor of Social Work</strong> - University of Calgary, Canada</li>
                             <li><strong>Master's in English Language</strong> - Bergen, Norway</li>
                         </ul>
+
+                        <h3 style="margin-top: 2rem;"><i data-lucide="star"></i> Expertise & Skills</h3>
+                        <p style="color: var(--text-muted); line-height: 1.8; word-break: break-word;">
+                            Commercial Dispute Resolution &bull; Litigation &bull; Corporate Structuring &bull; Regulatory Compliance &bull; Risk Management &bull; Legal Consulting
+                        </p>
                     </div>
                 </div>
             </div>
@@ -991,7 +992,10 @@
             
             <div class="profile-layout">
                 <div class="profile-sidebar reveal-on-scroll">
-                    <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/vic_crop.jpeg" alt="Victoria Kotei ">
+                    <div class="profile-sidebar-img-wrapper" onclick="openGalleryModalDirect(this)">
+                        <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/vic_crop.jpeg" alt="Victoria Kotei" data-caption="Victoria Kotei - Legal Clerk">
+                        <i data-lucide="maximize" class="zoom-icon" width="32" height="32"></i>
+                    </div>
                     <div class="profile-contact">
                         <div class="profile-contact-item"><i data-lucide="phone" width="18"></i> <a href="tel:+233577780056">+233 577 780 056</a></div>
                         <div class="profile-contact-item"><i data-lucide="mail" width="18"></i> <a href="mailto:victoriakotei11@gmail.com">victoriakotei11@gmail.com</a></div>
@@ -1006,11 +1010,21 @@
                     <p>Her deep understanding of the court registry system in the Eastern Region means our legal team operates with maximum efficiency, avoiding procedural delays.</p>
                     
                     <div class="profile-section">
-                        <h3><i data-lucide="graduation-cap"></i> Education & Qualifications</h3>
+                        <h3><i data-lucide="briefcase"></i> Work Experience</h3>
+                        <ul class="profile-list">
+                            <li><strong>Legal Clerk</strong> - Akoben Legal Services (Present)</li>
+                        </ul>
+
+                        <h3 style="margin-top: 2rem;"><i data-lucide="graduation-cap"></i> Education & Qualifications</h3>
                         <ul class="profile-list">
                             <li><strong>HND in Secretaryship and Management Studies</strong> - Koforidua Technical University, Koforidua</li>
                             <li><strong>Bachelor of Technology in Secretaryship and Management Studies</strong> - Koforidua Technical University, Koforidua</li>
                         </ul>
+
+                        <h3 style="margin-top: 2rem;"><i data-lucide="star"></i> Expertise & Skills</h3>
+                        <p style="color: var(--text-muted); line-height: 1.8; word-break: break-word;">
+                            Case File Management &bull; Court Filings &bull; Judicial Standards Compliance &bull; Court Registry Navigation &bull; Organizational Efficiency
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1023,7 +1037,10 @@
             
             <div class="profile-layout">
                 <div class="profile-sidebar reveal-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600" alt="Donatus Ernest Mensah">
+                    <div class="profile-sidebar-img-wrapper" onclick="openGalleryModalDirect(this)">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600" alt="Donatus Ernest Mensah" data-caption="Donatus Ernest Mensah - Paralegal">
+                        <i data-lucide="maximize" class="zoom-icon" width="32" height="32"></i>
+                    </div>
                     <div class="profile-contact">
                         <div class="profile-contact-item"><i data-lucide="phone" width="18"></i> <a href="tel:+233543087113">+233 54 308 7113</a></div>
                         <div class="profile-contact-item"><i data-lucide="mail" width="18"></i> <a href="mailto:donatusernestmensah@gmail.com">donatusernestmensah@gmail.com</a></div>
@@ -1037,10 +1054,20 @@
                     <p>Donatus provides critical support in legal research, drafting preliminary legal opinions, and client interviewing. His passion for the law and dedication to meticulous research provides the attorneys at AKOBEN LEGAL with robust foundations for complex litigation strategies.</p>
                     
                     <div class="profile-section">
-                        <h3><i data-lucide="graduation-cap"></i> Education & Qualifications</h3>
+                        <h3><i data-lucide="briefcase"></i> Work Experience</h3>
+                        <ul class="profile-list">
+                            <li><strong>Paralegal</strong> - Akoben Legal Services (Present)</li>
+                        </ul>
+
+                        <h3 style="margin-top: 2rem;"><i data-lucide="graduation-cap"></i> Education & Qualifications</h3>
                         <ul class="profile-list">
                             <li><strong>Bachelor of Science in Information Technology</strong> - University of Cape Coast, Cape Coast</li>
                         </ul>
+
+                        <h3 style="margin-top: 2rem;"><i data-lucide="star"></i> Expertise & Skills</h3>
+                        <p style="color: var(--text-muted); line-height: 1.8; word-break: break-word;">
+                            Legal Research &bull; Drafting Legal Opinions &bull; Client Interviewing &bull; Information Technology &bull; Litigation Support
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1125,13 +1152,14 @@
                             <label for="book-practice" style="display:none;">Practice Area</label>
                             <select id="book-practice" required>
                                 <option value="" disabled selected>Select Practice Area</option>
-                                <option value="Corporate & Commercial Law">Corporate and business law</option>
-                                <option value="Real Estate & Conveyancing">Property and real estate transactions</option>
-                                <option value="Family & Probate Law">Family & Probate Law</option>
-                                <option value="Dispute Resolution">Civil litigation and dispute resolution</option>
-                                <option value="Employment & Labour Law">Employment & Labour Law</option>
-                                <option value="Intellectual Property Law">Intellectual Property Law</option>
-                                <option value="General Legal Inquiry">General Legal Inquiry</option>
+                                <option value="Criminal law">Criminal law</option>
+                                <option value="Civil and commercial litigation">Civil and commercial litigation</option>
+                                <option value="Land and property disputes">Land and property disputes</option>
+                                <option value="Chieftaincy and traditional authority matters">Chieftaincy and traditional authority matters</option>
+                                <option value="Family and succession disputes">Family and succession disputes</option>
+                                <option value="Contractual claims">Contractual claims</option>
+                                <option value="Corporate and business-related matters">Corporate and business-related matters</option>
+                                <option value="Employment and institutional disputes">Employment and institutional disputes</option>
                                 <option value="Other / Custom Inquiry">Other / Custom Legal Inquiry</option>
                             </select>
                             <div id="err-practice" class="error-msg">Please select a practice area.</div>
@@ -1165,9 +1193,19 @@
             <div class="page-header"><h1>Privacy Policy</h1></div>
             <div class="legal-content">
                 <h2>1. Introduction</h2>
-                <p>At AKOBEN LEGAL SERVICES, we are committed to protecting the privacy and security of our clients...</p>
+                <p>At AKOBEN LEGAL SERVICES, maintaining the confidentiality and security of our clients' information is paramount. This Privacy Policy outlines how we collect, use, disclose, and safeguard your personal and sensitive data in accordance with the Data Protection Act, 2012 (Act 843) of the Republic of Ghana.</p>
+                
                 <h2>2. Information Collection</h2>
-                <p>We collect information that you voluntarily provide to us when scheduling a consultation...</p>
+                <p>We collect information that you voluntarily provide to us when scheduling a consultation, filling out forms on our website, or during in-person meetings. This may include, but is not limited to, your name, contact details, identification documents, and specific details regarding your legal matters.</p>
+
+                <h2>3. Use of Information</h2>
+                <p>The information we collect is used strictly for the purpose of providing legal services, conflict checking, communicating with you regarding your case, and fulfilling our regulatory obligations. We do not use your information for marketing purposes without your explicit consent.</p>
+
+                <h2>4. Data Security & Confidentiality</h2>
+                <p>All information shared with AKOBEN LEGAL SERVICES is subject to strict attorney-client privilege. We implement robust physical, technical, and administrative security measures to protect your data against unauthorized access, alteration, or disclosure.</p>
+
+                <h2>5. Disclosure of Information</h2>
+                <p>We do not sell, trade, or rent your personal information to third parties. Information may only be disclosed if required by law, by court order, or to third-party service providers (such as IT hosting) who are bound by strict confidentiality agreements to assist in our operations.</p>
             </div>
         </section>
 
@@ -1175,19 +1213,30 @@
             <div class="page-header"><h1>Terms of Engagement</h1></div>
             <div class="legal-content">
                 <h2>1. Scope of Representation</h2>
-                <p>The submission of a form through this website does not constitute an attorney-client relationship...</p>
+                <p>The submission of a form through this website, or an initial consultation, does not constitute a formal attorney-client relationship. A formal relationship is only established upon the execution of a written Retainer Agreement signed by both the client and a representative of AKOBEN LEGAL SERVICES.</p>
+                
                 <h2>2. Consultation Fees</h2>
-                <p>Initial consultations scheduled via this website may be subject to a consultation fee...</p>
+                <p>Initial consultations scheduled via this website may be subject to a consultation fee. You will be informed of any applicable fees prior to the confirmation of your appointment.</p>
+
+                <h2>3. Client Responsibilities</h2>
+                <p>Clients are expected to provide full, honest, and timely disclosure of all facts relevant to their legal matter. Failure to do so may impede our ability to provide effective representation and may result in the termination of the engagement.</p>
+
+                <h2>4. Termination of Services</h2>
+                <p>Either party may terminate the legal representation at any time, subject to the terms outlined in the formal Retainer Agreement and the ethical guidelines established by the General Legal Council of Ghana.</p>
             </div>
         </section>
 
         <section id="disclaimer" class="page-view">
             <div class="page-header"><h1>Legal Disclaimer</h1></div>
             <div class="legal-content">
-                <h2>No Legal Advice</h2>
-                <p>The content provided on this website is intended for general informational purposes only...</p>
-                <h2>No Attorney-Client Relationship</h2>
-                <p>Viewing this website or sending messages does not create an attorney-client relationship...</p>
+                <h2>1. No Legal Advice Intended</h2>
+                <p>The content provided on this website—including articles, practice area descriptions, and general information—is intended for informational purposes only. It does not constitute legal advice and should not be relied upon as such. The law is constantly evolving, and information on this site may not reflect the most current legal developments in Ghana.</p>
+                
+                <h2>2. No Attorney-Client Relationship</h2>
+                <p>Viewing this website, downloading information, or sending messages through our contact forms does not create an attorney-client relationship between you and AKOBEN LEGAL SERVICES or Nana Yaw Gyasi, Esq. Do not send confidential information through this website until a formal attorney-client relationship has been established.</p>
+
+                <h2>3. Liability</h2>
+                <p>AKOBEN LEGAL SERVICES explicitly disclaims all liability in respect to actions taken or not taken based on any or all the contents of this site. Always seek the advice of competent legal counsel licensed to practice in Ghana for your specific legal issues.</p>
             </div>
         </section>
 
@@ -1200,7 +1249,27 @@
                         <i data-lucide="chevron-down" width="20" height="20"></i>
                     </h3>
                     <div id="faq-1" class="expandable-content">
-                        <p style="margin-top: 1rem; color: var(--text-muted);">Please bring a valid form of identification (Ghana Card or Passport) and any documents relevant to your case...</p>
+                        <p style="margin-top: 1rem; color: var(--text-muted);">Please bring a valid form of identification (such as your Ghana Card or Passport). Additionally, bring any documents relevant to your case, including contracts, court summons, correspondence, or land indentures. Having these documents ready allows us to provide a more accurate preliminary assessment of your situation.</p>
+                    </div>
+                </div>
+
+                <div class="interactive-card" style="margin-bottom: 1rem; border: 1px solid var(--border-color); background-color: var(--card-bg);" onclick="toggleExpand('faq-2', this)">
+                    <h3 style="margin-bottom: 0; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
+                        <span>Do you offer virtual consultations?</span>
+                        <i data-lucide="chevron-down" width="20" height="20"></i>
+                    </h3>
+                    <div id="faq-2" class="expandable-content">
+                        <p style="margin-top: 1rem; color: var(--text-muted);">Yes, we recognize that our clients may be located outside of the Eastern Region or internationally. We offer secure virtual consultations via Zoom or Microsoft Teams. You can select "Virtual" as your preference when filling out the consultation booking form.</p>
+                    </div>
+                </div>
+
+                <div class="interactive-card" style="margin-bottom: 1rem; border: 1px solid var(--border-color); background-color: var(--card-bg);" onclick="toggleExpand('faq-3', this)">
+                    <h3 style="margin-bottom: 0; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between;">
+                        <span>How does the firm charge for its services?</span>
+                        <i data-lucide="chevron-down" width="20" height="20"></i>
+                    </h3>
+                    <div id="faq-3" class="expandable-content">
+                        <p style="margin-top: 1rem; color: var(--text-muted);">Our fee structures are transparent and comply with the Scale of Fees published by the Ghana Bar Association. Depending on the nature of the mandate, we may charge a flat fee, an hourly rate, or a retainer. We discuss and agree upon all fee structures with our clients during the initial consultation before any work commences.</p>
                     </div>
                 </div>
             </div>
@@ -1209,8 +1278,14 @@
         <section id="compliance" class="page-view">
             <div class="page-header"><h1>AML & Regulatory Compliance</h1></div>
             <div class="legal-content">
-                <h2>Anti-Money Laundering (AML) Policy</h2>
-                <p>AKOBEN LEGAL SERVICES strictly adheres to the Anti-Money Laundering Act...</p>
+                <h2>1. Anti-Money Laundering (AML) Policy</h2>
+                <p>AKOBEN LEGAL SERVICES is strictly committed to combating money laundering and the financing of terrorism. As legal practitioners operating in Ghana, we are bound by the Anti-Money Laundering Act, 2020 (Act 1044) and the guidelines issued by the Financial Intelligence Centre (FIC).</p>
+                
+                <h2>2. Client Due Diligence (KYC)</h2>
+                <p>We are legally obligated to conduct comprehensive "Know Your Customer" (KYC) procedures before taking on new clients or engaging in specific transactions (such as real estate purchases or corporate formations). Clients will be required to provide verified proof of identity, proof of address, and in certain cases, documentation verifying the source of their funds.</p>
+
+                <h2>3. Reporting Obligations</h2>
+                <p>While attorney-client privilege is fiercely protected, under Ghanaian law, the firm is obligated to report suspicious transactions to the relevant authorities if we have reasonable grounds to suspect that funds are the proceeds of illegal activities. We reserve the right to decline or terminate representation if a client refuses to comply with our AML requirements.</p>
             </div>
         </section>
 
@@ -1227,7 +1302,7 @@
                 <h4>Our Team</h4>
                 <div class="footer-team">
                     <div class="team-member-mini" style="cursor: pointer;" onclick="navigate('team-kwame')">
-                        <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/dinaah2.jpg" alt="Worker Avatar" class="team-member-avatar">
+                        <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/dinah.jpg" alt="Worker Avatar" class="team-member-avatar">
                         <div class="team-member-info">
                             <span class="team-member-name">Ms. Dinah Agyapong Ohenebemah</span>
                             <span class="team-member-role">Senior Associate</span>
@@ -1536,12 +1611,23 @@
         const reviewsContainer = document.getElementById('reviews-container');
 
         if(reviewForm && reviewsContainer) {
-            const initialCards = Array.from(reviewsContainer.children);
-            initialCards.forEach(card => { reviewsContainer.appendChild(card.cloneNode(true)); });
+            
+            // Function to render a review card
+            const createReviewElement = (name, rating, text) => {
+                let stars = '';
+                for(let i=0; i<5; i++) { stars += i < rating ? '★' : '☆'; }
+                
+                const newReview = document.createElement('div');
+                newReview.className = 'review-card';
+                newReview.style.animation = 'fadeInPage 0.5s forwards';
+                newReview.innerHTML = `<div class="stars">${stars}</div><p class="review-text">"${text}"</p><p class="review-author">— ${name}</p>`;
+                return newReview;
+            };
 
             let isHoveringReviews = false;
             let scrollPos = 0;
             let firstChildHeight = 0;
+            let scrollAnimationId;
             
             const updateMetrics = () => {
                 const firstChild = reviewsContainer.firstElementChild;
@@ -1550,51 +1636,94 @@
                     firstChildHeight = firstChild.offsetHeight + (parseFloat(style.gap) || 32);
                 }
             };
-            updateMetrics();
             window.addEventListener('resize', updateMetrics);
 
             const scrollLoop = () => {
-                if (!isHoveringReviews) {
-                    scrollPos += 0.8;
-                    reviewsContainer.scrollTop = scrollPos;
-                    if (firstChildHeight > 0 && scrollPos >= firstChildHeight) {
-                        reviewsContainer.appendChild(reviewsContainer.firstElementChild);
-                        scrollPos -= firstChildHeight;
+                // Only scroll if there are actually elements to scroll
+                if (reviewsContainer.children.length > 1) {
+                    if (!isHoveringReviews) {
+                        scrollPos += 0.8;
                         reviewsContainer.scrollTop = scrollPos;
-                        updateMetrics(); 
+                        if (firstChildHeight > 0 && scrollPos >= firstChildHeight) {
+                            reviewsContainer.appendChild(reviewsContainer.firstElementChild);
+                            scrollPos -= firstChildHeight;
+                            reviewsContainer.scrollTop = scrollPos;
+                            updateMetrics(); 
+                        }
+                    } else {
+                        scrollPos = reviewsContainer.scrollTop;
                     }
-                } else {
-                    scrollPos = reviewsContainer.scrollTop;
                 }
-                requestAnimationFrame(scrollLoop);
+                scrollAnimationId = requestAnimationFrame(scrollLoop);
             };
 
             reviewsContainer.addEventListener('mouseenter', () => isHoveringReviews = true);
             reviewsContainer.addEventListener('mouseleave', () => isHoveringReviews = false);
             reviewsContainer.addEventListener('touchstart', () => isHoveringReviews = true, {passive: true});
             reviewsContainer.addEventListener('touchend', () => { setTimeout(() => isHoveringReviews = false, 1500); });
-            requestAnimationFrame(scrollLoop);
+
+            // Fetch reviews from Supabase on load
+            const loadReviews = async () => {
+                if (supabaseClient && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
+                    try {
+                        const { data, error } = await supabaseClient
+                            .from('testimonials')
+                            .select('*')
+                            .eq('type', 'review')
+                            .order('created_at', { ascending: false });
+
+                        if (error) throw error;
+
+                        if (data && data.length > 0) {
+                            reviewsContainer.innerHTML = ''; // Clear empty state message
+                            
+                            data.forEach(review => {
+                                reviewsContainer.appendChild(createReviewElement(review.name, review.rating, review.message));
+                            });
+                            
+                            // Duplicate elements to create continuous scroll illusion
+                            const initialCards = Array.from(reviewsContainer.children);
+                            initialCards.forEach(card => { reviewsContainer.appendChild(card.cloneNode(true)); });
+                            
+                            updateMetrics();
+                            cancelAnimationFrame(scrollAnimationId);
+                            requestAnimationFrame(scrollLoop);
+                        }
+                    } catch (err) {
+                        console.error("Error loading reviews:", err);
+                    }
+                }
+            };
+            
+            loadReviews(); // Call it immediately
 
             reviewForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const name = document.getElementById('rev-name').value;
                 const ratingVal = document.getElementById('rev-rating').value;
                 const text = document.getElementById('rev-text').value;
-                let stars = '';
-                for(let i=0; i<5; i++) { stars += i < ratingVal ? '★' : '☆'; }
-
+                
                 try {
                     if (supabaseClient && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
                         await supabaseClient.from('testimonials').insert([{ name, rating: ratingVal, message: text, type: 'review' }]);
                     }
 
-                    const newReview = document.createElement('div');
-                    newReview.className = 'review-card';
-                    newReview.style.animation = 'fadeInPage 0.5s forwards';
-                    newReview.innerHTML = `<div class="stars">${stars}</div><p class="review-text">"${text}"</p><p class="review-author">— ${name}</p>`;
+                    // Remove placeholder if it's the first review
+                    if(reviewsContainer.children.length === 1 && reviewsContainer.firstElementChild.tagName === 'P') {
+                        reviewsContainer.innerHTML = '';
+                    }
+
+                    const newReviewElement = createReviewElement(name, ratingVal, text);
+                    reviewsContainer.insertBefore(newReviewElement, reviewsContainer.firstChild);
                     
-                    reviewsContainer.insertBefore(newReview, reviewsContainer.firstChild);
-                    scrollPos = 0; reviewsContainer.scrollTop = 0; updateMetrics(); 
+                    scrollPos = 0; 
+                    reviewsContainer.scrollTop = 0; 
+                    updateMetrics(); 
+                    
+                    // Restart scroll if it wasn't running
+                    cancelAnimationFrame(scrollAnimationId);
+                    requestAnimationFrame(scrollLoop);
+
                     reviewForm.reset();
                     showSuccessModal("Review Submitted", "Thank you for your feedback! It has been securely saved and added to our live feed.");
                 } catch(err) { console.error("Review Error:", err); }
