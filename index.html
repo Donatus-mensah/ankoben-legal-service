@@ -214,10 +214,8 @@
         .award-item:hover { background-color: var(--hover-bg); border-color: var(--border-color); transform: translateX(8px); }
 
         .reputation-wrapper { max-width: 1000px; margin: 0 auto 5rem auto; }
-        .reputation-block { padding: 2.5rem; background-color: var(--card-bg); border-left: 4px solid var(--text-color); font-style: italic; color: var(--text-muted); cursor: pointer; transition: all 0.4s ease; position: relative; border-radius: 0 8px 8px 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
-        .reputation-block::after { content: 'Read full context ➔'; display: block; font-size: 0.8rem; color: var(--text-color); opacity: 0; margin-top: 1rem; transition: opacity 0.3s ease, transform 0.3s ease; transform: translateX(-10px); font-style: normal; }
-        .reputation-block:hover { transform: scale(1.02); background-color: var(--hover-bg); box-shadow: var(--shadow-hover); }
-        .reputation-block:hover::after { opacity: 1; transform: translateX(0); }
+        .reputation-block { padding: 2.5rem; background-color: var(--card-bg); border-left: 4px solid var(--text-color); font-style: italic; color: var(--text-muted); transition: all 0.4s ease; position: relative; border-radius: 0 8px 8px 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem; }
+        .reputation-block:hover { transform: scale(1.01); background-color: var(--hover-bg); box-shadow: var(--shadow-hover); }
 
         .album-section {
             border-top: 1px solid var(--border-color);
@@ -753,16 +751,8 @@
 
             <!-- Full Width Reputation Block -->
             <div class="reputation-wrapper reveal-on-scroll">
-                <div class="reputation-block interactive-card" style="margin-top: 0;" onclick="toggleExpand('reputation-full-text', this)">
-                    "Nana Yaw Gyasi and the team at Akoben Legal Services are not just lawyers; they are strategic partners. Their ability to dissect complex Ghanaian legal challenges and present clear, actionable pathways has earned them a stellar reputation among the Eastern Region's business elite. When the stakes are high, they are the firm you want in your corner."
-                    <br><br>
-                    <span style="font-weight: 600; color: var(--text-color); font-style: normal;">— West African Corporate Digest</span>
-                    
-                    <div id="reputation-full-text" class="expandable-content" style="font-style: normal; font-size: 0.9rem;">
-                        <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-                            <strong>Extended Context:</strong> We pride ourselves on not just offering legal advice, but providing actionable business intelligence that protects our clients' bottom line while ensuring strict legal compliance. Our reputation is built on trust, confidentiality, and consistent results.
-                        </p>
-                    </div>
+                <div id="reputation-container">
+                    <p style="color: var(--text-muted); font-style: italic; text-align: center; padding: 2rem;">No reputation entries available yet. Be the first to add one!</p>
                 </div>
 
                 <div style="text-align: right; margin-top: 1rem;">
@@ -1408,7 +1398,7 @@
 
     <script>
         const SUPABASE_URL = 'https://qbcjhoppnocrishsainc.supabase.co';
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE'; 
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFiY2pob3Bwbm9jcmlzaHNhaW5jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzNzcyMjIsImV4cCI6MjEwMTk1MzIyMn0.chEgS3AjjXkKSJJ4VJXvLpkXJeHD2uXpgEe3IG62wqk'; 
         const RENDER_BACKEND_URL = 'https://ankoben-legal-service.onrender.com';
 
         let supabaseClient;
@@ -1611,19 +1601,6 @@
         const reviewsContainer = document.getElementById('reviews-container');
 
         if(reviewForm && reviewsContainer) {
-            
-            // Function to render a review card
-            const createReviewElement = (name, rating, text) => {
-                let stars = '';
-                for(let i=0; i<5; i++) { stars += i < rating ? '★' : '☆'; }
-                
-                const newReview = document.createElement('div');
-                newReview.className = 'review-card';
-                newReview.style.animation = 'fadeInPage 0.5s forwards';
-                newReview.innerHTML = `<div class="stars">${stars}</div><p class="review-text">"${text}"</p><p class="review-author">— ${name}</p>`;
-                return newReview;
-            };
-
             let isHoveringReviews = false;
             let scrollPos = 0;
             let firstChildHeight = 0;
@@ -1636,97 +1613,102 @@
                     firstChildHeight = firstChild.offsetHeight + (parseFloat(style.gap) || 32);
                 }
             };
-            window.addEventListener('resize', updateMetrics);
 
             const scrollLoop = () => {
-                // Only scroll if there are actually elements to scroll
-                if (reviewsContainer.children.length > 1) {
-                    if (!isHoveringReviews) {
-                        scrollPos += 0.8;
+                if (!isHoveringReviews && reviewsContainer.children.length > 0) {
+                    scrollPos += 0.8;
+                    reviewsContainer.scrollTop = scrollPos;
+                    if (firstChildHeight > 0 && scrollPos >= firstChildHeight) {
+                        reviewsContainer.appendChild(reviewsContainer.firstElementChild);
+                        scrollPos -= firstChildHeight;
                         reviewsContainer.scrollTop = scrollPos;
-                        if (firstChildHeight > 0 && scrollPos >= firstChildHeight) {
-                            reviewsContainer.appendChild(reviewsContainer.firstElementChild);
-                            scrollPos -= firstChildHeight;
-                            reviewsContainer.scrollTop = scrollPos;
-                            updateMetrics(); 
-                        }
-                    } else {
-                        scrollPos = reviewsContainer.scrollTop;
+                        updateMetrics(); 
                     }
+                } else if (isHoveringReviews) {
+                    scrollPos = reviewsContainer.scrollTop;
                 }
                 scrollAnimationId = requestAnimationFrame(scrollLoop);
             };
+
+            const fetchAndRenderReviews = async () => {
+                if (!supabaseClient) return;
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('testimonials')
+                        .select('*')
+                        .eq('type', 'review')
+                        .order('created_at', { ascending: false });
+
+                    if (error) throw error;
+                    
+                    reviewsContainer.innerHTML = ''; // Clear container
+                    
+                    if (data && data.length > 0) {
+                        data.forEach(review => {
+                            let stars = '';
+                            for(let i=0; i<5; i++) { stars += i < review.rating ? '★' : '☆'; }
+                            
+                            const newReview = document.createElement('div');
+                            newReview.className = 'review-card';
+                            newReview.innerHTML = `<div class="stars">${stars}</div><p class="review-text">"${review.message}"</p><p class="review-author">— ${review.name}</p>`;
+                            reviewsContainer.appendChild(newReview);
+                        });
+                        
+                        updateMetrics();
+                        scrollPos = 0; 
+                        reviewsContainer.scrollTop = 0; 
+                        
+                        if(!scrollAnimationId) {
+                            requestAnimationFrame(scrollLoop);
+                        }
+                    } else {
+                        reviewsContainer.innerHTML = '<p style="color: var(--text-muted); font-style: italic; text-align: center; padding: 2rem;">No testimonials available yet. Be the first to leave a review below!</p>';
+                    }
+                } catch(err) { console.error("Error fetching reviews:", err); }
+            };
+
+            // Initial fetch
+            fetchAndRenderReviews();
+            window.addEventListener('resize', updateMetrics);
 
             reviewsContainer.addEventListener('mouseenter', () => isHoveringReviews = true);
             reviewsContainer.addEventListener('mouseleave', () => isHoveringReviews = false);
             reviewsContainer.addEventListener('touchstart', () => isHoveringReviews = true, {passive: true});
             reviewsContainer.addEventListener('touchend', () => { setTimeout(() => isHoveringReviews = false, 1500); });
-
-            // Fetch reviews from Supabase on load
-            const loadReviews = async () => {
-                if (supabaseClient && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
-                    try {
-                        const { data, error } = await supabaseClient
-                            .from('testimonials')
-                            .select('*')
-                            .eq('type', 'review')
-                            .order('created_at', { ascending: false });
-
-                        if (error) throw error;
-
-                        if (data && data.length > 0) {
-                            reviewsContainer.innerHTML = ''; // Clear empty state message
-                            
-                            data.forEach(review => {
-                                reviewsContainer.appendChild(createReviewElement(review.name, review.rating, review.message));
-                            });
-                            
-                            // Duplicate elements to create continuous scroll illusion
-                            const initialCards = Array.from(reviewsContainer.children);
-                            initialCards.forEach(card => { reviewsContainer.appendChild(card.cloneNode(true)); });
-                            
-                            updateMetrics();
-                            cancelAnimationFrame(scrollAnimationId);
-                            requestAnimationFrame(scrollLoop);
-                        }
-                    } catch (err) {
-                        console.error("Error loading reviews:", err);
-                    }
-                }
-            };
             
-            loadReviews(); // Call it immediately
-
             reviewForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const name = document.getElementById('rev-name').value;
-                const ratingVal = document.getElementById('rev-rating').value;
-                const text = document.getElementById('rev-text').value;
-                
+                const submitBtn = reviewForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Submitting...";
+
+                const name = document.getElementById('rev-name').value.trim();
+                const ratingVal = parseInt(document.getElementById('rev-rating').value);
+                const text = document.getElementById('rev-text').value.trim();
+
                 try {
-                    if (supabaseClient && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
-                        await supabaseClient.from('testimonials').insert([{ name, rating: ratingVal, message: text, type: 'review' }]);
+                    if (supabaseClient) {
+                        const { error } = await supabaseClient.from('testimonials').insert([{ 
+                            name, 
+                            rating: ratingVal, 
+                            message: text, 
+                            type: 'review' 
+                        }]);
+                        
+                        if (error) throw error;
+
+                        reviewForm.reset();
+                        showSuccessModal("Review Submitted", "Thank you for your feedback! It has been securely saved and added to our live feed.");
+                        await fetchAndRenderReviews(); // Immediately pull new review
                     }
-
-                    // Remove placeholder if it's the first review
-                    if(reviewsContainer.children.length === 1 && reviewsContainer.firstElementChild.tagName === 'P') {
-                        reviewsContainer.innerHTML = '';
-                    }
-
-                    const newReviewElement = createReviewElement(name, ratingVal, text);
-                    reviewsContainer.insertBefore(newReviewElement, reviewsContainer.firstChild);
-                    
-                    scrollPos = 0; 
-                    reviewsContainer.scrollTop = 0; 
-                    updateMetrics(); 
-                    
-                    // Restart scroll if it wasn't running
-                    cancelAnimationFrame(scrollAnimationId);
-                    requestAnimationFrame(scrollLoop);
-
-                    reviewForm.reset();
-                    showSuccessModal("Review Submitted", "Thank you for your feedback! It has been securely saved and added to our live feed.");
-                } catch(err) { console.error("Review Error:", err); }
+                } catch(err) { 
+                    console.error("Review Error:", err.message); 
+                    alert("There was an error saving your review. Please try again later.");
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
             });
         }
 
@@ -1768,21 +1750,78 @@
         }
 
         const miniRepForm = document.getElementById('mini-rep-form');
+        
+        const fetchAndRenderReputations = async () => {
+            if (!supabaseClient) return;
+            const container = document.getElementById('reputation-container');
+            if (!container) return;
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('testimonials')
+                    .select('*')
+                    .eq('type', 'reputation')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+                
+                if (data && data.length > 0) {
+                    container.innerHTML = ''; // Clear container
+                    data.forEach(rep => {
+                        const newRep = document.createElement('div');
+                        newRep.className = 'reputation-block interactive-card';
+                        newRep.style.marginTop = '0';
+                        newRep.innerHTML = `
+                            "${rep.message}"
+                            <br><br>
+                            <span style="font-weight: 600; color: var(--text-color); font-style: normal;">— ${rep.name}</span>
+                        `;
+                        container.appendChild(newRep);
+                    });
+                } else {
+                    container.innerHTML = '<p style="color: var(--text-muted); font-style: italic; text-align: center; padding: 2rem;">No reputation entries available yet. Be the first to add one!</p>';
+                }
+            } catch(err) { console.error("Error fetching reputations:", err); }
+        };
+
+        // Fetch reputations on initial load
+        fetchAndRenderReputations();
+
         if(miniRepForm) {
             miniRepForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const submitBtn = miniRepForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Submitting...";
+
                 const name = document.getElementById('m-rep-name').value.trim();
-                const ratingVal = document.getElementById('m-rep-rating').value;
+                const ratingVal = parseInt(document.getElementById('m-rep-rating').value);
                 const text = document.getElementById('m-rep-text').value.trim();
 
                 try {
-                    if (supabaseClient && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
-                        await supabaseClient.from('testimonials').insert([{ name, rating: ratingVal, message: text, type: 'reputation' }]);
+                    if (supabaseClient) {
+                        const { error } = await supabaseClient.from('testimonials').insert([{ 
+                            name, 
+                            rating: ratingVal, 
+                            message: text, 
+                            type: 'reputation' 
+                        }]);
+                        if (error) throw error;
                     }
                     miniRepForm.reset();
                     toggleExpand('client-rep-form-container');
                     showSuccessModal("Reputation Submitted", "Thank you! Your feedback has been securely transmitted and saved in our database.");
-                } catch(err) { console.error("Reputation Error:", err); }
+                    
+                    // Immediately pull new reputation into view
+                    await fetchAndRenderReputations();
+                } catch(err) { 
+                    console.error("Reputation Error:", err); 
+                    alert("Error saving reputation. Please try again later.");
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
             });
         }
 
