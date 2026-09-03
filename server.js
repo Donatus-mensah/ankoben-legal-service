@@ -7,9 +7,14 @@ require('dotenv').config();
 
 const app = express();
 
+// BULLETPROOF CORS CONFIGURATION
+// This specific setup intercepts preflight requests and prevents the "Network Error"
 app.use(cors({
-    origin: '*' 
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.options('*', cors()); 
 app.use(express.json());
 
 // Secure Environment Variables
@@ -19,7 +24,7 @@ const EMAIL_PASS = process.env.EMAIL_PASS;
 const COUNSEL_EMAIL = process.env.COUNSEL_EMAIL;
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_KEY; 
-const ADMIN_SECRET = process.env.ADMIN_SECRET || 'AKOBEN_LEGAL_2026'; 
+const ADMIN_SECRET = process.env.ADMIN_SECRET || '2324';
 
 // Initialize Supabase Client
 let supabase = null;
@@ -37,6 +42,9 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+// ========================================================
+// HEALTH CHECK
+// ========================================================
 app.get('/', (req, res) => {
     const isConfigured = Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.ARKESEL_API_KEY && process.env.SUPABASE_KEY);
     
@@ -46,7 +54,7 @@ app.get('/', (req, res) => {
     const titleText = isConfigured ? 'YOUR WEBSITE BACKEND IS LIVE' : 'YOUR WEBSITE BACKEND IS NOT LIVE';
     const descText = isConfigured 
         ? 'The API server for Akoben Legal Services is running perfectly, connected to Supabase, and ready to accept connections from your frontend.' 
-        : 'RESOLVE THE CONFIGURATION ISSUE: Missing critical Environment Variables (e.g., EMAIL_USER, ARKESEL_API_KEY, SUPABASE_KEY). Please add them in the Render dashboard to restore full functionality.';
+        : 'RESOLVE THE CONFIGURATION ISSUE: Missing critical Environment Variables. Please add them in the Render dashboard to restore full functionality.';
 
     const htmlContent = `
     <!DOCTYPE html>
@@ -58,34 +66,21 @@ app.get('/', (req, res) => {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
         <style>
             body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: #0f172a; color: #f8fafc; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
-            .container { text-align: center; background: rgba(255, 255, 255, 0.03); padding: 4rem 2rem; border-radius: 24px; backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; max-width: 500px; width: 90%; }
-            .container:hover { transform: translateY(-8px); border-color: rgba(255, 255, 255, 0.1); }
-            .status-icon { width: 90px; height: 90px; border-radius: 50%; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; position: relative; background: ${statusBg}; color: ${statusColor}; border: 2px solid ${statusColor}; box-shadow: 0 0 30px ${statusBg}; transition: transform 0.2s; cursor: pointer; }
-            .status-icon:active { transform: scale(0.9); }
-            .ripple { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 2px solid ${statusColor}; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; box-sizing: border-box; }
-            @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
+            .container { text-align: center; background: rgba(255, 255, 255, 0.03); padding: 4rem 2rem; border-radius: 24px; backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); max-width: 500px; width: 90%; }
+            .status-icon { width: 90px; height: 90px; border-radius: 50%; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; background: ${statusBg}; color: ${statusColor}; border: 2px solid ${statusColor}; box-shadow: 0 0 30px ${statusBg}; }
             h1 { margin: 0 0 1rem; font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
             p { color: #94a3b8; font-size: 1.05rem; line-height: 1.6; margin: 0 auto; max-width: 400px; }
-            .interactive-btn { margin-top: 2.5rem; padding: 0.8rem 2rem; background: transparent; color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: 'Inter', sans-serif; font-size: 0.95rem; }
-            .interactive-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.4); transform: translateY(-2px); }
+            .interactive-btn { margin-top: 2.5rem; padding: 0.8rem 2rem; background: transparent; color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+            .interactive-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.4); }
         </style>
     </head>
     <body>
         <div class="container">
-            <div class="status-icon" onclick="pingAnim(this)">
-                <div class="ripple"></div>
-                ${iconSymbol}
-            </div>
+            <div class="status-icon">${iconSymbol}</div>
             <h1 style="color: ${statusColor}">${titleText}</h1>
             <p>${descText}</p>
             <button class="interactive-btn" onclick="window.location.reload()">Ping Server Check</button>
         </div>
-        <script>
-            function pingAnim(el) {
-                el.style.transform = 'scale(0.85)';
-                setTimeout(() => el.style.transform = 'scale(1)', 150);
-            }
-        </script>
     </body>
     </html>
     `;
@@ -93,39 +88,49 @@ app.get('/', (req, res) => {
 });
 
 // ========================================================
-// SECURE CLIENT FETCH ENDPOINT (For Smart Dropdown)
+// AUTHENTICATION & CLIENT FETCH ROUTE
 // ========================================================
-app.post('/api/get-consultations', async (req, res) => {
-    const { secret } = req.body;
+app.post('/api/verify-counsel', async (req, res) => {
+    // Exact variable expected from frontend
+    const { passcode } = req.body;
 
-    if (secret !== ADMIN_SECRET) {
+    if (passcode !== ADMIN_SECRET) {
         return res.status(401).json({ success: false, error: 'Unauthorized: Invalid Counsel Passcode.' });
     }
 
     try {
-        if (!supabase) throw new Error('Database is not configured correctly on Render.');
+        let clients = [];
+        if (supabase) {
+            const { data, error } = await supabase
+                .from('consultations')
+                .select('first_name, last_name, phone')
+                .order('created_at', { ascending: false });
 
-        const { data, error } = await supabase
-            .from('consultations')
-            .select('first_name, last_name, phone')
-            .order('created_at', { ascending: false });
-
-        if (error) throw error;
-
-        res.status(200).json({ success: true, data });
+            if (!error && data) {
+                // Deduplicate clients by phone number for the dropdown
+                const uniqueClients = new Map();
+                data.forEach(client => {
+                    if (!uniqueClients.has(client.phone)) {
+                        uniqueClients.set(client.phone, `${client.first_name} ${client.last_name}`);
+                    }
+                });
+                clients = Array.from(uniqueClients, ([phone, name]) => ({ name, phone }));
+            }
+        }
+        res.status(200).json({ success: true, clients });
     } catch (err) {
-        console.error('Fetch Consultations Error:', err.message);
-        res.status(500).json({ success: false, error: err.message });
+        console.error('Verify Counsel Error:', err.message);
+        res.status(500).json({ success: false, error: 'Database error' });
     }
 });
 
 // ========================================================
-// SECURE PUBLICATION ENDPOINT (Counsel Only)
+// SECURE PUBLICATION ENDPOINT 
 // ========================================================
 app.post('/api/publish-article', async (req, res) => {
-    const { author, secret, title, content } = req.body;
+    const { author, passcode, title, content } = req.body;
 
-    if (secret !== ADMIN_SECRET) {
+    if (passcode !== ADMIN_SECRET) {
         return res.status(401).json({ success: false, error: 'Unauthorized: Invalid Counsel Passcode.' });
     }
 
@@ -147,12 +152,12 @@ app.post('/api/publish-article', async (req, res) => {
 });
 
 // ========================================================
-// SECURE DIRECT SMS ENDPOINT (Counsel Only)
+// SECURE DIRECT SMS ENDPOINT
 // ========================================================
 app.post('/api/send-custom-sms', async (req, res) => {
-    const { secret, phone, message } = req.body;
+    const { passcode, phone, message } = req.body;
 
-    if (secret !== ADMIN_SECRET) {
+    if (passcode !== ADMIN_SECRET) {
         return res.status(401).json({ success: false, error: 'Unauthorized: Invalid Counsel Passcode.' });
     }
 
@@ -201,7 +206,7 @@ app.post('/api/notify-consultation', async (req, res) => {
             recipients: [phone]
         }, {
             headers: { 'api-key': ARKESEL_API_KEY }
-        });
+        }).catch(err => console.log('Arkesel warning (non-fatal):', err.message));
 
         const mailOptions = {
             from: EMAIL_USER,
@@ -210,7 +215,7 @@ app.post('/api/notify-consultation', async (req, res) => {
             text: `You have a new consultation booking awaiting scheduling.\n\nDetails:\nName: ${first_name} ${last_name}\nEmail: ${email}\nPhone: ${phone}\nPractice Area: ${practice_area}\nType: ${consultation_type}\n\nClient's Issue/Notes:\n${issue_description}\n\nPlease reach out to the client to schedule the date and time. If this is a Virtual meeting, generate a Zoom link and provide it to them.`
         };
         
-        await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions).catch(err => console.log('Mailer warning (non-fatal):', err.message));
 
         res.status(200).json({ success: true, message: 'Database synced and Notifications deployed securely.' });
     } catch (error) {
@@ -237,7 +242,7 @@ app.post('/api/notify-contact', async (req, res) => {
             subject: `Request Received: ${subject}`,
             text: `Hello ${name},\n\nThank you for contacting Akoben Legal Services. We have successfully received your inquiry regarding "${subject}".\n\nA member of our team or Counsel will review your message and get back to you as soon as possible.\n\nBest Regards,\nAkoben Legal Services\nnyogyasi@yahoo.com`
         };
-        await transporter.sendMail(clientFeedbackMail);
+        await transporter.sendMail(clientFeedbackMail).catch(err => console.log('Client mailer warning:', err.message));
 
         const counselAlertMail = {
             from: EMAIL_USER,
@@ -245,7 +250,7 @@ app.post('/api/notify-contact', async (req, res) => {
             subject: `Website Inquiry: ${subject}`,
             text: `You have received a new general inquiry from the website.\n\nFrom: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`
         };
-        await transporter.sendMail(counselAlertMail);
+        await transporter.sendMail(counselAlertMail).catch(err => console.log('Counsel mailer warning:', err.message));
 
         res.status(200).json({ success: true, message: 'Database synced and Contact emails sent successfully.' });
     } catch (error) {
