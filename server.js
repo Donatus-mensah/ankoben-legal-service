@@ -8,26 +8,27 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-    origin: '*' // Allows your frontend to communicate with this backend
+    origin: '*' 
 }));
 app.use(express.json());
 
-// These keys will be hidden safely inside Render's dashboard or your local .env
+// Secure Environment Variables
 const ARKESEL_API_KEY = process.env.ARKESEL_API_KEY;
 const EMAIL_USER = process.env.EMAIL_USER; 
-const EMAIL_PASS = process.env.EMAIL_PASS; // Using Yahoo App Password
+const EMAIL_PASS = process.env.EMAIL_PASS; 
 const COUNSEL_EMAIL = process.env.COUNSEL_EMAIL;
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_KEY;
+const SUPABASE_KEY = process.env.SUPABASE_KEY; 
+const ADMIN_SECRET = process.env.ADMIN_SECRET || 'AKOBEN_LEGAL_2026'; 
 
-// Initialize Supabase Client for backend database syncing
+// Initialize Supabase Client
 let supabase = null;
 if (SUPABASE_URL && SUPABASE_KEY) {
     supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
     console.log('Supabase client initialized successfully.');
 }
 
-// Initialize Mailer
+// Initialize Nodemailer for Yahoo
 const transporter = nodemailer.createTransport({
     service: 'yahoo',
     auth: {
@@ -36,9 +37,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Graphical Interface for Backend Status
 app.get('/', (req, res) => {
-    // Check if vital env variables exist to determine true "healthy" state
     const isConfigured = Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.ARKESEL_API_KEY && process.env.SUPABASE_KEY);
     
     const statusColor = isConfigured ? '#22c55e' : '#ef4444';
@@ -93,6 +92,89 @@ app.get('/', (req, res) => {
     res.send(htmlContent);
 });
 
+// ========================================================
+// SECURE CLIENT FETCH ENDPOINT (For Smart Dropdown)
+// ========================================================
+app.post('/api/get-consultations', async (req, res) => {
+    const { secret } = req.body;
+
+    if (secret !== ADMIN_SECRET) {
+        return res.status(401).json({ success: false, error: 'Unauthorized: Invalid Counsel Passcode.' });
+    }
+
+    try {
+        if (!supabase) throw new Error('Database is not configured correctly on Render.');
+
+        const { data, error } = await supabase
+            .from('consultations')
+            .select('first_name, last_name, phone')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        res.status(200).json({ success: true, data });
+    } catch (err) {
+        console.error('Fetch Consultations Error:', err.message);
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+// ========================================================
+// SECURE PUBLICATION ENDPOINT (Counsel Only)
+// ========================================================
+app.post('/api/publish-article', async (req, res) => {
+    const { author, secret, title, content } = req.body;
+
+    if (secret !== ADMIN_SECRET) {
+        return res.status(401).json({ success: false, error: 'Unauthorized: Invalid Counsel Passcode.' });
+    }
+
+    try {
+        if (!supabase) throw new Error('Database is not configured correctly on Render.');
+
+        const { data, error } = await supabase
+            .from('publications')
+            .insert([{ title, content, author }])
+            .select();
+
+        if (error) throw error;
+
+        res.status(200).json({ success: true, message: 'Article published successfully to database', data });
+    } catch (err) {
+        console.error('Publish Article Error:', err.message);
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+// ========================================================
+// SECURE DIRECT SMS ENDPOINT (Counsel Only)
+// ========================================================
+app.post('/api/send-custom-sms', async (req, res) => {
+    const { secret, phone, message } = req.body;
+
+    if (secret !== ADMIN_SECRET) {
+        return res.status(401).json({ success: false, error: 'Unauthorized: Invalid Counsel Passcode.' });
+    }
+
+    try {
+        await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
+            sender: 'AKOBEN', 
+            message: message,
+            recipients: [phone]
+        }, {
+            headers: { 'api-key': ARKESEL_API_KEY }
+        });
+
+        res.status(200).json({ success: true, message: 'SMS sent successfully.' });
+    } catch (error) {
+        console.error('Custom SMS Error:', error?.response?.data || error.message);
+        res.status(500).json({ success: false, error: 'Failed to send Custom SMS' });
+    }
+});
+
+// ========================================================
+// NOTIFICATIONS: Consultations & Contacts
+// ========================================================
 app.post('/api/notify-consultation', async (req, res) => {
     const { 
         first_name, last_name, email, phone, 
@@ -100,7 +182,6 @@ app.post('/api/notify-consultation', async (req, res) => {
     } = req.body;
 
     try {
-        // 1. Sync data securely to Supabase Backend
         if (supabase) {
             const { error: dbError } = await supabase
                 .from('consultations')
@@ -112,7 +193,6 @@ app.post('/api/notify-consultation', async (req, res) => {
             if (dbError) console.error('Supabase DB Insert Error:', dbError.message);
         }
 
-        // 2. Send Generic Receipt SMS to Client via Arkesel
         const smsMessage = `Hello ${first_name}, your ${consultation_type} consultation request has been received by Akoben Legal Services. We will contact you shortly to confirm your appointment date and time.`;
         
         await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
@@ -123,7 +203,6 @@ app.post('/api/notify-consultation', async (req, res) => {
             headers: { 'api-key': ARKESEL_API_KEY }
         });
 
-        // 3. Send Immediate Email Alert to Counsel
         const mailOptions = {
             from: EMAIL_USER,
             to: COUNSEL_EMAIL,
@@ -144,7 +223,6 @@ app.post('/api/notify-contact', async (req, res) => {
     const { name, email, subject, message } = req.body;
 
     try {
-        // 1. Sync data securely to Supabase Backend
         if (supabase) {
             const { error: dbError } = await supabase
                 .from('contacts')
@@ -153,16 +231,14 @@ app.post('/api/notify-contact', async (req, res) => {
             if (dbError) console.error('Supabase DB Insert Error:', dbError.message);
         }
 
-        // 2. Send Auto-Reply Feedback Email TO THE CLIENT
         const clientFeedbackMail = {
             from: EMAIL_USER,
-            to: email, // Sending to the person who filled the form
+            to: email, 
             subject: `Request Received: ${subject}`,
             text: `Hello ${name},\n\nThank you for contacting Akoben Legal Services. We have successfully received your inquiry regarding "${subject}".\n\nA member of our team or Counsel will review your message and get back to you as soon as possible.\n\nBest Regards,\nAkoben Legal Services\nnyogyasi@yahoo.com`
         };
         await transporter.sendMail(clientFeedbackMail);
 
-        // 3. Forward the actual message TO COUNSEL
         const counselAlertMail = {
             from: EMAIL_USER,
             to: COUNSEL_EMAIL,

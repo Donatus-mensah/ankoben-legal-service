@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AKOBEN LEGAL SERVICES | Nana Yaw Gyasi, Esq.</title>
+    <title>AKOBEN LEGAL SERVICES | Nana Yaw Gyasi, Esq. & Emmanuel Yaw Hukpatsi, Esq.</title>
     
     <link rel="icon" type="image/png" href="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/logo.png">
     
@@ -46,7 +46,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+        html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; width: 100vw; max-width: 100%; }
         
         body {
             font-family: var(--font-body);
@@ -116,13 +116,13 @@
         .btn-outline:hover { background-color: var(--text-color); color: var(--bg-color); }
 
         input, textarea, select { 
-            width: 100%; max-width: 100%; padding: 1rem; background-color: transparent; border: 1px solid var(--border-color); color: var(--text-color); font-family: var(--font-body); margin-bottom: 1rem; transition: all 0.3s ease; appearance: none; border-radius: 4px; 
+            width: 100%; max-width: 100%; padding: 1rem; background-color: transparent; border: 1px solid var(--border-color); color: var(--text-color); font-family: var(--font-body); margin-bottom: 1rem; transition: all 0.3s ease; appearance: none; border-radius: 4px; box-sizing: border-box;
         }
         input:focus, textarea:focus, select:focus { outline: none; border-color: var(--text-color); box-shadow: 0 0 0 1px var(--text-color); background-color: var(--bg-color); }
         select option { background-color: var(--bg-color); color: var(--text-color); }
 
         header { 
-            position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; background-color: transparent; border-bottom: 1px solid transparent; z-index: 1000; transition: all 0.4s ease; 
+            position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; background-color: transparent; border-bottom: 1px solid transparent; z-index: 1000; transition: all 0.4s ease; box-sizing: border-box;
         }
         header.scrolled { background-color: var(--overlay-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); padding: 1rem 5%; box-shadow: var(--shadow-light); }
         .logo { cursor: pointer; display: flex; align-items: center; gap: 0.8rem; transition: transform 0.3s ease; z-index: 1002; }
@@ -139,7 +139,7 @@
         .theme-toggle:hover { transform: rotate(15deg); }
         .hamburger { display: none; background: none; border: none; color: var(--text-color); cursor: pointer; z-index: 1002; padding: 0.5rem; }
 
-        main { flex: 1; margin-top: 80px; padding: 2rem 5%; width: 100%; max-width: 1400px; margin-left: auto; margin-right: auto; }
+        main { flex: 1; margin-top: 80px; padding: 2rem 5%; width: 100%; max-width: 1400px; margin-left: auto; margin-right: auto; box-sizing: border-box; }
         .page-view { display: none; opacity: 0; }
         .page-view.active { display: block; animation: fadeInPage 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes fadeInPage { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -151,6 +151,7 @@
         .hero-text h1 { font-size: clamp(2.2rem, 5vw, 4.5rem); margin-bottom: 1.5rem; line-height: 1.1; }
         .hero-text p { font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted); margin-bottom: 2.5rem; max-width: 90%; }
         
+        .founders-dual-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .hero-image-container { position: relative; cursor: pointer; overflow: hidden; border-radius: 8px; box-shadow: var(--shadow-light); transition: transform 0.4s ease; }
         .hero-image-container:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
         .hero-image { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/5; background-color: var(--hover-bg); }
@@ -186,15 +187,23 @@
         .profile-intro h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
         .profile-intro p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.8; text-align: justify; }
 
-        .about-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 3rem; 
-            margin-bottom: 4rem;
-        }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 4rem; }
+        .founder-profile-col { padding: 2.5rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: var(--shadow-light); }
+        
+        .founder-header { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .founder-pic-wrapper { width: 100px; height: 100px; flex-shrink: 0; border-radius: 50%; overflow: hidden; border: 3px solid var(--border-color); position: relative; cursor: pointer; box-shadow: var(--shadow-light); transition: transform 0.4s ease, box-shadow 0.4s ease; background: var(--bg-color); }
+        .founder-pic-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
+        .founder-pic-wrapper::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s ease; border-radius: 50%; pointer-events: none; }
+        .founder-pic-wrapper:hover::after { opacity: 1; }
+        .founder-pic-wrapper .zoom-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; z-index: 2; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .founder-pic-wrapper:hover .zoom-icon { opacity: 1; }
+        .founder-pic-wrapper:hover { transform: scale(1.05); box-shadow: var(--shadow-hover); border-color: var(--text-color); }
+        
+        .founder-header-text h2 { font-size: 1.6rem; margin-bottom: 0.3rem; color: var(--text-color); }
+        .founder-header-text .role-title { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); display: block; }
 
-        .credentials { margin-top: 0; padding-top: 0; border: none; margin-bottom: 2.5rem; }
-        .credentials h3 { margin-bottom: 1rem; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); }
+        .credentials { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color); margin-bottom: 0; }
+        .credentials h3 { margin-bottom: 1rem; font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem; padding-bottom: 0.5rem; }
         .credentials ul { list-style: none; }
         .credentials li { padding: 0.8rem 0; display: flex; align-items: flex-start; gap: 1rem; word-break: break-word; }
 
@@ -217,136 +226,47 @@
         .reputation-block { padding: 2.5rem; background-color: var(--card-bg); border-left: 4px solid var(--text-color); font-style: italic; color: var(--text-muted); transition: all 0.4s ease; position: relative; border-radius: 0 8px 8px 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem; }
         .reputation-block:hover { transform: scale(1.01); background-color: var(--hover-bg); box-shadow: var(--shadow-hover); }
 
-        .album-section {
-            border-top: 1px solid var(--border-color);
-            padding-top: 4rem;
-            margin-top: 2rem;
-            position: relative;
-        }
+        .pub-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 2.5rem; margin-bottom: 2rem; box-shadow: var(--shadow-light); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .pub-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
+        .pub-title { font-size: 1.5rem; font-family: var(--font-heading); color: var(--text-color); margin: 0; }
+        .pub-author-badge { background-color: var(--text-color); color: var(--bg-color); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+        .pub-content { font-size: 1.05rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 2rem; white-space: pre-wrap; word-break: break-word; }
         
-        .album-header-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+        .comments-section { background-color: rgba(0,0,0,0.02); border-radius: 8px; padding: 1.5rem; border: 1px solid var(--border-color); }
+        [data-theme="dark"] .comments-section { background-color: rgba(255,255,255,0.02); }
+        .comment-item { padding: 1rem 0; border-bottom: 1px solid var(--border-color); }
+        .comment-item:last-child { border-bottom: none; }
+        .comment-author { font-weight: 600; font-size: 0.95rem; color: var(--text-color); }
+        .comment-date { font-size: 0.75rem; color: var(--text-muted); font-weight: 400; text-transform: none; }
+        .comment-text { margin-top: 0.5rem; font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
 
-        .gallery-grid { 
-            display: grid; 
-            gap: 1rem; 
-            position: relative;
-            width: 100%;
-        }
-
-        /* EXPANDED LAYOUT (Huge detailed grid) */
-        .gallery-grid.expanded { 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 2rem;
-            animation: unpackFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+        .album-section { border-top: 1px solid var(--border-color); padding-top: 4rem; margin-top: 2rem; position: relative; }
+        .album-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+        .gallery-grid { display: grid; gap: 1rem; position: relative; width: 100%; }
+        .gallery-grid.expanded { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; animation: unpackFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes unpackFade { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-
-        /* STACKED LAYOUT (Giant interactive book) */
-        .gallery-grid.stacked {
-            grid-template-columns: 1fr;
-            place-items: center;
-            min-height: 550px; 
-            gap: 0;
-            padding: 2rem 0;
-            cursor: pointer;
-        }
-
-        /* Base item for Expanded Grid */
-        .gallery-grid.expanded .gallery-item {
-            position: relative; 
-            cursor: pointer; 
-            overflow: hidden; 
-            border-radius: 12px; 
-            aspect-ratio: 1; 
-            background-color: var(--hover-bg);
-            box-shadow: var(--shadow-light);
-            border: 1px solid var(--border-color);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: none !important; /* Override stacked transforms */
-            grid-area: auto;
-            width: 100%;
-        }
-
-        .gallery-grid.expanded .gallery-item:hover {
-            transform: translateY(-10px) scale(1.02) !important;
-            box-shadow: var(--shadow-deep);
-            border-color: var(--text-color);
-        }
-
-        /* Base Item for Stacked Book */
-        .gallery-grid.stacked .gallery-item {
-            grid-area: 1 / 1;
-            width: 95%;
-            max-width: 450px; /* Highly increased size */
-            aspect-ratio: 1;
-            border: 12px solid var(--card-bg);
-            box-shadow: var(--shadow-hover);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border-radius: 6px;
-            overflow: hidden;
-            background-color: var(--hover-bg);
-        }
-
+        .gallery-grid.stacked { grid-template-columns: 1fr; place-items: center; min-height: 550px; gap: 0; padding: 2rem 0; cursor: pointer; }
+        .gallery-grid.expanded .gallery-item { position: relative; cursor: pointer; overflow: hidden; border-radius: 12px; aspect-ratio: 1; background-color: var(--hover-bg); box-shadow: var(--shadow-light); border: 1px solid var(--border-color); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: none !important; grid-area: auto; width: 100%; }
+        .gallery-grid.expanded .gallery-item:hover { transform: translateY(-10px) scale(1.02) !important; box-shadow: var(--shadow-deep); border-color: var(--text-color); }
+        .gallery-grid.stacked .gallery-item { grid-area: 1 / 1; width: 95%; max-width: 450px; aspect-ratio: 1; border: 12px solid var(--card-bg); box-shadow: var(--shadow-hover); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: 6px; overflow: hidden; background-color: var(--hover-bg); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; will-change: transform; transition: filter var(--transition-speed), transform 0.6s ease; }
-        
         .gallery-grid.expanded .gallery-item:hover img, .gallery-grid.expanded .gallery-item:active img { transform: scale(1.08); filter: grayscale(0%); }
         [data-theme="dark"] .gallery-grid.expanded .gallery-item:hover img { filter: grayscale(0%) brightness(1.1); }
-        
         .gallery-item .overlay-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; opacity: 0; transition: opacity 0.3s ease; z-index: 2; pointer-events: none; }
         .gallery-grid.expanded .gallery-item::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
         .gallery-grid.expanded .gallery-item:hover::after, .gallery-grid.expanded .gallery-item:hover .overlay-icon { opacity: 1; }
-
-        /* Dynamic Book Stack Rotations */
         .gallery-grid.stacked .gallery-item:nth-child(1) { transform: rotate(-5deg) translate(-15px, -15px); z-index: 6; }
         .gallery-grid.stacked .gallery-item:nth-child(2) { transform: rotate(4deg) translate(10px, 15px); z-index: 5; }
         .gallery-grid.stacked .gallery-item:nth-child(3) { transform: rotate(-3deg) translate(25px, -5px); z-index: 4; }
         .gallery-grid.stacked .gallery-item:nth-child(4) { transform: rotate(6deg) translate(-10px, 25px); z-index: 3; }
         .gallery-grid.stacked .gallery-item:nth-child(5) { transform: rotate(-4deg) translate(15px, 20px); z-index: 2; }
         .gallery-grid.stacked .gallery-item:nth-child(6) { transform: rotate(2deg) translate(-20px, 10px); z-index: 1; }
-
-        /* Dramatic Hover Interactions for the Stack */
         .gallery-grid.stacked:hover .gallery-item:nth-child(1) { transform: rotate(-10deg) translate(-40px, -25px) scale(1.05); filter: grayscale(0%); box-shadow: var(--shadow-deep); }
         .gallery-grid.stacked:hover .gallery-item:nth-child(2) { transform: rotate(8deg) translate(30px, 20px) scale(1.02); filter: grayscale(20%); }
         .gallery-grid.stacked:hover .gallery-item:nth-child(3) { transform: rotate(-6deg) translate(45px, -15px) scale(1.03); filter: grayscale(40%); }
         .gallery-grid.stacked:hover .gallery-item:nth-child(4) { transform: rotate(10deg) translate(-30px, 40px); }
-
-        .album-prompt {
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1rem;
-            color: var(--text-color);
-            background: var(--card-bg);
-            padding: 0.8rem 2rem;
-            border-radius: 30px;
-            font-weight: 600;
-            pointer-events: none;
-            box-shadow: var(--shadow-hover);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            opacity: 0.95;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .gallery-grid.stacked:hover ~ .album-prompt {
-            transform: translateX(-50%) translateY(5px);
-            background: var(--text-color);
-            color: var(--bg-color);
-        }
-
+        .album-prompt { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); font-size: 1rem; color: var(--text-color); background: var(--card-bg); padding: 0.8rem 2rem; border-radius: 30px; font-weight: 600; pointer-events: none; box-shadow: var(--shadow-hover); border: 1px solid var(--border-color); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0.95; z-index: 10; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
+        .gallery-grid.stacked:hover ~ .album-prompt { transform: translateX(-50%) translateY(5px); background: var(--text-color); color: var(--bg-color); }
         [data-theme="dark"] .gallery-grid.stacked .gallery-item { border-color: #1a1a1a; }
 
         .reviews-layout { display: grid; grid-template-columns: 1fr 350px; gap: 4rem; }
@@ -357,7 +277,6 @@
         .stars { font-size: 1.2rem; margin-bottom: 1rem; letter-spacing: 2px; color: var(--text-color); }
         .review-text { font-size: 1.05rem; font-style: italic; margin-bottom: 1.5rem; line-height: 1.7; }
         .review-author { font-weight: 600; text-transform: uppercase; font-size: 0.9rem; }
-        
         .review-form-container { position: sticky; top: 120px; background-color: var(--card-bg); padding: 2rem; border: 1px solid var(--border-color); border-radius: 8px; height: fit-content; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 
         .split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
@@ -365,7 +284,7 @@
         .info-block h3 { font-size: 1.2rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
         .info-block p { color: var(--text-muted); word-break: break-word; }
         
-        .form-container { background-color: var(--card-bg); padding: 3rem; border: 1px solid var(--border-color); border-radius: 8px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); width: 100%; overflow: hidden; }
+        .form-container { background-color: var(--card-bg); padding: 3rem; border: 1px solid var(--border-color); border-radius: 8px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); width: 100%; overflow: hidden; box-sizing: border-box; }
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 1.5rem; }
         .form-full { grid-column: 1 / -1; }
         .error-msg { color: #ff3333; font-size: 0.85rem; margin-top: -0.8rem; margin-bottom: 1rem; display: none; animation: fadeInPage 0.3s forwards; }
@@ -386,24 +305,20 @@
         .team-card:hover .team-card-btn { opacity: 0.6; }
 
         .profile-layout { display: grid; grid-template-columns: 350px 1fr; gap: 4rem; margin-top: 1rem; }
-        
         .profile-sidebar-img-wrapper { position: relative; overflow: hidden; border-radius: 8px; margin-bottom: 2rem; cursor: pointer; box-shadow: var(--shadow-light); transition: transform 0.4s ease, box-shadow 0.4s ease; }
         .profile-sidebar-img-wrapper::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; border-radius: 8px; }
         .profile-sidebar-img-wrapper:hover::after { opacity: 1; }
         .profile-sidebar-img-wrapper .zoom-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; z-index: 2; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
         .profile-sidebar-img-wrapper:hover .zoom-icon { opacity: 1; }
         .profile-sidebar-img-wrapper:hover { transform: scale(1.02); box-shadow: var(--shadow-hover); }
-        
         .profile-sidebar img { margin-bottom: 0; width: 100%; max-height: 500px; object-fit: cover; object-position: top center; border-radius: 8px; border: 1px solid var(--border-color); transition: transform 0.5s ease, filter 0.5s ease; display: block; }
         .profile-sidebar-img-wrapper:hover img { transform: scale(1.05); filter: grayscale(0%); }
         [data-theme="dark"] .profile-sidebar-img-wrapper:hover img { filter: grayscale(0%) brightness(1.1); }
-
         .profile-contact { background-color: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); }
         .profile-contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; color: var(--text-color); font-size: 0.95rem; word-break: break-word; }
         .profile-contact-item:last-child { margin-bottom: 0; }
         .profile-contact-item a { color: var(--text-color); transition: opacity 0.3s; }
         .profile-contact-item a:hover { text-decoration: underline; opacity: 0.7; }
-
         .profile-main h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.5rem; }
         .profile-main .role { color: var(--text-muted); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2rem; }
         .profile-section { margin-top: 3rem; }
@@ -412,29 +327,31 @@
         .profile-list li { margin-bottom: 1rem; padding-left: 1.5rem; position: relative; word-break: break-word; }
         .profile-list li::before { content: '▹'; position: absolute; left: 0; color: var(--text-muted); }
 
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.4s ease; padding: 1rem; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.4s ease; padding: 1rem; box-sizing: border-box;}
         .modal.show { opacity: 1; visibility: visible; }
-        .modal-content { background-color: var(--bg-color); padding: 3rem; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; width: 100%; max-width: 500px; transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .modal-content { background-color: var(--bg-color); padding: 3rem; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; width: 100%; max-width: 500px; transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); box-sizing: border-box; }
         .modal.show .modal-content { transform: translateY(0) scale(1); }
-
         .modal-content.gallery-modal { max-width: 90vw; padding: 0; background-color: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: visible; }
         .modal-content.gallery-modal img { width: auto; height: auto; max-width: 100%; max-height: 85vh; object-fit: contain; margin-bottom: 1.5rem; border-radius: 8px; filter: grayscale(0%) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .modal-content.gallery-modal p { color: #ffffff; background-color: rgba(0,0,0,0.8); padding: 1rem 1.5rem; border-radius: 8px; display: inline-block; font-size: 1rem; max-width: 90%; margin: 0; line-height: 1.4; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        
         .modal-icon { width: 64px; height: 64px; margin: 0 auto 1.5rem; }
         .close-modal-btn { position: absolute; top: 1rem; right: 1rem; background: var(--hover-bg); border: none; color: var(--text-color); cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 10; }
         .close-modal-btn:hover { background-color: var(--text-color); color: var(--bg-color); transform: rotate(90deg); }
         .modal-content.gallery-modal .close-modal-btn { top: -15px; right: 0; background-color: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
         .modal-content.gallery-modal .close-modal-btn:hover { background-color: #fff; color: #000; }
 
-        footer { border-top: 1px solid var(--border-color); padding: 4rem 5% 2rem; margin-top: auto; background-color: var(--bg-color); width: 100%; }
+        /* PORTAL TABS */
+        .tab-btn { background: none; border: none; padding: 0.5rem 1rem; cursor: pointer; color: var(--text-muted); font-family: var(--font-body); font-size: 1rem; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.3s ease; }
+        .tab-btn:hover { color: var(--text-color); }
+        .tab-btn.active { color: var(--text-color); border-bottom-color: var(--text-color); }
+
+        footer { border-top: 1px solid var(--border-color); padding: 4rem 5% 2rem; margin-top: auto; background-color: var(--bg-color); width: 100%; box-sizing: border-box;}
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2.5rem; margin-bottom: 3rem; }
         .footer-col h4 { margin-bottom: 1.5rem; font-size: 1.1rem; }
         .footer-col ul { list-style: none; }
         .footer-col li { margin-bottom: 0.8rem; }
         .footer-col a { color: var(--text-muted); cursor: pointer; transition: color 0.3s ease; }
         .footer-col a:hover { color: var(--text-color); opacity: 1; }
-        
         .footer-team { display: flex; flex-direction: column; gap: 1.2rem; }
         .team-member-mini { display: flex; align-items: center; gap: 0.8rem; transition: transform 0.3s ease; }
         .team-member-mini:hover { transform: translateX(5px); }
@@ -442,28 +359,22 @@
         .team-member-info { display: flex; flex-direction: column; }
         .team-member-name { font-size: 0.95rem; font-weight: 600; color: var(--text-color); }
         .team-member-role { font-size: 0.8rem; color: var(--text-muted); }
-
         .social-links { display: flex; gap: 1rem; flex-wrap: wrap; }
         .social-links a { padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; width: 44px; height: 44px; color: var(--text-color); background-color: transparent; }
         .social-links a:hover { background-color: var(--text-color); color: var(--bg-color); transform: translateY(-3px); box-shadow: var(--shadow-light); }
-        
-        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.9rem; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.9rem; position: relative; }
 
         @media (max-width: 992px) {
             .hero { grid-template-columns: 1fr; gap: 3rem; min-height: auto; padding-top: 2rem; }
             .hero-text { text-align: center; }
             .hero-text p { margin-left: auto; margin-right: auto; }
-            .hero-image-container { max-width: 600px; margin: 0 auto; aspect-ratio: 16/9; }
-            .hero-image { aspect-ratio: 16/9; max-height: 500px; }
-            
+            .founders-dual-container { max-width: 800px; margin: 0 auto; }
             .about-grid, .split-layout { grid-template-columns: 1fr; gap: 3rem; }
             .reviews-layout { grid-template-columns: 1fr; gap: 3rem; }
             .review-form-container { position: static; margin-top: 0; }
-            
             .profile-layout { grid-template-columns: 1fr; gap: 2.5rem; }
             .profile-sidebar-img-wrapper { max-width: 400px; margin-left: auto; margin-right: auto; }
             .profile-sidebar img { max-width: 100%; max-height: 500px; object-fit: cover; margin: 0 auto; display: block; }
-            
             .nav-links { gap: 1.5rem; }
         }
 
@@ -473,32 +384,19 @@
             .hamburger { display: block; }
             header { padding: 1rem 5%; background-color: var(--bg-color); }
             header.scrolled { padding: 1rem 5%; }
-            
-            .nav-links { 
-                position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
-                background-color: var(--bg-color); 
-                flex-direction: column; justify-content: center; padding: 2rem; 
-                transform: translateY(-100%); opacity: 0; 
-                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001; 
-            }
+            .nav-links { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--bg-color); flex-direction: column; justify-content: center; padding: 2rem; transform: translateY(-100%); opacity: 0; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001; box-sizing: border-box; }
             .nav-links.open { transform: translateY(0); opacity: 1; }
             .nav-link { font-size: 1.5rem; margin-bottom: 1.5rem; width: 100%; text-align: center; padding: 1rem; }
             .nav-link::after { display: none; }
             .nav-link:active { background-color: var(--hover-bg); border-radius: 8px; }
-
             .home-section { margin-top: 4rem; padding-top: 3rem; }
             .section-header h2 { font-size: 2rem; }
-            
             .form-grid { grid-template-columns: 1fr; gap: 1rem; }
             .form-container { padding: 2rem 1.5rem; }
-            .feature-box, .service-card, .review-card, .reputation-block { padding: 1.8rem 1.2rem; }
+            .feature-box, .service-card, .review-card, .reputation-block, .pub-card { padding: 1.8rem 1.2rem; }
             .cta-banner { padding: 3rem 1.5rem; }
-            
             .modal-content { padding: 2.5rem 1.5rem; }
             .close-modal-btn { top: 0.5rem; right: 0.5rem; width: 35px; height: 35px; } 
-            
-            .hero-image-container:active::after, .hero-image-container:active .hero-overlay-icon { opacity: 1; }
-            
             .gallery-grid.stacked .gallery-item { max-width: 85%; }
         }
 
@@ -513,18 +411,18 @@
             html { font-size: 14px; }
             header { padding: 1rem 1.2rem; }
             main { padding: 1.5rem 1.2rem; }
-            
             .hero { gap: 2rem; }
             .hero-text h1 { font-size: 2.2rem; }
             .hero-text p { width: 100%; max-width: 100%; }
-            .hero-image-container { aspect-ratio: 1; max-height: 350px; }
-            .hero-image { aspect-ratio: 1; max-height: 350px; }
-            
+            .founders-dual-container { grid-template-columns: 1fr; }
             .btn { width: 100%; margin-left: 0 !important; margin-bottom: 1rem; display: block; }
-            
             .gallery-grid.expanded { grid-template-columns: 1fr; }
             .profile-sidebar-img-wrapper { max-width: 100%; }
             .form-container { padding: 1.5rem 1rem; }
+            
+            .founder-header { flex-direction: column; align-items: center; text-align: center; }
+            .founder-pic-wrapper { width: 120px; height: 120px; margin-bottom: 1rem; }
+            .founder-header-text { width: 100%; }
         }
     </style>
 </head>
@@ -539,6 +437,7 @@
         <nav class="nav-links" id="nav-menu">
             <a class="nav-link active" onclick="navigate('home')">Home</a>
             <a class="nav-link" onclick="navigate('about')">Profile</a>
+            <a class="nav-link" onclick="navigate('publications')">Publications</a>
             <a class="nav-link" onclick="navigate('services')">Expertise</a>
             <a class="nav-link" onclick="navigate('contact')">Contact</a>
             <a class="nav-link" onclick="navigate('consultation')">Consultation</a>
@@ -555,6 +454,7 @@
 
     <main id="app-content">
 
+        <!-- 1. HOME PAGE -->
         <section id="home" class="page-view active">
             <div class="hero">
                 <div class="hero-text reveal-on-scroll">
@@ -564,16 +464,22 @@
                     <button class="btn btn-outline" style="margin-left: 1rem;" onclick="navigate('about')">Learn More</button>
                 </div>
                 
-                <div class="hero-image-container reveal-on-scroll" style="transition-delay: 0.2s;" onclick="openGalleryModalDirect(this)">
-                    <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/NANA_GYASI.jpeg" alt="Nana Yaw Gyasi" class="hero-image" data-caption="Nana Yaw Gyasi, Esq. - Principal & Founder of Akoben Legal Services">
-                    <i data-lucide="maximize-2" class="overlay-icon hero-overlay-icon" width="48" height="48"></i>
+                <div class="founders-dual-container reveal-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="hero-image-container" onclick="openGalleryModalDirect(this)">
+                        <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/NANA_GYASI.jpeg" alt="Nana Yaw Ofori Gyasi, Esq." class="hero-image" data-caption="Nana Yaw Ofori Gyasi, Esq.">
+                        <i data-lucide="maximize-2" class="overlay-icon hero-overlay-icon" width="36" height="36"></i>
+                    </div>
+                    <div class="hero-image-container" onclick="openGalleryModalDirect(this)">
+                        <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/hukpatsi.jpg" alt="Emmanuel Yaw Hukpatsi, Esq." class="hero-image" data-caption="Emmanuel Yaw Hukpatsi, Esq.">
+                        <i data-lucide="maximize-2" class="overlay-icon hero-overlay-icon" width="36" height="36"></i>
+                    </div>
                 </div>
             </div>
 
             <div class="home-section reveal-on-scroll">
                 <div class="home-summary">
                     <h2>Excellence in Jurisprudence</h2>
-                    <p>Nana Gyasi and the entire Akoben team is committed to providing legal services founded on professionalism, integrity, sound legal reasoning and practical results, with each matter approached with diligence and a clear understanding of the client's interests.</p>
+                    <p>Nana Gyasi, Emmanuel Yaw Hukpatsi, and the entire Akoben team are committed to providing legal services founded on professionalism, integrity, sound legal reasoning and practical results, with each matter approached with diligence and a clear understanding of the client's interests.</p>
                 </div>
                 <div class="home-features">
                     <div class="feature-box reveal-on-scroll" style="transition-delay: 0.1s;">
@@ -628,7 +534,6 @@
                 </div>
                 <div class="reviews-layout">
                     <div class="reviews-list-wrapper">
-                        <!-- We leave this container empty by default. Reviews will be dynamically inserted here via JS. -->
                         <div class="reviews-list" id="reviews-container">
                             <p style="color: var(--text-muted); font-style: italic; text-align: center; padding: 2rem;">No testimonials available yet. Be the first to leave a review below!</p>
                         </div>
@@ -653,7 +558,7 @@
 
             <div class="cta-banner reveal-on-scroll">
                 <h2>Ready to Discuss Your Legal Needs?</h2>
-                <p style="color: var(--text-muted); margin: 1rem 0 2rem; font-size: 1.1rem;">Reach out to our chambers or schedule a direct consultation with Nana Yaw Gyasi.</p>
+                <p style="color: var(--text-muted); margin: 1rem 0 2rem; font-size: 1.1rem;">Reach out to our chambers or schedule a direct consultation today.</p>
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <button class="btn" onclick="navigate('consultation')">Schedule Consultation</button>
                     <button class="btn btn-outline" onclick="navigate('contact')">General Contact</button>
@@ -661,38 +566,48 @@
             </div>
         </section>
 
+        <!-- 2. ABOUT/PROFILE PAGE -->
         <section id="about" class="page-view">
             <div class="page-header reveal-on-scroll">
-                <h1>Counsel Profile</h1>
-                <p style="color: var(--text-muted); margin-top: 1rem;">Meet the founder and learn about the ethos of Akoben Legal Services.</p>
+                <h1>Founders Profile</h1>
+                <p style="color: var(--text-muted); margin-top: 1rem;">Meet the principal founders and learn about the ethos of Akoben Legal Services.</p>
             </div>
             
             <div class="profile-intro reveal-on-scroll">
-                <h2>Nana Yaw Ofori Gyasi, Esq.</h2>
-                <p>Nana Yaw Ofori Gyasi is a Ghanaian lawyer with experience in criminal law, civil litigation, dispute resolution, legal advisory and advocacy. His practice involves representing individuals, families, traditional authorities, businesses and corporate entities in a broad range of legal matters before the courts and other adjudicatory bodies in Ghana.</p>
-                <p>He has particular experience in criminal law, civil and commercial litigation, land and property disputes, chieftaincy and traditional authority matters, family and succession disputes, contractual claims, corporate and business-related matters, and employment and institutional disputes. He also advises clients on legal rights and obligations, risk management, contractual relationships and strategies for resolving disputes effectively.</p>
-                <p>Beyond courtroom advocacy, he places considerable emphasis on preventive legal advice and strategic representation, helping clients understand their legal position and take appropriate steps before disputes escalate.</p>
-                <p>Nana Gyasi is committed to providing legal services founded on professionalism, integrity, sound legal reasoning and practical results, with each matter approached with diligence and a clear understanding of the client's interests.</p>
+                <p>AKOBEN LEGAL SERVICES was established by two prominent legal minds—Nana Yaw Ofori Gyasi, Esq. and Emmanuel Yaw Hukpatsi, Esq. Together, they have forged a formidable partnership dedicated to rigorous advocacy, ethical practice, and comprehensive legal solutions for individuals and corporate entities across Ghana. They are committed to providing legal services founded on professionalism, integrity, sound legal reasoning and practical results.</p>
             </div>
 
             <div class="about-grid">
-                <!-- LEFT COLUMN -->
-                <div class="col-left reveal-on-scroll" style="transition-delay: 0.1s;">
+                <!-- FOUNDER 1: NANA YAW OFORI GYASI -->
+                <div class="founder-profile-col reveal-on-scroll" style="transition-delay: 0.1s;">
+                    <div class="founder-header">
+                        <div class="founder-pic-wrapper" onclick="openGalleryModalDirect(this)">
+                            <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/NANA_GYASI.jpeg" alt="Nana Yaw Ofori Gyasi, Esq." data-caption="Nana Yaw Ofori Gyasi, Esq.">
+                            <i data-lucide="maximize" class="zoom-icon" width="24" height="24"></i>
+                        </div>
+                        <div class="founder-header-text">
+                            <h2>Nana Yaw Ofori Gyasi, Esq.</h2>
+                            <span class="role-title">Co-Founder & Managing Partner</span>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; text-align: justify;">Nana Yaw Ofori Gyasi is an exceptional legal strategist with extensive experience in civil litigation, criminal defense, and corporate advisory. His dedication to meticulous research and fierce advocacy has consistently delivered favorable outcomes for his clients across multiple jurisdictions in Ghana.</p>
+
+                    <div class="credentials" style="border-top: none; padding-top: 0;">
+                        <h3><i data-lucide="briefcase"></i> Work Experience</h3>
+                        <ul>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Senior Lecturer</strong><br><span style="color: var(--text-muted);">Koforidua Technical University (May 2013 - Present)</span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Adjunct Lecturer</strong><br><span style="color: var(--text-muted);">All Nations University (Feb 2023 - Present)</span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Managing Partner</strong><br><span style="color: var(--text-muted);">Akoben Legal Services (Nov 2022 - Present)</span></div></li>
+                        </ul>
+                    </div>
+
                     <div class="credentials">
                         <h3><i data-lucide="graduation-cap"></i> Education</h3>
                         <ul>
                             <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Doctor of Philosophy - PhD</strong><br><span style="color: var(--text-muted);">University of South Africa (July 2026)</span></div></li>
                             <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Barrister at Law</strong><br><span style="color: var(--text-muted);">Ghana School of Law (July 2026)</span></div></li>
                             <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Bachelor of Laws - LLB</strong><br><span style="color: var(--text-muted);">Ghana Institute of Management and Public Administration (July 2026)</span></div></li>
-                        </ul>
-                    </div>
-
-                    <div class="credentials">
-                        <h3><i data-lucide="briefcase"></i> Work Experience</h3>
-                        <ul>
-                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Senior Lecturer</strong><br><span style="color: var(--text-muted);">Koforidua Technical University (May 2013 - Present)</span></div></li>
-                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Adjunct Lecturer</strong><br><span style="color: var(--text-muted);">All Nations University (Feb 2023 - Present)</span></div></li>
-                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Managing Partner</strong><br><span style="color: var(--text-muted);">Akoben Legal Services (Nov 2022 - Present)</span></div></li>
                         </ul>
                     </div>
 
@@ -704,28 +619,83 @@
                     </div>
                 </div>
 
-                <!-- RIGHT COLUMN -->
-                <div class="col-right reveal-on-scroll" style="transition-delay: 0.2s;">
-                    <div class="vm-box interactive-card" onclick="showInfoModal('Our Vision', 'To provide legal services founded on professionalism, integrity, sound legal reasoning and practical results.', 'eye')">
-                        <h3><i data-lucide="eye" width="24" height="24"></i> Our Vision</h3>
-                        <p style="color: var(--text-muted); margin-bottom: 0;">To provide legal services founded on professionalism, integrity, sound legal reasoning and practical results.</p>
-                    </div>
-                    
-                    <div class="vm-box interactive-card" onclick="showInfoModal('Our Mission', 'To approach each matter with diligence and a clear understanding of the client\'s interests, placing considerable emphasis on preventive legal advice and strategic representation to ensure successful outcomes.', 'target')">
-                        <h3><i data-lucide="target" width="24" height="24"></i> Our Mission</h3>
-                        <p style="color: var(--text-muted); margin-bottom: 0;">To approach each matter with diligence and a clear understanding of the client's interests, emphasizing preventive legal advice and strategic representation.</p>
+                <!-- FOUNDER 2: EMMANUEL YAW HUKPATSI -->
+                <div class="founder-profile-col reveal-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="founder-header">
+                        <div class="founder-pic-wrapper" onclick="openGalleryModalDirect(this)">
+                            <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/hukpatsi.jpg" alt="Emmanuel Yaw Hukpatsi, Esq." data-caption="Emmanuel Yaw Hukpatsi, Esq.">
+                            <i data-lucide="maximize" class="zoom-icon" width="24" height="24"></i>
+                        </div>
+                        <div class="founder-header-text">
+                            <h2>Emmanuel Yaw Hukpatsi, Esq.</h2>
+                            <span class="role-title">Co-Founder & Senior Partner</span>
+                        </div>
                     </div>
 
-                    <div class="credentials interactive-card" style="margin-top: 2rem;" onclick="toggleExpand('awards-list', this)">
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1rem; text-align: justify;">Mr. Hukpatsi brings experience across energy, oil and gas, corporate and commercial law, civil and criminal litigation, administrative and regulatory matters, labour and industrial relations, and debt recovery. His practice also encompasses energy risk assessment in the downstream petroleum sector, regulatory compliance, business establishment, and investment advisory.</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; text-align: justify;">He has a strong foundation in legal research and advocacy, with experience advising and representing clients while providing practical, commercially focused legal solutions.</p>
+                    
+                    <div class="credentials" style="border-top: none; padding-top: 0;">
+                        <h3><i data-lucide="briefcase"></i> Work Experience</h3>
+                        <ul>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Senior Partner</strong><br><span style="color: var(--text-muted);">Akoben Legal Services</span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Legal Counsel</strong><br><span style="color: var(--text-muted);">Corporate, Commercial & Energy Sectors</span></div></li>
+                        </ul>
+                    </div>
+
+                    <div class="credentials">
+                        <h3><i data-lucide="graduation-cap"></i> Education</h3>
+                        <ul>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Barrister at Law</strong><br><span style="color: var(--text-muted);">Ghana School of Law</span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Bachelor of Laws - LLB</strong><br><span style="color: var(--text-muted);">Ghana</span></div></li>
+                        </ul>
+                    </div>
+
+                    <div class="credentials">
+                        <h3><i data-lucide="star"></i> Expertise & Skills</h3>
+                        <p style="color: var(--text-muted); line-height: 1.8; word-break: break-word;">
+                            Energy, Oil & Gas &bull; Corporate & Commercial Law &bull; Civil & Criminal Litigation &bull; Administrative & Regulatory Matters &bull; Labour & Industrial Relations &bull; Debt Recovery &bull; Energy Risk Assessment &bull; Investment Advisory
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vision, Mission & Reputation Grid -->
+            <div class="about-grid" style="margin-bottom: 2rem;">
+                <div class="reveal-on-scroll">
+                    <!-- Dropdown for Vision -->
+                    <div class="vm-box interactive-card" onclick="toggleExpand('vision-text', this)">
                         <h3 style="margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; pointer-events: none;">
-                            <i data-lucide="award" width="24" height="24"></i> Awards & Recognitions
+                            <i data-lucide="eye" width="24" height="24"></i> Our Vision
+                        </h3>
+                        <div id="vision-text" class="expandable-content">
+                            <p style="color: var(--text-muted); margin-top: 1rem; margin-bottom: 0; line-height: 1.6;">To provide legal services founded on professionalism, integrity, sound legal reasoning and practical results.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Dropdown for Mission -->
+                    <div class="vm-box interactive-card" onclick="toggleExpand('mission-text', this)">
+                        <h3 style="margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; pointer-events: none;">
+                            <i data-lucide="target" width="24" height="24"></i> Our Mission
+                        </h3>
+                        <div id="mission-text" class="expandable-content">
+                            <p style="color: var(--text-muted); margin-top: 1rem; margin-bottom: 0; line-height: 1.6;">To approach each matter with diligence and a clear understanding of the client's interests, emphasizing preventive legal advice and strategic representation to ensure successful outcomes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-on-scroll" style="transition-delay: 0.1s;">
+                    <!-- Dropdown for Awards -->
+                    <div class="credentials interactive-card" style="margin-top: 0; border: none; padding-top: 1.5rem;" onclick="toggleExpand('awards-list', this)">
+                        <h3 style="margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; pointer-events: none;">
+                            <i data-lucide="award" width="24" height="24"></i> Firm Awards & Recognitions
                         </h3>
                         <div id="awards-list" class="expandable-content">
-                            <ul style="list-style: none;">
+                            <ul style="list-style: none; margin-top: 1rem;">
                                 <li class="award-item" style="display: flex; gap: 1rem; align-items: flex-start; border-bottom: none; padding: 0;">
                                     <i data-lucide="trophy" style="color: var(--text-color); flex-shrink: 0; margin-top: 0.2rem;"></i>
                                     <div>
-                                        <strong style="color: var(--text-color);">Top 50 Legal Practitioners in West Africa</strong>
+                                        <strong style="color: var(--text-color);">Top 50 Legal Practices in West Africa</strong>
                                         <div style="color: var(--text-muted); font-size: 0.9rem;">West African Legal Digest (2025)</div>
                                     </div>
                                 </li>
@@ -749,7 +719,6 @@
                 </div>
             </div>
 
-            <!-- Full Width Reputation Block -->
             <div class="reputation-wrapper reveal-on-scroll">
                 <div id="reputation-container">
                     <p style="color: var(--text-muted); font-style: italic; text-align: center; padding: 2rem;">No reputation entries available yet. Be the first to add one!</p>
@@ -794,27 +763,27 @@
 
                 <div id="chambers-album" class="gallery-grid stacked">
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
-                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/signing.jpg" alt="Nana Yaw Gyasi at Court" data-caption="Nana Yaw Gyasi, Esq. preparing for proceedings at the High Court Complex, Accra.">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/signing.jpg" alt="Court" data-caption="Preparing for proceedings at the High Court Complex, Accra.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
-                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/decen.jpg" alt="Akoben Boardroom" data-caption="The main boardroom at Akoben Legal Services, where strategic corporate negotiations take place.">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/decen.jpg" alt="Boardroom" data-caption="The main boardroom at Akoben Legal Services.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
-                        <img loading="lazy" src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&q=80&w=600" alt="Law Library" data-caption="Our extensive law library ensures our legal research is always thorough and up-to-date.">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&q=80&w=600" alt="Library" data-caption="Our extensive law library ensures thorough legal research.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
-                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/wig.jpg" alt="Client Meeting" data-caption="A standard consultation session. We prioritize clear communication and confidentiality above all.">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/wig.jpg" alt="Consultation" data-caption="A standard consultation session.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
-                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/in_office.jpeg" alt="Legal Documents" data-caption="Meticulous drafting and review of contracts is at the heart of our commercial practice.">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/in_office.jpeg" alt="Documents" data-caption="Meticulous drafting and review of contracts.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
                     <div class="gallery-item" onclick="handleGalleryClick(event, this)">
-                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/speech.jpg" alt="Chambers Team" data-caption="Collaboration and strategic planning among the associates at Akoben Legal.">
+                        <img loading="lazy" src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/speech.jpg" alt="Team" data-caption="Collaboration and strategic planning among the associates.">
                         <i data-lucide="maximize-2" class="overlay-icon" width="32" height="32"></i>
                     </div>
                 </div>
@@ -825,6 +794,18 @@
             </div>
         </section>
 
+        <!-- 3. PUBLICATIONS PAGE -->
+        <section id="publications" class="page-view">
+            <div class="page-header reveal-on-scroll">
+                <h1>Legal News & Publications</h1>
+                <p style="color: var(--text-muted); margin-top: 1rem;">Insights, trending legal news analysis, and articles published by the Founders of Akoben Legal Services.</p>
+            </div>
+            <div id="publications-feed" class="reveal-on-scroll" style="max-width: 900px; margin: 0 auto;">
+                <p style="color: var(--text-muted); text-align: center; font-style: italic;">Loading legal publications...</p>
+            </div>
+        </section>
+
+        <!-- 4. SERVICES PAGE -->
         <section id="services" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Areas of Expertise</h1>
@@ -882,6 +863,7 @@
             </div>
         </section>
 
+        <!-- 5. TEAM PAGE -->
         <section id="team" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Our Team</h1>
@@ -893,7 +875,16 @@
                     <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/NANA_GYASI.jpeg" alt="Nana Yaw Ofori Gyasi" class="team-card-img">
                     <div class="team-card-content">
                         <h3>Nana Yaw Ofori Gyasi, Esq.</h3>
-                        <div class="team-card-role">Principal & Founder</div>
+                        <div class="team-card-role">Managing Partner</div>
+                        <div class="team-card-btn">View Full Profile ➔</div>
+                    </div>
+                </div>
+
+                <div class="team-card reveal-on-scroll" style="transition-delay: 0.05s;" onclick="navigate('about')">
+                    <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/hukpatsi.jpg" alt="Emmanuel Yaw Hukpatsi" class="team-card-img">
+                    <div class="team-card-content">
+                        <h3>Emmanuel Yaw Hukpatsi, Esq.</h3>
+                        <div class="team-card-role">Senior Partner</div>
                         <div class="team-card-btn">View Full Profile ➔</div>
                     </div>
                 </div>
@@ -948,7 +939,7 @@
                 <div class="profile-main reveal-on-scroll" style="transition-delay: 0.2s;">
                     <h1>Ms. Dinah Agyapong Ohenebemah, Esq.</h1>
                     <div class="role">Senior Associate</div>
-                    <p>Ms. Dinah Agyapong Ohenebemah is a distinguished legal professional and an invaluable Senior Associate at AKOBEN LEGAL SERVICES. With over seven years of rigorous experience in litigation and corporate structuring, she has established a formidable reputation as a critical pillar of the firm. Renowned for her exceptionally sharp analytical mind and composed courtroom demeanor, Lady Dinah expertly leads the firm’s commercial dispute resolution desk.</p>
+                    <p>Ms. Dinah Agyapong Ohenebemah is a distinguished legal professional and an invaluable Senior Associate at AKOBEN LEGAL SERVICES. With over considerable years of rigorous experience in litigation and corporate structuring, she has established a formidable reputation as a critical pillar of the firm. Renowned for her exceptionally sharp analytical mind and composed courtroom demeanor, Lady Dinah expertly leads the firm’s commercial dispute resolution desk.</p>
                     <p>Before bringing her immense talents to her current role, she served as a key legal consultant for several leading financial institutions in Accra, providing vital advice on regulatory compliance and risk management. Her unique blend of multidisciplinary, international education and deep legal expertise makes her a truly inspiring and highly capable leader in her field.</p>
                     
                     <div class="profile-section">
@@ -995,7 +986,7 @@
                 
                 <div class="profile-main reveal-on-scroll" style="transition-delay: 0.2s;">
                     <h1>Victoria Kotei </h1>
-                    <div class="role">Legal Clerk</div>
+                    <div class="role">Administrator</div>
                     <p>Victoria is the organizational backbone of AKOBEN LEGAL SERVICES. With an exceptional eye for detail, she manages case files, court filings, and ensures all legal documentation strictly adheres to judicial standards.</p>
                     <p>Her deep understanding of the court registry system in the Eastern Region means our legal team operates with maximum efficiency, avoiding procedural delays.</p>
                     
@@ -1063,6 +1054,7 @@
             </div>
         </section>
 
+        <!-- 6. CONTACT PAGE -->
         <section id="contact" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Contact Us</h1>
@@ -1106,6 +1098,7 @@
             </div>
         </section>
 
+        <!-- 7. CONSULTATION PAGE -->
         <section id="consultation" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Schedule a Consultation</h1>
@@ -1179,6 +1172,7 @@
             </div>
         </section>
 
+        <!-- 8. PRIVACY POLICY PAGE -->
         <section id="privacy" class="page-view">
             <div class="page-header"><h1>Privacy Policy</h1></div>
             <div class="legal-content">
@@ -1199,6 +1193,7 @@
             </div>
         </section>
 
+        <!-- 9. TERMS OF ENGAGEMENT PAGE -->
         <section id="terms" class="page-view">
             <div class="page-header"><h1>Terms of Engagement</h1></div>
             <div class="legal-content">
@@ -1216,6 +1211,7 @@
             </div>
         </section>
 
+        <!-- 10. DISCLAIMER PAGE -->
         <section id="disclaimer" class="page-view">
             <div class="page-header"><h1>Legal Disclaimer</h1></div>
             <div class="legal-content">
@@ -1223,13 +1219,14 @@
                 <p>The content provided on this website—including articles, practice area descriptions, and general information—is intended for informational purposes only. It does not constitute legal advice and should not be relied upon as such. The law is constantly evolving, and information on this site may not reflect the most current legal developments in Ghana.</p>
                 
                 <h2>2. No Attorney-Client Relationship</h2>
-                <p>Viewing this website, downloading information, or sending messages through our contact forms does not create an attorney-client relationship between you and AKOBEN LEGAL SERVICES or Nana Yaw Gyasi, Esq. Do not send confidential information through this website until a formal attorney-client relationship has been established.</p>
+                <p>Viewing this website, downloading information, or sending messages through our contact forms does not create an attorney-client relationship between you and AKOBEN LEGAL SERVICES. Do not send confidential information through this website until a formal attorney-client relationship has been established.</p>
 
                 <h2>3. Liability</h2>
                 <p>AKOBEN LEGAL SERVICES explicitly disclaims all liability in respect to actions taken or not taken based on any or all the contents of this site. Always seek the advice of competent legal counsel licensed to practice in Ghana for your specific legal issues.</p>
             </div>
         </section>
 
+        <!-- 11. FAQ PAGE -->
         <section id="faq" class="page-view">
             <div class="page-header"><h1>Frequently Asked Questions</h1></div>
             <div class="legal-content">
@@ -1265,6 +1262,7 @@
             </div>
         </section>
 
+        <!-- 12. AML & COMPLIANCE PAGE -->
         <section id="compliance" class="page-view">
             <div class="page-header"><h1>AML & Regulatory Compliance</h1></div>
             <div class="legal-content">
@@ -1285,7 +1283,7 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <h4>AKOBEN LEGAL SERVICES</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Founded by Nana Yaw Gyasi, Esq.<br>Excellence, Integrity, and Unwavering Advocacy in the heart of Koforidua.</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Founded by Nana Yaw Gyasi, Esq. & Emmanuel Yaw Hukpatsi, Esq.<br>Excellence, Integrity, and Unwavering Advocacy in the heart of Koforidua.</p>
             </div>
             
             <div class="footer-col">
@@ -1349,11 +1347,100 @@
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; <span id="current-year"></span> AKOBEN LEGAL SERVICES | Nana Yaw Gyasi. All rights reserved.
+            &copy; <span id="current-year"></span> AKOBEN LEGAL SERVICES. All rights reserved.
+            
+            <!-- SECURE COUNSEL PORTAL (HIDDEN ICON) -->
+            <a href="#" onclick="openAuthModal(event); return false;" style="position: absolute; right: 5%; top: 2rem; color: var(--text-muted); opacity: 0.4; padding: 0.5rem;" title="Portal">
+                <i data-lucide="lock" style="width: 14px; height: 14px;"></i>
+            </a>
         </div>
     </footer>
 
-    <!-- SUCCESS MODAL (Forms) -->
+    <!-- MODALS -->
+
+    <!-- AUTH MODAL (Hidden Passcode Gate) -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal-btn" onclick="closeModal('auth-modal')"><i data-lucide="x"></i></button>
+            <i data-lucide="lock" class="modal-icon" style="color: var(--text-color);"></i>
+            <h2 style="margin-bottom: 1rem;">Counsel Authentication</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Enter your secure passcode to access the portal.</p>
+            <input type="password" id="auth-passcode" placeholder="Passcode" required>
+            <p id="auth-error" class="error-msg" style="display:none; color: #ff3333; margin-bottom: 1rem;"></p>
+            <button class="btn" id="verify-access-btn" onclick="verifyAuth()" style="width: 100%;">Verify Access</button>
+        </div>
+    </div>
+
+    <!-- COMBINED COUNSEL PORTAL MODAL -->
+    <div id="counsel-portal-modal" class="modal">
+        <div class="modal-content" style="max-width: 700px; text-align: left;">
+            <button class="close-modal-btn" onclick="closeModal('counsel-portal-modal')"><i data-lucide="x"></i></button>
+            
+            <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem;">
+                <i data-lucide="briefcase"></i> Counsel Dashboard
+            </h3>
+
+            <!-- Dashboard Tabs -->
+            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <button class="tab-btn active" onclick="switchTab('publish-tab', event)">Publish Article</button>
+                <button class="tab-btn" onclick="switchTab('sms-tab', event)">Send SMS</button>
+            </div>
+            
+            <input type="hidden" id="admin-secret">
+
+            <!-- TAB 1: PUBLISH ARTICLE -->
+            <div id="publish-tab" class="portal-tab-content">
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                    Publish trending news, articles, or import external links with your legal commentary. Immediately syncs to the public feed.
+                </p>
+                <form id="publish-form">
+                    <div class="form-grid">
+                        <div class="form-full">
+                            <select id="pub-author" required>
+                                <option value="" disabled selected>Select Author</option>
+                                <option value="Nana Yaw Ofori Gyasi, Esq.">Nana Yaw Ofori Gyasi, Esq.</option>
+                                <option value="Emmanuel Yaw Hukpatsi, Esq.">Emmanuel Yaw Hukpatsi, Esq.</option>
+                                <option value="Ms. Dinah Agyapong Ohenebemah">Ms. Dinah Agyapong Ohenebemah</option>
+                            </select>
+                        </div>
+                        <div class="form-full">
+                            <input type="text" id="pub-title" placeholder="Publication Title / Topic" required>
+                        </div>
+                        <div class="form-full">
+                            <textarea id="pub-content" rows="6" placeholder="Write article content, trending news analysis, or paste shared external links from social media..." required></textarea>
+                        </div>
+                        <div class="form-full">
+                            <button type="submit" class="btn" style="width: 100%;">Publish</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- TAB 2: SEND SMS -->
+            <div id="sms-tab" class="portal-tab-content" style="display: none;">
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                    Send an official text message directly to a client's phone number.
+                </p>
+                <form id="custom-sms-form">
+                    <div class="form-grid">
+                        <div class="form-full">
+                            <!-- DATALIST FOR SMART DROPDOWN -->
+                            <input type="text" id="sms-phone" list="client-phones-list" placeholder="Select client from dropdown or type number..." required>
+                            <datalist id="client-phones-list"></datalist>
+                        </div>
+                        <div class="form-full">
+                            <textarea id="sms-message" rows="5" placeholder="Message format: 'Hello John, your consultation is confirmed for Tuesday, Sept 8th at 10:00 AM...'" required></textarea>
+                        </div>
+                        <div class="form-full">
+                            <button type="submit" class="btn" style="width: 100%;">Send Secure SMS</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
     <div id="success-modal" class="modal">
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeModal('success-modal')"><i data-lucide="x"></i></button>
@@ -1364,7 +1451,6 @@
         </div>
     </div>
 
-    <!-- GALLERY MODAL (Profile Pictures) -->
     <div id="gallery-modal" class="modal">
         <div class="modal-content gallery-modal">
             <button class="close-modal-btn" onclick="closeModal('gallery-modal')"><i data-lucide="x"></i></button>
@@ -1373,7 +1459,6 @@
         </div>
     </div>
 
-    <!-- INFO MODAL -->
     <div id="info-modal" class="modal">
         <div class="modal-content" style="max-width: 600px; text-align: left;">
             <button class="close-modal-btn" onclick="closeModal('info-modal')"><i data-lucide="x"></i></button>
@@ -1383,7 +1468,6 @@
         </div>
     </div>
 
-    <!-- SERVICE DETAIL MODAL -->
     <div id="service-modal" class="modal">
         <div class="modal-content" style="max-width: 600px; text-align: left;">
             <button class="close-modal-btn" onclick="closeModal('service-modal')"><i data-lucide="x"></i></button>
@@ -1394,22 +1478,26 @@
         </div>
     </div>
 
+    <!-- SUPABASE SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <!-- CORE LOGIC & FUNCTIONALITY -->
     <script>
+        // CONFIGURATION
         const SUPABASE_URL = 'https://qbcjhoppnocrishsainc.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFiY2pob3Bwbm9jcmlzaHNhaW5jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzNzcyMjIsImV4cCI6MjEwMTk1MzIyMn0.chEgS3AjjXkKSJJ4VJXvLpkXJeHD2uXpgEe3IG62wqk'; 
         const RENDER_BACKEND_URL = 'https://ankoben-legal-service.onrender.com';
 
         let supabaseClient;
         try {
-            if (window.supabase) {
-                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            }
-        } catch(e) { console.error("Supabase Initialization Error:", e); }
+            if (window.supabase) { supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }
+        } catch(e) { console.error("Supabase Error:", e); }
 
         lucide.createIcons();
         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // FAILSAFE TIMER
+        setTimeout(() => { document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('visible')); }, 1500);
 
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
         const scrollObserver = new IntersectionObserver((entries, observer) => {
@@ -1457,6 +1545,7 @@
             document.body.style.overflow = isOpen ? 'hidden' : '';
         });
 
+        // ROUTING
         function navigate(pageId) {
             if(navMenu.classList.contains('open')) {
                 navMenu.classList.remove('open');
@@ -1476,8 +1565,252 @@
                 setTimeout(initScrollAnimations, 100);
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (pageId === 'publications') { loadPublications(); }
         }
 
+        function formatExactDateTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + 
+                   ' at ' + 
+                   date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // --- AUTH, TABS & SECURE DROPDOWN LOGIC ---
+        let validPasscode = ""; 
+        window.openAuthModal = function(e) {
+            e.preventDefault();
+            document.getElementById('auth-passcode').value = '';
+            document.getElementById('auth-error').style.display = 'none';
+            document.getElementById('auth-modal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        window.verifyAuth = async function() {
+            const passcode = document.getElementById('auth-passcode').value.trim();
+            const errorMsg = document.getElementById('auth-error');
+            const authBtn = document.getElementById('verify-access-btn');
+
+            if(passcode === '') {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'Please enter a passcode.';
+                return;
+            }
+            
+            // Loading State
+            const originalBtnText = authBtn.textContent;
+            authBtn.textContent = 'Verifying Data...';
+            authBtn.disabled = true;
+            errorMsg.style.display = 'none';
+
+            try {
+                // Secretly fetch client data to both verify passcode and populate dropdown
+                const response = await fetch(`${RENDER_BACKEND_URL}/api/verify-counsel`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ passcode })
+                });
+                
+                const resData = await response.json();
+                
+                if(response.ok && resData.success) {
+                    validPasscode = passcode;
+                    document.getElementById('admin-secret').value = passcode; 
+                    closeModal('auth-modal');
+                    
+                    // Populate Datalist with Client Names & Numbers
+                    const dataList = document.getElementById('client-phones-list');
+                    dataList.innerHTML = ''; 
+                    if (resData.clients && resData.clients.length > 0) {
+                        resData.clients.forEach(client => {
+                            const option = document.createElement('option');
+                            option.value = client.phone; 
+                            option.textContent = client.name; 
+                            dataList.appendChild(option);
+                        });
+                    }
+
+                    document.getElementById('counsel-portal-modal').classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    errorMsg.style.display = 'block';
+                    errorMsg.textContent = resData.error || 'Invalid passcode.';
+                }
+            } catch (err) {
+                errorMsg.style.display = 'block';
+                errorMsg.innerHTML = '<b>Network error:</b> Cannot reach backend server. Make sure Render is awake and running.';
+            } finally {
+                authBtn.textContent = originalBtnText;
+                authBtn.disabled = false;
+            }
+        }
+
+        window.switchTab = function(tabId, event) {
+            document.querySelectorAll('.portal-tab-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).style.display = 'block';
+            event.currentTarget.classList.add('active');
+        }
+
+        // --- 1. PUBLISH ARTICLE FORM SUBMIT ---
+        const publishForm = document.getElementById('publish-form');
+        if (publishForm) {
+            publishForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const author = document.getElementById('pub-author').value;
+                const passcode = validPasscode;
+                const title = document.getElementById('pub-title').value.trim();
+                const content = document.getElementById('pub-content').value.trim();
+                const submitBtn = publishForm.querySelector('button[type="submit"]');
+                
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Publishing...";
+
+                try {
+                    const response = await fetch(`${RENDER_BACKEND_URL}/api/publish-article`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ author, passcode, title, content })
+                    });
+
+                    const resData = await response.json();
+                    if(response.ok && resData.success) {
+                        showSuccessModal("Published Successfully", "Your article has been securely published to the database with the exact date and time.");
+                        publishForm.reset();
+                        closeModal('counsel-portal-modal');
+                        navigate('publications'); 
+                    } else {
+                        alert(resData.error || "Failed to publish article. Invalid Passcode.");
+                    }
+                } catch(err) {
+                    alert("Error connecting to backend server.");
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Publish";
+                }
+            });
+        }
+
+        // --- 2. SEND CUSTOM SMS FORM SUBMIT ---
+        const smsForm = document.getElementById('custom-sms-form');
+        if (smsForm) {
+            smsForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const phone = document.getElementById('sms-phone').value.trim();
+                const message = document.getElementById('sms-message').value.trim();
+                const passcode = validPasscode;
+                const submitBtn = smsForm.querySelector('button[type="submit"]');
+                
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Sending SMS...";
+
+                try {
+                    const response = await fetch(`${RENDER_BACKEND_URL}/api/send-custom-sms`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ passcode, phone, message })
+                    });
+
+                    const resData = await response.json();
+                    if(response.ok && resData.success) {
+                        showSuccessModal("SMS Sent", "Your message has been sent successfully to the client.");
+                        smsForm.reset();
+                    } else {
+                        alert(resData.error || "Failed to send SMS. Invalid Passcode.");
+                    }
+                } catch(err) {
+                    alert("Error connecting to backend server to send SMS.");
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Send Secure SMS";
+                }
+            });
+        }
+
+
+        window.loadPublications = async function() {
+            const feed = document.getElementById('publications-feed');
+            if(!feed) return;
+            if(!supabaseClient) { feed.innerHTML = '<p style="text-align:center;">Database connection unavailable.</p>'; return; }
+
+            try {
+                const { data: pubs, error } = await supabaseClient.from('publications').select('*').order('created_at', { ascending: false });
+                if(error) throw error;
+                
+                if(!pubs || pubs.length === 0) {
+                    feed.innerHTML = '<p style="color: var(--text-muted); text-align: center; font-style: italic;">No legal articles or updates published yet. Counsel will post updates soon.</p>';
+                    return;
+                }
+
+                feed.innerHTML = '';
+                for(const pub of pubs) {
+                    const { data: comments } = await supabaseClient.from('publication_comments').select('*').eq('publication_id', pub.id).order('created_at', { ascending: true });
+
+                    let commentsHtml = '';
+                    if(comments && comments.length > 0) {
+                        comments.forEach(c => {
+                            const exactTime = formatExactDateTime(c.created_at);
+                            commentsHtml += `
+                                <div class="comment-item">
+                                    <div class="comment-author" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                                        <span>${c.client_name}</span>
+                                        <span class="comment-date">${exactTime}</span>
+                                    </div>
+                                    <div class="comment-text">${c.comment_text}</div>
+                                </div>`;
+                        });
+                    } else {
+                        commentsHtml = '<p style="font-size:0.85rem; color: var(--text-muted); margin-bottom: 1rem; font-style: italic;">No comments yet. Be the first to leave your thoughts!</p>';
+                    }
+
+                    const exactPubTime = formatExactDateTime(pub.created_at);
+                    const pubCard = document.createElement('div');
+                    pubCard.className = 'pub-card';
+                    pubCard.innerHTML = `
+                        <div class="pub-header">
+                            <div>
+                                <h2 class="pub-title">${pub.title}</h2>
+                                <span style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-top: 0.3rem;">Published on: ${exactPubTime}</span>
+                            </div>
+                            <span class="pub-author-badge">${pub.author}</span>
+                        </div>
+                        <div class="pub-content">${pub.content}</div>
+                        
+                        <div class="comments-section">
+                            <h4 style="margin-bottom: 1rem; font-size: 1rem;">Client Comments (${comments ? comments.length : 0})</h4>
+                            ${commentsHtml}
+
+                            <form onsubmit="submitClientComment(event, '${pub.id}')" style="margin-top: 1rem;">
+                                <input type="text" placeholder="Your Name" class="comment-name-input" required style="margin-bottom: 0.5rem; padding: 0.6rem;">
+                                <textarea placeholder="Share your legal perspective..." class="comment-text-input" rows="2" required style="margin-bottom: 0.5rem; padding: 0.6rem;"></textarea>
+                                <button type="submit" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Submit Comment</button>
+                            </form>
+                        </div>`;
+                    feed.appendChild(pubCard);
+                }
+            } catch(e) { console.warn('Error loading publications:', e); }
+        }
+
+        window.submitClientComment = async function(event, pubId) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const name = form.querySelector('.comment-name-input').value.trim();
+            const text = form.querySelector('.comment-text-input').value.trim();
+
+            if(!supabaseClient) { alert("Database error. Please try again."); return; }
+            submitBtn.disabled = true; submitBtn.textContent = "Sending...";
+
+            try {
+                const { error } = await supabaseClient.from('publication_comments').insert([{ publication_id: pubId, client_name: name, comment_text: text }]);
+                if(error) throw error;
+                form.reset();
+                loadPublications(); 
+            } catch(err) { alert("Failed to submit comment."); } 
+            finally { submitBtn.disabled = false; submitBtn.textContent = "Submit Comment"; }
+        }
+
+        // --- STANDARD MODALS & INTERACTIONS ---
         function showSuccessModal(title, message) {
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-message').textContent = message;
@@ -1527,7 +1860,6 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Standard direct open (used by hero image)
         function openGalleryModalDirect(element) {
             const imgEl = element.querySelector('img');
             document.getElementById('gallery-modal-img').src = imgEl.src;
@@ -1536,26 +1868,16 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Highly interactive Album Logic (Stack vs Expand)
         function handleGalleryClick(event, element) {
             const grid = element.closest('.gallery-grid');
-            
-            // If it is currently stacked like a book
             if (grid && grid.classList.contains('stacked')) {
-                // 1. Unpack the album
                 grid.classList.remove('stacked');
                 grid.classList.add('expanded');
-                
-                // 2. Show the Back/Pack button, hide prompt
                 document.getElementById('pack-album-btn').style.display = 'inline-flex';
                 document.getElementById('album-prompt').style.display = 'none';
-                
-                // Allow animations to play out, trigger scroll updates
                 setTimeout(() => { window.dispatchEvent(new Event('scroll')); }, 100);
-                return; // Stop here, do not open the full-screen modal window yet
+                return; 
             }
-
-            // If it is ALREADY expanded, behave normally and open the large modal
             const imgEl = element.querySelector('img');
             if (imgEl) {
                 document.getElementById('gallery-modal-img').src = imgEl.src;
@@ -1565,16 +1887,12 @@
             }
         }
 
-        // Logic to Pack Album back into a stack
         function packAlbum() {
             const grid = document.getElementById('chambers-album');
             grid.classList.remove('expanded');
             grid.classList.add('stacked');
-            
             document.getElementById('pack-album-btn').style.display = 'none';
             document.getElementById('album-prompt').style.display = 'flex';
-            
-            // Scroll back into view gracefully
             document.getElementById('album-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
@@ -1597,6 +1915,7 @@
             if (cardElement && cardElement.classList.contains('interactive-card')) { cardElement.classList.toggle('expanded'); }
         }
 
+        // --- REVIEWS LOGIC ---
         const reviewForm = document.getElementById('review-form');
         const reviewsContainer = document.getElementById('reviews-container');
 
@@ -1633,15 +1952,9 @@
             const fetchAndRenderReviews = async () => {
                 if (!supabaseClient) return;
                 try {
-                    const { data, error } = await supabaseClient
-                        .from('testimonials')
-                        .select('*')
-                        .eq('type', 'review')
-                        .order('created_at', { ascending: false });
-
+                    const { data, error } = await supabaseClient.from('testimonials').select('*').eq('type', 'review').order('created_at', { ascending: false });
                     if (error) throw error;
-                    
-                    reviewsContainer.innerHTML = ''; // Clear container
+                    reviewsContainer.innerHTML = ''; 
                     
                     if (data && data.length > 0) {
                         data.forEach(review => {
@@ -1658,16 +1971,13 @@
                         scrollPos = 0; 
                         reviewsContainer.scrollTop = 0; 
                         
-                        if(!scrollAnimationId) {
-                            requestAnimationFrame(scrollLoop);
-                        }
+                        if(!scrollAnimationId) requestAnimationFrame(scrollLoop);
                     } else {
                         reviewsContainer.innerHTML = '<p style="color: var(--text-muted); font-style: italic; text-align: center; padding: 2rem;">No testimonials available yet. Be the first to leave a review below!</p>';
                     }
                 } catch(err) { console.error("Error fetching reviews:", err); }
             };
 
-            // Initial fetch
             fetchAndRenderReviews();
             window.addEventListener('resize', updateMetrics);
 
@@ -1689,21 +1999,13 @@
 
                 try {
                     if (supabaseClient) {
-                        const { error } = await supabaseClient.from('testimonials').insert([{ 
-                            name, 
-                            rating: ratingVal, 
-                            message: text, 
-                            type: 'review' 
-                        }]);
-                        
+                        const { error } = await supabaseClient.from('testimonials').insert([{ name, rating: ratingVal, message: text, type: 'review' }]);
                         if (error) throw error;
-
                         reviewForm.reset();
                         showSuccessModal("Review Submitted", "Thank you for your feedback! It has been securely saved and added to our live feed.");
-                        await fetchAndRenderReviews(); // Immediately pull new review
+                        await fetchAndRenderReviews(); 
                     }
                 } catch(err) { 
-                    console.error("Review Error:", err.message); 
                     alert("There was an error saving your review. Please try again later.");
                 } finally {
                     submitBtn.disabled = false;
@@ -1712,70 +2014,24 @@
             });
         }
 
-        const contactForm = document.getElementById('general-contact-form');
-        if(contactForm) {
-            contactForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const submitBtn = contactForm.querySelector('button[type="submit"]');
-                submitBtn.disabled = true;
-                submitBtn.textContent = "Sending...";
-
-                const name = document.getElementById('contact-name').value.trim();
-                const email = document.getElementById('contact-email').value.trim();
-                const subject = document.getElementById('contact-subject').value.trim();
-                const message = document.getElementById('contact-message').value.trim();
-
-                try {
-                    if (supabaseClient && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
-                        await supabaseClient.from('contacts').insert([{ name, email, subject, message }]);
-                    }
-
-                    if (RENDER_BACKEND_URL !== 'https://your-backend-app.onrender.com') {
-                        await fetch(`${RENDER_BACKEND_URL}/api/notify-contact`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ name, email, subject, message })
-                        });
-                    }
-
-                    contactForm.reset();
-                    showSuccessModal("Message Sent", "Your inquiry has been sent to our chambers. You should receive a confirmation email shortly.");
-                } catch (error) {
-                    console.error("Contact Form Error:", error);
-                    alert("There was an error saving your message. Please try again.");
-                } finally {
-                    submitBtn.disabled = false; submitBtn.textContent = "Send Message";
-                }
-            });
-        }
-
+        // --- REPUTATION LOGIC ---
         const miniRepForm = document.getElementById('mini-rep-form');
-        
         const fetchAndRenderReputations = async () => {
             if (!supabaseClient) return;
             const container = document.getElementById('reputation-container');
             if (!container) return;
             
             try {
-                const { data, error } = await supabaseClient
-                    .from('testimonials')
-                    .select('*')
-                    .eq('type', 'reputation')
-                    .order('created_at', { ascending: false });
-
+                const { data, error } = await supabaseClient.from('testimonials').select('*').eq('type', 'reputation').order('created_at', { ascending: false });
                 if (error) throw error;
                 
                 if (data && data.length > 0) {
-                    container.innerHTML = ''; // Clear container
+                    container.innerHTML = ''; 
                     data.forEach(rep => {
                         const newRep = document.createElement('div');
                         newRep.className = 'reputation-block interactive-card';
                         newRep.style.marginTop = '0';
-                        newRep.innerHTML = `
-                            "${rep.message}"
-                            <br><br>
-                            <span style="font-weight: 600; color: var(--text-color); font-style: normal;">— ${rep.name}</span>
-                        `;
+                        newRep.innerHTML = `"${rep.message}"<br><br><span style="font-weight: 600; color: var(--text-color); font-style: normal;">— ${rep.name}</span>`;
                         container.appendChild(newRep);
                     });
                 } else {
@@ -1783,8 +2039,6 @@
                 }
             } catch(err) { console.error("Error fetching reputations:", err); }
         };
-
-        // Fetch reputations on initial load
         fetchAndRenderReputations();
 
         if(miniRepForm) {
@@ -1792,35 +2046,51 @@
                 e.preventDefault();
                 const submitBtn = miniRepForm.querySelector('button[type="submit"]');
                 const originalText = submitBtn.textContent;
-                submitBtn.disabled = true;
-                submitBtn.textContent = "Submitting...";
-
+                submitBtn.disabled = true; submitBtn.textContent = "Submitting...";
                 const name = document.getElementById('m-rep-name').value.trim();
                 const ratingVal = parseInt(document.getElementById('m-rep-rating').value);
                 const text = document.getElementById('m-rep-text').value.trim();
-
                 try {
                     if (supabaseClient) {
-                        const { error } = await supabaseClient.from('testimonials').insert([{ 
-                            name, 
-                            rating: ratingVal, 
-                            message: text, 
-                            type: 'reputation' 
-                        }]);
+                        const { error } = await supabaseClient.from('testimonials').insert([{ name, rating: ratingVal, message: text, type: 'reputation' }]);
                         if (error) throw error;
                     }
                     miniRepForm.reset();
                     toggleExpand('client-rep-form-container');
                     showSuccessModal("Reputation Submitted", "Thank you! Your feedback has been securely transmitted and saved in our database.");
-                    
-                    // Immediately pull new reputation into view
                     await fetchAndRenderReputations();
-                } catch(err) { 
-                    console.error("Reputation Error:", err); 
-                    alert("Error saving reputation. Please try again later.");
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalText;
+                } catch(err) { alert("Error saving reputation. Please try again later."); } 
+                finally { submitBtn.disabled = false; submitBtn.textContent = originalText; }
+            });
+        }
+
+        // --- CONTACT & CONSULTATION FORMS (Backend Routing Only) ---
+        const contactForm = document.getElementById('general-contact-form');
+        if(contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = true; submitBtn.textContent = "Sending...";
+                const name = document.getElementById('contact-name').value.trim();
+                const email = document.getElementById('contact-email').value.trim();
+                const subject = document.getElementById('contact-subject').value.trim();
+                const message = document.getElementById('contact-message').value.trim();
+
+                try {
+                    const backendResponse = await fetch(`${RENDER_BACKEND_URL}/api/notify-contact`, { 
+                        method: 'POST', 
+                        headers: { 'Content-Type': 'application/json' }, 
+                        body: JSON.stringify({ name, email, subject, message }) 
+                    });
+
+                    if (!backendResponse.ok) throw new Error("Server error");
+                    
+                    contactForm.reset();
+                    showSuccessModal("Message Sent", "Your inquiry has been sent to our chambers. You should receive a confirmation email shortly.");
+                } catch (error) { 
+                    alert("There was an error saving your message. Please try again."); 
+                } finally { 
+                    submitBtn.disabled = false; submitBtn.textContent = "Send Message"; 
                 }
             });
         }
@@ -1850,45 +2120,24 @@
 
                 if(isValid) {
                     const submitBtn = bookingForm.querySelector('button[type="submit"]');
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = "Processing...";
-
-                    const consultationData = {
-                        first_name: fname,
-                        last_name: lname,
-                        email: email,
-                        phone: phone, 
-                        practice_area: practice,
-                        consultation_type: type,
-                        issue_description: issue
-                    };
+                    submitBtn.disabled = true; submitBtn.textContent = "Processing...";
+                    const consultationData = { first_name: fname, last_name: lname, email: email, phone: phone, practice_area: practice, consultation_type: type, issue_description: issue };
 
                     try {
-                        if (supabaseClient && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
-                            const { error: dbError } = await supabaseClient.from('consultations').insert([consultationData]);
-                            if (dbError) throw new Error("Database error: " + dbError.message);
-                        }
+                        const backendResponse = await fetch(`${RENDER_BACKEND_URL}/api/notify-consultation`, { 
+                            method: 'POST', 
+                            headers: { 'Content-Type': 'application/json' }, 
+                            body: JSON.stringify(consultationData) 
+                        });
 
-                        if (RENDER_BACKEND_URL !== 'https://your-backend-app.onrender.com') {
-                            try {
-                                const backendResponse = await fetch(`${RENDER_BACKEND_URL}/api/notify-consultation`, {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify(consultationData)
-                                });
-                            } catch (fetchError) { console.error("Could not reach backend:", fetchError); }
-                        }
-
-                        let successMsg = "Your consultation request has been successfully submitted. You will receive an email message and SMS shortly confirming the exact date and time you can come for your appointment.";
-
-                        showSuccessModal("Request Received", successMsg);
+                        if (!backendResponse.ok) throw new Error("Server error");
+                        
+                        showSuccessModal("Request Received", "Your consultation request has been successfully submitted. You will receive an email message and SMS shortly confirming the exact date and time you can come for your appointment.");
                         bookingForm.reset();
-                    } catch (error) {
-                        console.error("Submission Error:", error);
-                        alert("There was an error saving your booking. Please try again or call us directly.");
-                    } finally {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = "Confirm Appointment Request";
+                    } catch (error) { 
+                        alert("There was an error saving your booking. Please try again or call us directly."); 
+                    } finally { 
+                        submitBtn.disabled = false; submitBtn.textContent = "Confirm Appointment Request"; 
                     }
                 }
             });
