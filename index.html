@@ -46,7 +46,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; width: 100vw; max-width: 100%; }
+        html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; width: 100%; max-width: 100vw; }
         
         body {
             font-family: var(--font-body);
@@ -225,6 +225,9 @@
         .reputation-wrapper { max-width: 1000px; margin: 0 auto 5rem auto; }
         .reputation-block { padding: 2.5rem; background-color: var(--card-bg); border-left: 4px solid var(--text-color); font-style: italic; color: var(--text-muted); transition: all 0.4s ease; position: relative; border-radius: 0 8px 8px 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem; }
         .reputation-block:hover { transform: scale(1.01); background-color: var(--hover-bg); box-shadow: var(--shadow-hover); }
+        
+        /* FIX: Remove 'Click to expand' text specifically from reputation blocks */
+        .reputation-block.interactive-card::after { content: none; display: none !important; }
 
         .pub-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 2.5rem; margin-bottom: 2rem; box-shadow: var(--shadow-light); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
         .pub-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
@@ -289,6 +292,54 @@
         .form-full { grid-column: 1 / -1; }
         .error-msg { color: #ff3333; font-size: 0.85rem; margin-top: -0.8rem; margin-bottom: 1rem; display: none; animation: fadeInPage 0.3s forwards; }
 
+        .contact-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .contact-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--text-color);
+        }
+        .card-icon-wrapper {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            background: var(--text-color);
+            color: var(--bg-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hours-list { list-style: none; padding: 0; margin: 0; }
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        .map-wrapper {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            height: 400px;
+            box-shadow: var(--shadow-light);
+        }
+
         .legal-content { max-width: 800px; margin: 0 auto; width: 100%; }
         .legal-content h2 { margin-top: 2rem; font-size: clamp(1.3rem, 3vw, 1.5rem); }
         .legal-content p, .legal-content ul { color: var(--text-muted); margin-bottom: 1rem; line-height: 1.8; text-align: justify; }
@@ -340,7 +391,6 @@
         .modal-content.gallery-modal .close-modal-btn { top: -15px; right: 0; background-color: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
         .modal-content.gallery-modal .close-modal-btn:hover { background-color: #fff; color: #000; }
 
-        /* PORTAL TABS */
         .tab-btn { background: none; border: none; padding: 0.5rem 1rem; cursor: pointer; color: var(--text-muted); font-family: var(--font-body); font-size: 1rem; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.3s ease; }
         .tab-btn:hover { color: var(--text-color); }
         .tab-btn.active { color: var(--text-color); border-bottom-color: var(--text-color); }
@@ -365,46 +415,50 @@
         .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.9rem; position: relative; }
 
         @media (max-width: 992px) {
-            .hero { grid-template-columns: 1fr; gap: 3rem; min-height: auto; padding-top: 2rem; }
+            .hero { grid-template-columns: 1fr; gap: 2.5rem; min-height: auto; padding-top: 2rem; }
             .hero-text { text-align: center; }
-            .hero-text p { margin-left: auto; margin-right: auto; }
-            .founders-dual-container { max-width: 800px; margin: 0 auto; }
-            .about-grid, .split-layout { grid-template-columns: 1fr; gap: 3rem; }
-            .reviews-layout { grid-template-columns: 1fr; gap: 3rem; }
+            .hero-text p { margin-left: auto; margin-right: auto; max-width: 100%; }
+            .founders-dual-container { max-width: 700px; margin: 0 auto; }
+            .about-grid, .split-layout, .reviews-layout { grid-template-columns: 1fr; gap: 2.5rem; }
             .review-form-container { position: static; margin-top: 0; }
             .profile-layout { grid-template-columns: 1fr; gap: 2.5rem; }
             .profile-sidebar-img-wrapper { max-width: 400px; margin-left: auto; margin-right: auto; }
             .profile-sidebar img { max-width: 100%; max-height: 500px; object-fit: cover; margin: 0 auto; display: block; }
             .nav-links { gap: 1.5rem; }
+            .contact-cards-grid { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 768px) {
             html { font-size: 15px; } 
-            main { padding: 1.5rem 5%; margin-top: 70px; }
+            main { padding: 1.5rem 1.5rem; margin-top: 70px; }
             .hamburger { display: block; }
-            header { padding: 1rem 5%; background-color: var(--bg-color); }
-            header.scrolled { padding: 1rem 5%; }
+            header { padding: 1rem 1.5rem; background-color: var(--bg-color); }
+            header.scrolled { padding: 1rem 1.5rem; }
             .nav-links { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--bg-color); flex-direction: column; justify-content: center; padding: 2rem; transform: translateY(-100%); opacity: 0; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001; box-sizing: border-box; }
             .nav-links.open { transform: translateY(0); opacity: 1; }
             .nav-link { font-size: 1.5rem; margin-bottom: 1.5rem; width: 100%; text-align: center; padding: 1rem; }
             .nav-link::after { display: none; }
             .nav-link:active { background-color: var(--hover-bg); border-radius: 8px; }
-            .home-section { margin-top: 4rem; padding-top: 3rem; }
+            .home-section { margin-top: 3.5rem; padding-top: 2.5rem; }
             .section-header h2 { font-size: 2rem; }
             .form-grid { grid-template-columns: 1fr; gap: 1rem; }
             .form-container { padding: 2rem 1.5rem; }
-            .feature-box, .service-card, .review-card, .reputation-block, .pub-card { padding: 1.8rem 1.2rem; }
-            .cta-banner { padding: 3rem 1.5rem; }
-            .modal-content { padding: 2.5rem 1.5rem; }
+            .feature-box, .service-card, .review-card, .reputation-block, .pub-card { padding: 1.5rem 1.2rem; }
+            .cta-banner { padding: 2.5rem 1.5rem; margin-top: 3rem; }
+            .modal-content { padding: 2rem 1.5rem; }
             .close-modal-btn { top: 0.5rem; right: 0.5rem; width: 35px; height: 35px; } 
-            .gallery-grid.stacked .gallery-item { max-width: 85%; }
+            .gallery-grid.stacked .gallery-item { max-width: 90%; }
+            .contact-cards-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .map-wrapper { height: 300px; }
+            footer { padding: 3rem 1.5rem 1.5rem; }
         }
 
         @media (max-width: 600px) {
-            .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
-            .footer-team { align-items: center; }
-            .team-member-mini { text-align: left; width: 100%; max-width: 250px; }
-            .social-links { justify-content: center; }
+            .footer-grid { grid-template-columns: 1fr; text-align: left; gap: 2rem; }
+            .footer-team { align-items: flex-start; }
+            .team-member-mini { width: 100%; max-width: 100%; }
+            .social-links { justify-content: flex-start; }
+            .hours-list li { flex-direction: column; gap: 0.2rem; }
         }
 
         @media (max-width: 480px) {
@@ -412,17 +466,17 @@
             header { padding: 1rem 1.2rem; }
             main { padding: 1.5rem 1.2rem; }
             .hero { gap: 2rem; }
-            .hero-text h1 { font-size: 2.2rem; }
+            .hero-text h1 { font-size: 2.4rem; }
             .hero-text p { width: 100%; max-width: 100%; }
             .founders-dual-container { grid-template-columns: 1fr; }
-            .btn { width: 100%; margin-left: 0 !important; margin-bottom: 1rem; display: block; }
-            .gallery-grid.expanded { grid-template-columns: 1fr; }
+            .btn { width: 100%; margin-left: 0 !important; margin-bottom: 1rem; display: block; padding: 1rem; }
+            .gallery-grid.expanded { grid-template-columns: 1fr; gap: 1.5rem; }
             .profile-sidebar-img-wrapper { max-width: 100%; }
             .form-container { padding: 1.5rem 1rem; }
-            
             .founder-header { flex-direction: column; align-items: center; text-align: center; }
             .founder-pic-wrapper { width: 120px; height: 120px; margin-bottom: 1rem; }
             .founder-header-text { width: 100%; }
+            .contact-card { padding: 2rem 1.2rem; }
         }
     </style>
 </head>
@@ -454,7 +508,6 @@
 
     <main id="app-content">
 
-        <!-- 1. HOME PAGE -->
         <section id="home" class="page-view active">
             <div class="hero">
                 <div class="hero-text reveal-on-scroll">
@@ -566,7 +619,6 @@
             </div>
         </section>
 
-        <!-- 2. ABOUT/PROFILE PAGE -->
         <section id="about" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Founders Profile</h1>
@@ -794,7 +846,6 @@
             </div>
         </section>
 
-        <!-- 3. PUBLICATIONS PAGE -->
         <section id="publications" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Legal News & Publications</h1>
@@ -805,7 +856,6 @@
             </div>
         </section>
 
-        <!-- 4. SERVICES PAGE -->
         <section id="services" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Areas of Expertise</h1>
@@ -863,7 +913,6 @@
             </div>
         </section>
 
-        <!-- 5. TEAM PAGE -->
         <section id="team" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Our Team</h1>
@@ -1054,51 +1103,64 @@
             </div>
         </section>
 
-        <!-- 6. CONTACT PAGE -->
         <section id="contact" class="page-view">
             <div class="page-header reveal-on-scroll">
-                <h1>Contact Us</h1>
-                <p style="color: var(--text-muted); margin-top: 1rem;">Get in touch for general inquiries or visit our chambers.</p>
+                <h1>Contact & Location</h1>
+                <p style="color: var(--text-muted); margin-top: 1rem;">Reach out to our chambers or visit us in person. We are ready to assist you.</p>
             </div>
 
-            <div class="split-layout">
-                <div class="contact-info reveal-on-scroll">
-                    <div class="info-block">
-                        <h3><i data-lucide="map-pin"></i> Chambers Location</h3>
-                        <p>KOFORIDUA OLD ESTATE<br>Enkaakyi junction<br>Eastern Region of Ghana</p>
+            <div class="contact-cards-grid reveal-on-scroll">
+                <div class="contact-card">
+                    <div class="card-icon-wrapper"><i data-lucide="phone"></i></div>
+                    <h3>Phone</h3>
+                    <p style="margin-top: 1rem; font-size: 1.1rem;"><a href="tel:0244526944">0244526944</a></p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Mon-Fri, 8am - 5pm</p>
+                </div>
+                <div class="contact-card">
+                    <div class="card-icon-wrapper"><i data-lucide="mail"></i></div>
+                    <h3>Email</h3>
+                    <p style="margin-top: 1rem; font-size: 1.1rem;"><a href="mailto:nyogyasi@yahoo.com">nyogyasi@yahoo.com</a></p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">24/7 Monitored</p>
+                </div>
+                <div class="contact-card">
+                    <div class="card-icon-wrapper"><i data-lucide="map-pin"></i></div>
+                    <h3>Chambers</h3>
+                    <p style="margin-top: 1rem; font-size: 1.05rem;">KOFORIDUA OLD ESTATE<br>Enkaakyi junction</p>
+                </div>
+            </div>
+
+            <div class="split-layout" style="margin-top: 3rem; align-items: start;">
+                <!-- Left: Map Container -->
+                <div class="map-container reveal-on-scroll">
+                    <div class="map-wrapper">
+                        <iframe src="https://www.google.com/maps?q=Koforidua+Old+Estate,+Enkaakyi+junction,+Eastern+Region,+Ghana&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
-                    <div class="info-block">
-                        <h3><i data-lucide="phone"></i> Telephone</h3>
-                        <p>0244526944</p>
-                    </div>
-                    <div class="info-block">
-                        <h3><i data-lucide="mail"></i> Email</h3>
-                        <p>nyogyasi@yahoo.com</p>
-                    </div>
-                    <div class="info-block" style="margin-top: 3rem;">
-                        <div style="border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); height: 250px;">
-                            <iframe src="https://www.google.com/maps?q=Koforidua+Old+Estate,+Enkaakyi+junction,+Eastern+Region,+Ghana&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
-                        <a href="https://www.google.com/maps/dir/?api=1&destination=Koforidua+Old+Estate,+Enkaakyi+junction,+Eastern+Region,+Ghana" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 1rem; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8rem; font-size: 0.9rem;">
-                            <i data-lucide="navigation" width="18" height="18"></i> Get Directions
-                        </a>
-                    </div>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Koforidua+Old+Estate,+Enkaakyi+junction,+Eastern+Region,+Ghana" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="width: 100%; margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem;">
+                        <i data-lucide="navigation"></i> Get Directions to Chambers
+                    </a>
                 </div>
 
-                <div class="form-container reveal-on-scroll" style="transition-delay: 0.2s;">
-                    <h2 style="margin-bottom: 2rem;">General Inquiry</h2>
-                    <form id="general-contact-form">
-                        <input type="text" id="contact-name" placeholder="Full Name" required>
-                        <input type="email" id="contact-email" placeholder="Email Address" required>
-                        <input type="text" id="contact-subject" placeholder="Subject" required>
-                        <textarea id="contact-message" rows="6" placeholder="Your Message..." required></textarea>
-                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
-                    </form>
+                <!-- Right: Business Hours & Emergency replaced the General Inquiry Form -->
+                <div class="hours-container reveal-on-scroll" style="transition-delay: 0.2s; background: var(--card-bg); padding: 3rem 2.5rem; border: 1px solid var(--border-color); border-radius: 12px; backdrop-filter: blur(12px);">
+                    <h3 style="margin-bottom: 2rem; font-family: var(--font-heading); font-size: 1.8rem; border-bottom: 2px solid var(--text-color); padding-bottom: 1rem; display: inline-block;">Business Hours</h3>
+                    <ul class="hours-list">
+                        <li><span>Monday - Friday</span> <span>8:00 AM - 5:00 PM</span></li>
+                        <li><span>Saturday</span> <span>By Appointment Only</span></li>
+                        <li><span style="color: var(--text-muted);">Sunday</span> <span style="color: var(--text-muted);">Closed</span></li>
+                        <li><span style="color: var(--text-muted);">Public Holidays</span> <span style="color: var(--text-muted);">Closed</span></li>
+                    </ul>
+
+                    <div class="emergency-box" style="margin-top: 3rem; padding: 1.5rem; background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0;">
+                        <h4 style="color: #ef4444; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem;">
+                            <i data-lucide="alert-circle" width="22"></i> 24/7 Emergency Representation
+                        </h4>
+                        <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-color);">For extremely urgent legal matters requiring immediate counsel outside of normal business hours (e.g., arrests, bail applications), please call our emergency line directly.</p>
+                        <p style="margin-top: 1rem; font-weight: 600; font-size: 1.1rem;"><a href="tel:0244526944" style="color: #ef4444;">Call 0244526944</a></p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- 7. CONSULTATION PAGE -->
         <section id="consultation" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Schedule a Consultation</h1>
@@ -1172,7 +1234,6 @@
             </div>
         </section>
 
-        <!-- 8. PRIVACY POLICY PAGE -->
         <section id="privacy" class="page-view">
             <div class="page-header"><h1>Privacy Policy</h1></div>
             <div class="legal-content">
@@ -1193,7 +1254,6 @@
             </div>
         </section>
 
-        <!-- 9. TERMS OF ENGAGEMENT PAGE -->
         <section id="terms" class="page-view">
             <div class="page-header"><h1>Terms of Engagement</h1></div>
             <div class="legal-content">
@@ -1211,7 +1271,6 @@
             </div>
         </section>
 
-        <!-- 10. DISCLAIMER PAGE -->
         <section id="disclaimer" class="page-view">
             <div class="page-header"><h1>Legal Disclaimer</h1></div>
             <div class="legal-content">
@@ -1226,7 +1285,6 @@
             </div>
         </section>
 
-        <!-- 11. FAQ PAGE -->
         <section id="faq" class="page-view">
             <div class="page-header"><h1>Frequently Asked Questions</h1></div>
             <div class="legal-content">
@@ -1262,7 +1320,6 @@
             </div>
         </section>
 
-        <!-- 12. AML & COMPLIANCE PAGE -->
         <section id="compliance" class="page-view">
             <div class="page-header"><h1>AML & Regulatory Compliance</h1></div>
             <div class="legal-content">
@@ -1356,9 +1413,7 @@
         </div>
     </footer>
 
-    <!-- MODALS -->
-
-    <!-- AUTH MODAL (Hidden Passcode Gate) -->
+    <!-- AUTH MODAL -->
     <div id="auth-modal" class="modal">
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeModal('auth-modal')"><i data-lucide="x"></i></button>
@@ -1576,7 +1631,7 @@
                    date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
         }
 
-        // --- AUTH, TABS & SECURE DROPDOWN LOGIC ---
+        // --- STREAMING_CHUNK: Portal Auth and API Logics ---
         let validPasscode = ""; 
         window.openAuthModal = function(e) {
             e.preventDefault();
@@ -1599,7 +1654,7 @@
             
             // Loading State
             const originalBtnText = authBtn.textContent;
-            authBtn.textContent = 'Verifying Data...';
+            authBtn.textContent = 'Verifying...';
             authBtn.disabled = true;
             errorMsg.style.display = 'none';
 
@@ -1914,7 +1969,7 @@
             if (cardElement && cardElement.classList.contains('interactive-card')) { cardElement.classList.toggle('expanded'); }
         }
 
-        // --- REVIEWS LOGIC ---
+        // --- STREAMING_CHUNK: User Reputation Interactions ---
         const reviewForm = document.getElementById('review-form');
         const reviewsContainer = document.getElementById('reviews-container');
 
@@ -2063,7 +2118,8 @@
             });
         }
 
-        // --- CONTACT & CONSULTATION FORMS (Backend Routing Only) ---
+        // --- STREAMING_CHUNK: Contact and Booking Fetch Calls ---
+        // (Left completely untouched as requested)
         const contactForm = document.getElementById('general-contact-form');
         if(contactForm) {
             contactForm.addEventListener('submit', async (e) => {
