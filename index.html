@@ -1485,7 +1485,7 @@
     <script>
         // CONFIGURATION
         const SUPABASE_URL = 'https://qbcjhoppnocrishsainc.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFiY2pob3Bwbm9jcmlzaHNhaW5jIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjM3NzIyMiwiZXhwIjoyMTAxOTUzMjIyfQ.jAxh6HlUixDty1E1RomsIh-WR0cU4QJm4Zyaqx8eSrs'; 
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFiY2pob3Bwbm9jcmlzaHNhaW5jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzNzcyMjIsImV4cCI6MjEwMTk1MzIyMn0.chEgS3AjjXkKSJJ4VJXvLpkXJeHD2uXpgEe3IG62wqk'; 
         const RENDER_BACKEND_URL = 'https://ankoben-legal-service.onrender.com';
 
         let supabaseClient;
@@ -2119,8 +2119,18 @@
 
                 if(isValid) {
                     const submitBtn = bookingForm.querySelector('button[type="submit"]');
-                    submitBtn.disabled = true; submitBtn.textContent = "Processing...";
-                    const consultationData = { first_name: fname, last_name: lname, email: email, phone: phone, practice_area: practice, consultation_type: type, issue_description: issue };
+                    submitBtn.disabled = true; 
+                    submitBtn.textContent = "Processing...";
+                    
+                    const consultationData = { 
+                        first_name: fname, 
+                        last_name: lname, 
+                        email: email, 
+                        phone: phone, 
+                        practice_area: practice, 
+                        consultation_type: type, 
+                        issue_description: issue 
+                    };
 
                     try {
                         const backendResponse = await fetch(`${RENDER_BACKEND_URL}/api/notify-consultation`, { 
@@ -2129,14 +2139,23 @@
                             body: JSON.stringify(consultationData) 
                         });
 
-                        if (!backendResponse.ok) throw new Error("Server error");
+                        const result = await backendResponse.json();
+
+                        if (!backendResponse.ok || !result.success) {
+                            throw new Error(result.error || "Server error");
+                        }
                         
-                        showSuccessModal("Request Received", "Your consultation request has been successfully submitted. You will receive an email message and SMS shortly confirming the exact date and time you can come for your appointment.");
+                        const refId = result.booking_id || "CONFIRMED";
+                        showSuccessModal(
+                            "Booking Request Confirmed", 
+                            `Your consultation request has been received. Your Booking Reference ID is: ${refId}. A confirmation SMS and email have been initiated. Our chambers will contact you directly regarding your appointment time.`
+                        );
                         bookingForm.reset();
                     } catch (error) { 
                         alert("There was an error saving your booking. Please try again or call us directly."); 
                     } finally { 
-                        submitBtn.disabled = false; submitBtn.textContent = "Confirm Appointment Request"; 
+                        submitBtn.disabled = false; 
+                        submitBtn.textContent = "Confirm Appointment Request"; 
                     }
                 }
             });
