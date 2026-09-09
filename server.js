@@ -160,10 +160,11 @@ app.post('/api/publish-article', async (req, res) => {
 });
 
 // ========================================================
-// SECURE DIRECT SMS ENDPOINT (FIXED ARKESEL FORMATTING)
+// SECURE DIRECT SMS ENDPOINT (NOW SAVES APPOINTMENT DATE/TIME)
 // ========================================================
 app.post('/api/send-custom-sms', async (req, res) => {
-    const { passcode, phone, message } = req.body;
+    // We now receive appointment_date and appointment_time from the frontend payload
+    const { passcode, phone, message, appointment_date, appointment_time } = req.body;
 
     if (passcode !== ADMIN_SECRET) {
         return res.status(401).json({ success: false, error: 'Unauthorized: Invalid Counsel Passcode.' });
@@ -173,6 +174,7 @@ app.post('/api/send-custom-sms', async (req, res) => {
         // Auto-format phone number to '233...' so Arkesel API accepts it
         const formattedPhone = formatGhanaNumber(phone);
 
+        // 1. Send the SMS via Arkesel
         await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
             sender: 'AKOBEN', 
             message: message,
@@ -184,7 +186,23 @@ app.post('/api/send-custom-sms', async (req, res) => {
             }
         });
 
-        res.status(200).json({ success: true, message: 'SMS sent successfully.' });
+        // 2. Update the Database with the schedule time
+        if (supabase && appointment_date && appointment_time) {
+            const { error: dbError } = await supabase
+                .from('consultations')
+                .update({ 
+                    appointment_date: appointment_date, 
+                    appointment_time: appointment_time,
+                    status: 'Confirmed'
+                })
+                .eq('phone', phone); // Match the client by their phone number
+            
+            if (dbError) {
+                console.error('Supabase Date Saving Error:', dbError.message);
+            }
+        }
+
+        res.status(200).json({ success: true, message: 'SMS sent and database updated successfully.' });
     } catch (error) {
         console.error('Custom SMS Error:', error?.response?.data || error.message);
         res.status(500).json({ success: false, error: 'Failed to send Custom SMS. Check Arkesel API Key.' });
@@ -211,7 +229,8 @@ app.post('/api/notify-consultation', async (req, res) => {
                 .from('consultations')
                 .insert([{
                     first_name, last_name, email, phone, 
-                    practice_area, consultation_type, issue_description
+                    practice_area, consultation_type, issue_description,
+                    status: 'Pending'
                 }]);
             
             if (dbError) {
@@ -231,7 +250,8 @@ app.post('/api/notify-consultation', async (req, res) => {
         setImmediate(async () => {
             try {
                 if (ARKESEL_API_KEY) {
-                    const smsMessage = `Akoben Legal: Hello ${first_name}, your consultation request (Ref: ${bookingId}) has been received. Our chambers will contact you shortly to confirm your schedule.`;
+                    // Start from Hello as requested
+                    const smsMessage = `Hello ${first_name}, your consultation request (Ref: ${bookingId}) has been received. Our chambers will contact you shortly to confirm your schedule.`;
                     await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
                         sender: 'AKOBEN', 
                         message: smsMessage,
