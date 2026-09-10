@@ -10,7 +10,7 @@
     <!-- Premium Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -46,7 +46,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; width: 100vw; max-width: 100%; }
+        html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; width: 100%; max-width: 100vw; }
         
         body {
             font-family: var(--font-body);
@@ -225,8 +225,6 @@
         .reputation-wrapper { max-width: 1000px; margin: 0 auto 5rem auto; }
         .reputation-block { padding: 2.5rem; background-color: var(--card-bg); border-left: 4px solid var(--text-color); font-style: italic; color: var(--text-muted); transition: all 0.4s ease; position: relative; border-radius: 0 8px 8px 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem; }
         .reputation-block:hover { transform: scale(1.01); background-color: var(--hover-bg); box-shadow: var(--shadow-hover); }
-        
-        /* FIX: Remove 'Click to expand' text specifically from reputation blocks */
         .reputation-block.interactive-card::after { content: none; display: none !important; }
 
         .pub-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 2.5rem; margin-bottom: 2rem; box-shadow: var(--shadow-light); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
@@ -292,67 +290,13 @@
         .form-full { grid-column: 1 / -1; }
         .error-msg { color: #ff3333; font-size: 0.85rem; margin-top: -0.8rem; margin-bottom: 1rem; display: none; animation: fadeInPage 0.3s forwards; }
 
-        .contact-cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        .contact-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2.5rem 1.5rem;
-            text-align: center;
-            backdrop-filter: blur(12px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .contact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--text-color);
-        }
-        .card-icon-wrapper {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 1.5rem;
-            background: var(--text-color);
-            color: var(--bg-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .hours-container {
-            background: var(--card-bg);
-            padding: 3rem 2.5rem;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            backdrop-filter: blur(12px);
-        }
+        .contact-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .contact-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem 1.5rem; text-align: center; backdrop-filter: blur(12px); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .contact-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: var(--text-color); }
+        .card-icon-wrapper { width: 60px; height: 60px; margin: 0 auto 1.5rem; background: var(--text-color); color: var(--bg-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .hours-list { list-style: none; padding: 0; margin: 0; }
-        .hours-list li {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-color);
-            font-weight: 500;
-        }
-        .emergency-box {
-            margin-top: 3rem;
-            padding: 1.5rem;
-            background: rgba(239, 68, 68, 0.05);
-            border-left: 4px solid #ef4444;
-            border-radius: 0 8px 8px 0;
-        }
-        .map-wrapper {
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            height: 400px;
-            box-shadow: var(--shadow-light);
-        }
+        .hours-list li { display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border-color); color: var(--text-color); font-weight: 500; }
+        .map-wrapper { border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); height: 400px; box-shadow: var(--shadow-light); }
 
         .legal-content { max-width: 800px; margin: 0 auto; width: 100%; }
         .legal-content h2 { margin-top: 2rem; font-size: clamp(1.3rem, 3vw, 1.5rem); }
@@ -394,14 +338,12 @@
 
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.4s ease; padding: 1rem; box-sizing: border-box;}
         .modal.show { opacity: 1; visibility: visible; }
-        .modal-content { background-color: var(--bg-color); padding: 3rem; border: 1px solid var(--border-color); border-radius: 12px; text-align: left; width: 100%; max-width: 500px; transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); box-sizing: border-box; }
+        .modal-content { background-color: var(--bg-color); padding: 3rem; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; width: 100%; max-width: 500px; transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); box-sizing: border-box; }
         .modal.show .modal-content { transform: translateY(0) scale(1); }
-        
         .modal-content.gallery-modal { max-width: 90vw; padding: 0; background-color: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: visible; }
         .modal-content.gallery-modal img { width: auto; height: auto; max-width: 100%; max-height: 85vh; object-fit: contain; margin-bottom: 1.5rem; border-radius: 8px; filter: grayscale(0%) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .modal-content.gallery-modal p { color: #ffffff; background-color: rgba(0,0,0,0.8); padding: 1rem 1.5rem; border-radius: 8px; display: inline-block; font-size: 1rem; max-width: 90%; margin: 0; line-height: 1.4; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .modal-icon { width: 64px; height: 64px; margin: 0 auto 1.5rem; display: block; }
-        
+        .modal-icon { width: 64px; height: 64px; margin: 0 auto 1.5rem; }
         .close-modal-btn { position: absolute; top: 1rem; right: 1rem; background: var(--hover-bg); border: none; color: var(--text-color); cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 10; }
         .close-modal-btn:hover { background-color: var(--text-color); color: var(--bg-color); transform: rotate(90deg); }
         .modal-content.gallery-modal .close-modal-btn { top: -15px; right: 0; background-color: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
@@ -410,6 +352,12 @@
         .tab-btn { background: none; border: none; padding: 0.5rem 1rem; cursor: pointer; color: var(--text-muted); font-family: var(--font-body); font-size: 1rem; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.3s ease; }
         .tab-btn:hover { color: var(--text-color); }
         .tab-btn.active { color: var(--text-color); border-bottom-color: var(--text-color); }
+
+        .status-badge { display: inline-flex; align-items: center; padding: 0.25rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .status-Pending { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid #eab308; }
+        .status-Confirmed { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid #3b82f6; }
+        .status-Completed { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid #22c55e; }
+        .status-Cancelled { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444; }
 
         footer { border-top: 1px solid var(--border-color); padding: 4rem 5% 2rem; margin-top: auto; background-color: var(--bg-color); width: 100%; box-sizing: border-box;}
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2.5rem; margin-bottom: 3rem; }
@@ -466,8 +414,6 @@
             .gallery-grid.stacked .gallery-item { max-width: 90%; }
             .contact-cards-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .map-wrapper { height: 300px; }
-            .hours-container { padding: 2rem 1.5rem !important; }
-            .emergency-box { padding: 1.2rem !important; margin-top: 2rem !important; }
             footer { padding: 3rem 1.5rem 1.5rem; }
         }
 
@@ -526,7 +472,6 @@
 
     <main id="app-content">
 
-        <!-- 1. HOME PAGE -->
         <section id="home" class="page-view active">
             <div class="hero">
                 <div class="hero-text reveal-on-scroll">
@@ -638,7 +583,6 @@
             </div>
         </section>
 
-        <!-- 2. ABOUT/PROFILE PAGE -->
         <section id="about" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Founders Profile</h1>
@@ -650,7 +594,6 @@
             </div>
 
             <div class="about-grid">
-                <!-- FOUNDER 1: NANA YAW OFORI GYASI -->
                 <div class="founder-profile-col reveal-on-scroll" style="transition-delay: 0.1s;">
                     <div class="founder-header">
                         <div class="founder-pic-wrapper" onclick="openGalleryModalDirect(this)">
@@ -691,7 +634,6 @@
                     </div>
                 </div>
 
-                <!-- FOUNDER 2: EMMANUEL YAW HUKPATSI -->
                 <div class="founder-profile-col reveal-on-scroll" style="transition-delay: 0.2s;">
                     <div class="founder-header">
                         <div class="founder-pic-wrapper" onclick="openGalleryModalDirect(this)">
@@ -732,7 +674,6 @@
                 </div>
             </div>
 
-            <!-- Vision, Mission & Reputation Grid -->
             <div class="about-grid" style="margin-bottom: 2rem;">
                 <div class="reveal-on-scroll">
                     <!-- Dropdown for Vision -->
@@ -866,7 +807,6 @@
             </div>
         </section>
 
-        <!-- 3. PUBLICATIONS PAGE -->
         <section id="publications" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Legal News & Publications</h1>
@@ -877,7 +817,6 @@
             </div>
         </section>
 
-        <!-- 4. SERVICES PAGE -->
         <section id="services" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Areas of Expertise</h1>
@@ -935,7 +874,6 @@
             </div>
         </section>
 
-        <!-- 5. TEAM PAGE -->
         <section id="team" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Our Team</h1>
@@ -1126,66 +1064,62 @@
             </div>
         </section>
 
-        <!-- 6. CONTACT PAGE -->
         <section id="contact" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Contact & Location</h1>
                 <p style="color: var(--text-muted); margin-top: 1rem;">Reach out to our chambers or visit us in person. We are ready to assist you.</p>
             </div>
 
-            <div class="contact-cards-grid reveal-on-scroll">
-                <div class="contact-card">
-                    <div class="card-icon-wrapper"><i data-lucide="phone"></i></div>
-                    <h3>Phone</h3>
-                    <p style="margin-top: 1rem; font-size: 1.1rem;"><a href="tel:0244526944">0244526944</a></p>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Mon-Fri, 8am - 5pm</p>
-                </div>
-                <div class="contact-card">
-                    <div class="card-icon-wrapper"><i data-lucide="mail"></i></div>
-                    <h3>Email</h3>
-                    <p style="margin-top: 1rem; font-size: 1.1rem;"><a href="mailto:nyogyasi@yahoo.com">nyogyasi@yahoo.com</a></p>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">24/7 Monitored</p>
-                </div>
-                <div class="contact-card">
-                    <div class="card-icon-wrapper"><i data-lucide="map-pin"></i></div>
-                    <h3>Chambers</h3>
-                    <p style="margin-top: 1rem; font-size: 1.05rem;">KOFORIDUA OLD ESTATE<br>Enkaakyi junction</p>
-                </div>
-            </div>
-
             <div class="split-layout" style="margin-top: 3rem; align-items: start;">
-                <!-- Left: Map Container -->
-                <div class="map-container reveal-on-scroll">
-                    <div class="map-wrapper">
+                <!-- Left: Professional Written Information -->
+                <div class="hours-container reveal-on-scroll" style="background: var(--card-bg); padding: 3rem; border: 1px solid var(--border-color); border-radius: 12px; backdrop-filter: blur(12px);">
+                    <h2 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">Chambers Profile</h2>
+                    
+                    <div style="margin-bottom: 2.5rem;">
+                        <h4 style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">
+                            <i data-lucide="map-pin" width="18"></i> Location
+                        </h4>
+                        <p style="font-size: 1.1rem; line-height: 1.6;">KOFORIDUA OLD ESTATE<br>Enkaakyi junction<br>Eastern Region of Ghana</p>
+                    </div>
+
+                    <div style="margin-bottom: 2.5rem;">
+                        <h4 style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">
+                            <i data-lucide="phone" width="18"></i> Direct Communication
+                        </h4>
+                        <p style="font-size: 1.1rem; line-height: 1.6;"><a href="tel:0244526944">0244526944</a><br><a href="mailto:akobenlegalservices@gmail.com">akobenlegalservices@gmail.com</a></p>
+                    </div>
+
+                    <div style="margin-bottom: 2.5rem;">
+                        <h4 style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">
+                            <i data-lucide="clock" width="18"></i> Hours of Operation
+                        </h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed var(--border-color);"><span>Monday - Friday</span> <span>8:00 AM - 5:00 PM</span></li>
+                            <li style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed var(--border-color);"><span>Saturday</span> <span>By Appointment Only</span></li>
+                            <li style="display: flex; justify-content: space-between; padding: 0.5rem 0; color: var(--text-muted);"><span>Sunday & Public Holidays</span> <span>Closed</span></li>
+                        </ul>
+                    </div>
+
+                    <div style="padding: 1.5rem; background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0;">
+                        <h4 style="color: #ef4444; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem;">
+                            <i data-lucide="alert-circle" width="20"></i> Emergency Representation
+                        </h4>
+                        <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-color);">For extremely urgent legal matters (e.g., arrests, bail applications) outside of normal business hours, please call our emergency line directly.</p>
+                    </div>
+                </div>
+
+                <!-- Right: Map Container -->
+                <div class="map-container reveal-on-scroll" style="transition-delay: 0.2s; height: 100%;">
+                    <div class="map-wrapper" style="height: 100%; min-height: 400px;">
                         <iframe src="https://www.google.com/maps?q=Koforidua+Old+Estate,+Enkaakyi+junction,+Eastern+Region,+Ghana&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <a href="https://www.google.com/maps/dir/?api=1&destination=Koforidua+Old+Estate,+Enkaakyi+junction,+Eastern+Region,+Ghana" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="width: 100%; margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem;">
                         <i data-lucide="navigation"></i> Get Directions to Chambers
                     </a>
                 </div>
-
-                <!-- Right: Business Hours & Emergency replaced the General Inquiry Form -->
-                <div class="hours-container reveal-on-scroll" style="transition-delay: 0.2s; background: var(--card-bg); padding: 3rem 2.5rem; border: 1px solid var(--border-color); border-radius: 12px; backdrop-filter: blur(12px);">
-                    <h3 style="margin-bottom: 2rem; font-family: var(--font-heading); font-size: 1.8rem; border-bottom: 2px solid var(--text-color); padding-bottom: 1rem; display: inline-block;">Business Hours</h3>
-                    <ul class="hours-list">
-                        <li><span>Monday - Friday</span> <span>8:00 AM - 5:00 PM</span></li>
-                        <li><span>Saturday</span> <span>By Appointment Only</span></li>
-                        <li><span style="color: var(--text-muted);">Sunday</span> <span style="color: var(--text-muted);">Closed</span></li>
-                        <li><span style="color: var(--text-muted);">Public Holidays</span> <span style="color: var(--text-muted);">Closed</span></li>
-                    </ul>
-
-                    <div class="emergency-box" style="margin-top: 3rem; padding: 1.5rem; background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0;">
-                        <h4 style="color: #ef4444; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem;">
-                            <i data-lucide="alert-circle" width="22"></i> 24/7 Emergency Representation
-                        </h4>
-                        <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-color);">For extremely urgent legal matters requiring immediate counsel outside of normal business hours (e.g., arrests, bail applications), please call our emergency line directly.</p>
-                        <p style="margin-top: 1rem; font-weight: 600; font-size: 1.1rem;"><a href="tel:0244526944" style="color: #ef4444;">Call 0244526944</a></p>
-                    </div>
-                </div>
             </div>
         </section>
 
-        <!-- 7. CONSULTATION PAGE -->
         <section id="consultation" class="page-view">
             <div class="page-header reveal-on-scroll">
                 <h1>Schedule a Consultation</h1>
@@ -1259,7 +1193,6 @@
             </div>
         </section>
 
-        <!-- 8. PRIVACY POLICY PAGE -->
         <section id="privacy" class="page-view">
             <div class="page-header"><h1>Privacy Policy</h1></div>
             <div class="legal-content">
@@ -1280,7 +1213,6 @@
             </div>
         </section>
 
-        <!-- 9. TERMS OF ENGAGEMENT PAGE -->
         <section id="terms" class="page-view">
             <div class="page-header"><h1>Terms of Engagement</h1></div>
             <div class="legal-content">
@@ -1298,7 +1230,6 @@
             </div>
         </section>
 
-        <!-- 10. DISCLAIMER PAGE -->
         <section id="disclaimer" class="page-view">
             <div class="page-header"><h1>Legal Disclaimer</h1></div>
             <div class="legal-content">
@@ -1313,7 +1244,6 @@
             </div>
         </section>
 
-        <!-- 11. FAQ PAGE -->
         <section id="faq" class="page-view">
             <div class="page-header"><h1>Frequently Asked Questions</h1></div>
             <div class="legal-content">
@@ -1349,7 +1279,6 @@
             </div>
         </section>
 
-        <!-- 12. AML & COMPLIANCE PAGE -->
         <section id="compliance" class="page-view">
             <div class="page-header"><h1>AML & Regulatory Compliance</h1></div>
             <div class="legal-content">
@@ -1443,9 +1372,7 @@
         </div>
     </footer>
 
-    <!-- MODALS -->
-
-    <!-- AUTH MODAL (Hidden Passcode Gate) -->
+    <!-- AUTH MODAL -->
     <div id="auth-modal" class="modal">
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeModal('auth-modal')"><i data-lucide="x"></i></button>
@@ -1458,19 +1385,20 @@
         </div>
     </div>
 
-    <!-- COMBINED COUNSEL PORTAL MODAL -->
+    <!-- COMBINED COUNSEL PORTAL MODAL WITH 3 TABS -->
     <div id="counsel-portal-modal" class="modal">
-        <div class="modal-content" style="max-width: 700px; text-align: left;">
+        <div class="modal-content" style="max-width: 850px; text-align: left; padding: 2rem;">
             <button class="close-modal-btn" onclick="closeModal('counsel-portal-modal')"><i data-lucide="x"></i></button>
             
             <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem;">
                 <i data-lucide="briefcase"></i> Counsel Dashboard
             </h3>
 
-            <!-- Dashboard Tabs -->
-            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-                <button class="tab-btn active" onclick="switchTab('publish-tab', event)">Publish Article</button>
-                <button class="tab-btn" onclick="switchTab('sms-tab', event)">Send SMS</button>
+            <!-- Dashboard 3 Tabs -->
+            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; flex-wrap: wrap;">
+                <button class="tab-btn active" onclick="switchTab('publish-tab', event)">1. Publish Article</button>
+                <button class="tab-btn" onclick="switchTab('sms-tab', event)">2. Schedule & Send SMS</button>
+                <button class="tab-btn" onclick="switchTab('attendance-tab', event)">3. Attendance & Consultations</button>
             </div>
             
             <input type="hidden" id="admin-secret">
@@ -1478,7 +1406,7 @@
             <!-- TAB 1: PUBLISH ARTICLE -->
             <div id="publish-tab" class="portal-tab-content">
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-                    Publish trending news, articles, or import external links with your legal commentary. Immediately syncs to the public feed.
+                    Publish trending news, articles, or attach media/photos to your public feed.
                 </p>
                 <form id="publish-form">
                     <div class="form-grid">
@@ -1493,42 +1421,67 @@
                         <div class="form-full">
                             <input type="text" id="pub-title" placeholder="Publication Title / Topic" required>
                         </div>
-                        <div class="form-full">
-                            <textarea id="pub-content" rows="6" placeholder="Write article content, trending news analysis, or paste shared external links from social media..." required></textarea>
+                        <div class="form-full" style="background: rgba(0,0,0,0.02); padding: 1rem; border-radius: 8px; border: 1px dashed var(--border-color);">
+                            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Upload Image / Video or Paste URL:</label>
+                            <input type="file" id="pub-media-file" accept="image/*,video/*" style="padding: 0.5rem; margin-bottom: 0.5rem; background: var(--bg-color);">
+                            <input type="text" id="pub-media-url" placeholder="Or paste YouTube / External Link here (Optional)" style="margin-bottom: 0;">
                         </div>
                         <div class="form-full">
-                            <button type="submit" class="btn" style="width: 100%;">Publish</button>
+                            <textarea id="pub-content" rows="6" placeholder="Write article content, commentary, or case notes..." required></textarea>
+                        </div>
+                        <div class="form-full">
+                            <button type="submit" class="btn" style="width: 100%;">Publish to Feed</button>
                         </div>
                     </div>
                 </form>
             </div>
 
-            <!-- TAB 2: SEND SMS -->
+            <!-- TAB 2: SCHEDULE & SEND CONFIRMATION SMS -->
             <div id="sms-tab" class="portal-tab-content" style="display: none;">
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-                    Confirm a client's consultation schedule. This will automatically format and send an official SMS confirmation.
+                    Select a client to schedule their consultation date and time. An automated confirmation SMS containing their Reference ID will be sent to their phone.
                 </p>
-                <form id="custom-sms-form">
+                <form id="schedule-form" onsubmit="handleScheduleSubmit(event)">
                     <div class="form-grid">
                         <div class="form-full">
-                            <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-muted);">Select Client</label>
-                            <select id="sms-client" required style="margin-bottom: 1rem;">
-                                <option value="" disabled selected>Loading clients...</option>
+                            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Select Client:</label>
+                            <select id="schedule-client-select" required>
+                                <option value="" disabled selected>Choose client...</option>
                             </select>
                         </div>
                         <div>
-                            <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-muted);">Appointment Date</label>
-                            <input type="date" id="sms-date" required style="margin-bottom: 1rem;">
+                            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Appointment Date:</label>
+                            <input type="date" id="schedule-date" required>
                         </div>
                         <div>
-                            <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-muted);">Appointment Time</label>
-                            <input type="time" id="sms-time" required style="margin-bottom: 1rem;">
+                            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Appointment Time:</label>
+                            <input type="time" id="schedule-time" required>
                         </div>
                         <div class="form-full">
-                            <button type="submit" class="btn" style="width: 100%;">Send Confirmation SMS</button>
+                            <button type="submit" class="btn" style="width: 100%;">Send Confirmation SMS & Schedule</button>
                         </div>
                     </div>
                 </form>
+            </div>
+
+            <!-- TAB 3: ATTENDANCE & BOOKINGS MANAGEMENT -->
+            <div id="attendance-tab" class="portal-tab-content" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h4 style="margin: 0; font-size: 1.1rem;">Client Consultations</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">Track client attendance here. Marking a client as Completed or Cancelled frees up their number to book again.</p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;" id="status-filter-buttons">
+                        <button type="button" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;" onclick="filterConsultations('ALL')">All</button>
+                        <button type="button" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;" onclick="filterConsultations('Pending')">Pending</button>
+                        <button type="button" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;" onclick="filterConsultations('Confirmed')">Confirmed</button>
+                        <button type="button" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;" onclick="filterConsultations('Completed')">Completed</button>
+                    </div>
+                </div>
+
+                <div id="consultations-records-list" style="max-height: 500px; overflow-y: auto; padding-right: 0.5rem;">
+                    <p style="text-align: center; color: var(--text-muted); padding: 2rem;">No consultation records loaded.</p>
+                </div>
             </div>
 
         </div>
@@ -1574,9 +1527,7 @@
     <!-- SUPABASE SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- CORE LOGIC & FUNCTIONALITY -->
     <script>
-        // CONFIGURATION
         const SUPABASE_URL = 'https://qbcjhoppnocrishsainc.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFiY2pob3Bwbm9jcmlzaHNhaW5jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzNzcyMjIsImV4cCI6MjEwMTk1MzIyMn0.chEgS3AjjXkKSJJ4VJXvLpkXJeHD2uXpgEe3IG62wqk'; 
         const RENDER_BACKEND_URL = 'https://ankoben-legal-service.onrender.com';
@@ -1589,7 +1540,6 @@
         lucide.createIcons();
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // FAILSAFE TIMER
         setTimeout(() => { document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('visible')); }, 1500);
 
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
@@ -1618,7 +1568,6 @@
 
         const themeBtn = document.getElementById('theme-btn');
         const htmlEl = document.documentElement;
-        
         themeBtn.addEventListener('click', () => {
             const currentTheme = htmlEl.getAttribute('data-theme');
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
@@ -1629,7 +1578,6 @@
 
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const navMenu = document.getElementById('nav-menu');
-
         hamburgerBtn.addEventListener('click', () => {
             navMenu.classList.toggle('open');
             const isOpen = navMenu.classList.contains('open');
@@ -1638,7 +1586,6 @@
             document.body.style.overflow = isOpen ? 'hidden' : '';
         });
 
-        // ROUTING
         function navigate(pageId) {
             if(navMenu.classList.contains('open')) {
                 navMenu.classList.remove('open');
@@ -1663,14 +1610,17 @@
         }
 
         function formatExactDateTime(dateString) {
+            if (!dateString) return '';
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + 
                    ' at ' + 
                    date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
         }
 
-        // --- STREAMING_CHUNK: Portal Auth and API Logics ---
+        // --- STREAMING_CHUNK: Portal Authentication and 3-Tab Logic ---
         let validPasscode = ""; 
+        let counselClientsCache = [];
+
         window.openAuthModal = function(e) {
             e.preventDefault();
             document.getElementById('auth-passcode').value = '';
@@ -1690,14 +1640,12 @@
                 return;
             }
             
-            // Loading State
             const originalBtnText = authBtn.textContent;
             authBtn.textContent = 'Verifying...';
             authBtn.disabled = true;
             errorMsg.style.display = 'none';
 
             try {
-                // Secretly fetch client data to both verify passcode and populate dropdown
                 const response = await fetch(`${RENDER_BACKEND_URL}/api/verify-counsel`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1709,22 +1657,12 @@
                 if(response.ok && resData.success) {
                     validPasscode = passcode;
                     document.getElementById('admin-secret').value = passcode; 
+                    counselClientsCache = resData.clients || [];
+                    
                     closeModal('auth-modal');
                     
-                    // Populate Dropdown with Client Names & Numbers
-                    const clientSelect = document.getElementById('sms-client');
-                    clientSelect.innerHTML = '<option value="" disabled selected>Select a client...</option>'; 
-                    if (resData.clients && resData.clients.length > 0) {
-                        resData.clients.forEach(client => {
-                            const option = document.createElement('option');
-                            option.value = client.phone; 
-                            option.textContent = `${client.name} (${client.phone})`; 
-                            option.setAttribute('data-name', client.name);
-                            clientSelect.appendChild(option);
-                        });
-                    } else {
-                        clientSelect.innerHTML = '<option value="" disabled>No clients found</option>';
-                    }
+                    populateScheduleDropdown();
+                    renderConsultationRecords('ALL');
 
                     document.getElementById('counsel-portal-modal').classList.add('show');
                     document.body.style.overflow = 'hidden';
@@ -1745,10 +1683,167 @@
             document.querySelectorAll('.portal-tab-content').forEach(el => el.style.display = 'none');
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).style.display = 'block';
-            event.currentTarget.classList.add('active');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
         }
 
-        // --- 1. PUBLISH ARTICLE FORM SUBMIT ---
+        function populateScheduleDropdown() {
+            const selectEl = document.getElementById('schedule-client-select');
+            selectEl.innerHTML = '<option value="" disabled selected>Choose client...</option>';
+            
+            counselClientsCache.forEach(client => {
+                const opt = document.createElement('option');
+                opt.value = client.id;
+                // Show name, phone, and status to help counsel
+                opt.textContent = `${client.name} (${client.phone}) — [${client.status}]`;
+                selectEl.appendChild(opt);
+            });
+        }
+
+        // --- STREAMING_CHUNK: Tab 3 (Attendance & Status) Logic ---
+        function renderConsultationRecords(filterStatus) {
+            const container = document.getElementById('consultations-records-list');
+            
+            // Highlight active filter button
+            document.querySelectorAll('#status-filter-buttons .btn').forEach(b => {
+                b.style.background = 'transparent';
+                b.style.color = 'var(--text-color)';
+                if (b.textContent === filterStatus || (filterStatus === 'ALL' && b.textContent === 'All')) {
+                    b.style.background = 'var(--text-color)';
+                    b.style.color = 'var(--bg-color)';
+                }
+            });
+
+            const recordsToRender = filterStatus === 'ALL' 
+                ? counselClientsCache 
+                : counselClientsCache.filter(c => c.status === filterStatus);
+
+            if (!recordsToRender || recordsToRender.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No ${filterStatus === 'ALL' ? '' : filterStatus} consultations found.</p>`;
+                return;
+            }
+
+            let html = '';
+            recordsToRender.forEach(item => {
+                const scheduleInfo = item.appointment_date 
+                    ? `<div style="font-size: 0.85rem; color: #3b82f6; margin-top: 0.3rem;">Scheduled: ${item.appointment_date} at ${item.appointment_time || 'TBD'}</div>`
+                    : `<div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">Not scheduled yet</div>`;
+
+                html += `
+                <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.2rem; transition: all 0.3s ease;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem;">
+                        <div>
+                            <strong style="font-size: 1.05rem;">${item.name}</strong>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">Ref: ${item.ref} | Phone: ${item.phone} | Email: ${item.email || 'N/A'}</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">Area: ${item.practice_area} (${item.consultation_type})</div>
+                            ${scheduleInfo}
+                        </div>
+                        <span class="status-badge status-${item.status}">${item.status}</span>
+                    </div>
+
+                    <div style="display: flex; gap: 0.6rem; margin-top: 1rem; flex-wrap: wrap;">
+                        <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-color: #22c55e; color: #22c55e;" onclick="updateStatus('${item.id}', 'Completed')">
+                            ✓ Mark Attended / Completed
+                        </button>
+                        <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-color: #ef4444; color: #ef4444;" onclick="updateStatus('${item.id}', 'Cancelled')">
+                            ✕ Mark No-Show / Cancelled
+                        </button>
+                        <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="prefillSchedule('${item.id}')">
+                            📅 Schedule / Change Date
+                        </button>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        window.filterConsultations = function(status) {
+            renderConsultationRecords(status);
+        }
+
+        window.prefillSchedule = function(clientId) {
+            switchTab('sms-tab');
+            document.getElementById('schedule-client-select').value = clientId;
+        }
+
+        window.updateStatus = async function(clientId, newStatus) {
+            try {
+                const response = await fetch(`${RENDER_BACKEND_URL}/api/update-consultation-status`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ passcode: validPasscode, id: clientId, status: newStatus })
+                });
+                const resData = await response.json();
+
+                if (response.ok && resData.success) {
+                    // Update cache instantly
+                    const match = counselClientsCache.find(c => c.id === clientId);
+                    if (match) match.status = newStatus;
+                    populateScheduleDropdown();
+                    renderConsultationRecords('ALL'); // Refresh list
+                } else {
+                    alert(resData.error || "Failed to update status.");
+                }
+            } catch (err) {
+                alert("Network error updating status.");
+            }
+        };
+
+        // --- STREAMING_CHUNK: Tab 2 (Scheduling & SMS) Logic ---
+        window.handleScheduleSubmit = async function(e) {
+            e.preventDefault();
+            const clientId = document.getElementById('schedule-client-select').value;
+            const date = document.getElementById('schedule-date').value;
+            const time = document.getElementById('schedule-time').value;
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+
+            if (!clientId || !date || !time) {
+                alert("Please select client, appointment date, and time.");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Scheduling & Sending SMS...";
+
+            try {
+                const response = await fetch(`${RENDER_BACKEND_URL}/api/schedule-consultation`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ passcode: validPasscode, id: clientId, date, time })
+                });
+
+                const resData = await response.json();
+
+                if (response.ok && resData.success) {
+                    showSuccessModal("Appointment Scheduled", resData.message);
+                    
+                    // Secretly refresh the counsel clients cache from DB to show the new 'Confirmed' status
+                    const refreshRes = await fetch(`${RENDER_BACKEND_URL}/api/verify-counsel`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ passcode: validPasscode })
+                    });
+                    const refreshed = await refreshRes.json();
+                    if (refreshed.success) {
+                        counselClientsCache = refreshed.clients || [];
+                        populateScheduleDropdown();
+                        renderConsultationRecords('ALL');
+                    }
+                    
+                    switchTab('attendance-tab');
+                } else {
+                    alert(resData.error || "Failed to schedule appointment.");
+                }
+            } catch (err) {
+                alert("Error connecting to backend server.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Send Confirmation SMS & Schedule";
+            }
+        };
+
+        // --- STREAMING_CHUNK: Tab 1 (Publish Article with Media) Logic ---
         const publishForm = document.getElementById('publish-form');
         if (publishForm) {
             publishForm.addEventListener('submit', async (e) => {
@@ -1757,16 +1852,32 @@
                 const passcode = validPasscode;
                 const title = document.getElementById('pub-title').value.trim();
                 const content = document.getElementById('pub-content').value.trim();
+                const mediaUrlInput = document.getElementById('pub-media-url').value.trim();
+                const fileInput = document.getElementById('pub-media-file').files[0];
                 const submitBtn = publishForm.querySelector('button[type="submit"]');
                 
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Publishing...";
 
+                let finalUrl = mediaUrlInput;
+                let finalType = mediaUrlInput ? 'link' : null;
+
                 try {
+                    // Upload to Supabase if file is attached
+                    if (fileInput && supabaseClient) {
+                        const fileExt = fileInput.name.split('.').pop();
+                        const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+                        const { error: uploadErr } = await supabaseClient.storage.from('media').upload(fileName, fileInput);
+                        if (uploadErr) throw uploadErr;
+                        const { data: urlData } = supabaseClient.storage.from('media').getPublicUrl(fileName);
+                        finalUrl = urlData.publicUrl;
+                        finalType = fileInput.type.startsWith('video') ? 'video' : 'image';
+                    }
+
                     const response = await fetch(`${RENDER_BACKEND_URL}/api/publish-article`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ author, passcode, title, content })
+                        body: JSON.stringify({ author, passcode, title, content, media_type: finalType, media_url: finalUrl })
                     });
 
                     const resData = await response.json();
@@ -1776,77 +1887,18 @@
                         closeModal('counsel-portal-modal');
                         navigate('publications'); 
                     } else {
-                        alert(resData.error || "Failed to publish article. Invalid Passcode.");
+                        alert(resData.error || "Failed to publish article.");
                     }
                 } catch(err) {
-                    alert("Error connecting to backend server.");
+                    alert("Error publishing article.");
                 } finally {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = "Publish";
+                    submitBtn.textContent = "Publish to Feed";
                 }
             });
         }
 
-        // --- 2. SEND CUSTOM SMS FORM SUBMIT ---
-        const smsForm = document.getElementById('custom-sms-form');
-        if (smsForm) {
-            smsForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const clientSelect = document.getElementById('sms-client');
-                const phone = clientSelect.value;
-                const clientName = clientSelect.options[clientSelect.selectedIndex].getAttribute('data-name');
-                const dateVal = document.getElementById('sms-date').value;
-                const timeVal = document.getElementById('sms-time').value;
-                const passcode = validPasscode;
-                const submitBtn = smsForm.querySelector('button[type="submit"]');
-                
-                if (!phone) {
-                    alert("Please select a client.");
-                    return;
-                }
-
-                submitBtn.disabled = true;
-                submitBtn.textContent = "Sending Confirmation...";
-
-                try {
-                    // Format message natively
-                    const dateObj = new Date(dateVal + 'T' + timeVal);
-                    const optionsDate = { weekday: 'long', month: 'short', day: 'numeric' };
-                    const optionsTime = { hour: 'numeric', minute: '2-digit', hour12: true };
-                    const formattedDate = dateObj.toLocaleDateString('en-US', optionsDate);
-                    const formattedTime = dateObj.toLocaleTimeString('en-US', optionsTime);
-
-                    const message = `Hello ${clientName}, your consultation with Akoben Legal Services is confirmed for ${formattedDate} at ${formattedTime}. Our chambers are located at Koforidua Old Estate. Please contact us if you need to reschedule.`;
-
-                    // We now also pass the appointment_date and appointment_time to the backend
-                    const response = await fetch(`${RENDER_BACKEND_URL}/api/send-custom-sms`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            passcode: passcode, 
-                            phone: phone, 
-                            message: message,
-                            appointment_date: dateVal,
-                            appointment_time: timeVal
-                        })
-                    });
-
-                    const resData = await response.json();
-                    if(response.ok && resData.success) {
-                        showSuccessModal("Confirmation Sent", "The appointment confirmation SMS has been securely sent to the client.");
-                        smsForm.reset();
-                    } else {
-                        alert(resData.error || "Failed to send SMS. Invalid Passcode.");
-                    }
-                } catch(err) {
-                    alert("Error connecting to backend server to send SMS.");
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = "Send Confirmation SMS";
-                }
-            });
-        }
-
+        // --- STREAMING_CHUNK: Fetching and Rendering Publications ---
         window.loadPublications = async function() {
             const feed = document.getElementById('publications-feed');
             if(!feed) return;
@@ -1863,7 +1915,12 @@
 
                 feed.innerHTML = '';
                 for(const pub of pubs) {
-                    const { data: comments } = await supabaseClient.from('publication_comments').select('*').eq('publication_id', pub.id).order('created_at', { ascending: true });
+                    // Fetch comments for this publication safely
+                    let comments = [];
+                    try {
+                        const { data: cData } = await supabaseClient.from('publication_comments').select('*').eq('publication_id', pub.id).order('created_at', { ascending: true });
+                        if(cData) comments = cData;
+                    } catch(e) { console.warn("Could not fetch comments"); }
 
                     let commentsHtml = '';
                     if(comments && comments.length > 0) {
@@ -1882,6 +1939,20 @@
                         commentsHtml = '<p style="font-size:0.85rem; color: var(--text-muted); margin-bottom: 1rem; font-style: italic;">No comments yet. Be the first to leave your thoughts!</p>';
                     }
 
+                    // Handle Media Smart Embeds
+                    let mediaHtml = '';
+                    if (pub.media_url) {
+                        if (pub.media_url.includes('youtube.com') || pub.media_url.includes('youtu.be')) {
+                            const videoId = pub.media_url.split('v=')[1] || pub.media_url.split('/').pop();
+                            const cleanId = videoId.split('&')[0];
+                            mediaHtml = `<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 1.5rem;"><iframe style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;" src="https://www.youtube.com/embed/${cleanId}" allowfullscreen></iframe></div>`;
+                        } else if (pub.media_type === 'video') {
+                            mediaHtml = `<video controls style="width: 100%; border-radius: 8px; margin-bottom: 1.5rem;"><source src="${pub.media_url}"></video>`;
+                        } else {
+                            mediaHtml = `<img src="${pub.media_url}" alt="Publication" style="width: 100%; max-height: 450px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;">`;
+                        }
+                    }
+
                     const exactPubTime = formatExactDateTime(pub.created_at);
                     const pubCard = document.createElement('div');
                     pubCard.className = 'pub-card';
@@ -1893,10 +1964,11 @@
                             </div>
                             <span class="pub-author-badge">${pub.author}</span>
                         </div>
+                        ${mediaHtml}
                         <div class="pub-content">${pub.content}</div>
                         
                         <div class="comments-section">
-                            <h4 style="margin-bottom: 1rem; font-size: 1rem;">Client Comments (${comments ? comments.length : 0})</h4>
+                            <h4 style="margin-bottom: 1rem; font-size: 1rem;">Client Comments (${comments.length})</h4>
                             ${commentsHtml}
 
                             <form onsubmit="submitClientComment(event, '${pub.id}')" style="margin-top: 1rem;">
@@ -1929,7 +2001,7 @@
             finally { submitBtn.disabled = false; submitBtn.textContent = "Submit Comment"; }
         }
 
-        // --- STANDARD MODALS & INTERACTIONS ---
+        // --- STREAMING_CHUNK: General UI Modals ---
         function showSuccessModal(title, message) {
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-message').textContent = message;
@@ -2034,7 +2106,7 @@
             if (cardElement && cardElement.classList.contains('interactive-card')) { cardElement.classList.toggle('expanded'); }
         }
 
-        // --- STREAMING_CHUNK: User Reputation Interactions ---
+        // --- STREAMING_CHUNK: Client Reputation and Reviews ---
         const reviewForm = document.getElementById('review-form');
         const reviewsContainer = document.getElementById('reviews-container');
 
@@ -2133,7 +2205,6 @@
             });
         }
 
-        // --- REPUTATION LOGIC ---
         const miniRepForm = document.getElementById('mini-rep-form');
         const fetchAndRenderReputations = async () => {
             if (!supabaseClient) return;
@@ -2184,37 +2255,6 @@
         }
 
         // --- STREAMING_CHUNK: Contact and Booking Fetch Calls ---
-        // (Left completely untouched as requested)
-        const contactForm = document.getElementById('general-contact-form');
-        if(contactForm) {
-            contactForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const submitBtn = contactForm.querySelector('button[type="submit"]');
-                submitBtn.disabled = true; submitBtn.textContent = "Sending...";
-                const name = document.getElementById('contact-name').value.trim();
-                const email = document.getElementById('contact-email').value.trim();
-                const subject = document.getElementById('contact-subject').value.trim();
-                const message = document.getElementById('contact-message').value.trim();
-
-                try {
-                    const backendResponse = await fetch(`${RENDER_BACKEND_URL}/api/notify-contact`, { 
-                        method: 'POST', 
-                        headers: { 'Content-Type': 'application/json' }, 
-                        body: JSON.stringify({ name, email, subject, message }) 
-                    });
-
-                    if (!backendResponse.ok) throw new Error("Server error");
-                    
-                    contactForm.reset();
-                    showSuccessModal("Message Sent", "Your inquiry has been sent to our chambers. You should receive a confirmation email shortly.");
-                } catch (error) { 
-                    alert("There was an error saving your message. Please try again."); 
-                } finally { 
-                    submitBtn.disabled = false; submitBtn.textContent = "Send Message"; 
-                }
-            });
-        }
-
         const bookingForm = document.getElementById('booking-form');
         if(bookingForm) {
             bookingForm.addEventListener('submit', async (e) => {
@@ -2242,6 +2282,28 @@
                     const submitBtn = bookingForm.querySelector('button[type="submit"]');
                     submitBtn.disabled = true; 
                     submitBtn.textContent = "Processing...";
+
+                    // Dynamically build check query to prevent db syntax errors if an empty field somehow slips through
+                    const emailQuery = email ? `email.eq.${email}` : 'email.eq.NONE';
+                    const phoneQuery = phone ? `phone.eq.${phone}` : 'phone.eq.NONE';
+
+                    // Check for double booking (prevents Booking if status is Pending or Confirmed)
+                    try {
+                        const { data: existingBookings, error: checkError } = await supabaseClient
+                            .from('consultations')
+                            .select('*')
+                            .or(`${emailQuery},${phoneQuery}`)
+                            .in('status', ['Pending', 'Confirmed']);
+
+                        if (existingBookings && existingBookings.length > 0) {
+                            alert(`We found an existing active booking under this phone number or email (Status: ${existingBookings[0].status}). Please wait for your consultation or contact us directly.`);
+                            submitBtn.disabled = false; 
+                            submitBtn.textContent = "Confirm Appointment Request"; 
+                            return;
+                        }
+                    } catch (e) {
+                        console.warn("Check error", e);
+                    }
                     
                     const consultationData = { 
                         first_name: fname, 
@@ -2273,7 +2335,7 @@
                         );
                         bookingForm.reset();
                     } catch (error) { 
-                        alert("There was an error saving your booking. Please try again or call us directly."); 
+                        alert(error.message || "There was an error saving your booking. Please try again or call us directly."); 
                     } finally { 
                         submitBtn.disabled = false; 
                         submitBtn.textContent = "Confirm Appointment Request"; 
