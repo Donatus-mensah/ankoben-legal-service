@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const nodemailer = require('nodemailer');
+const cron = require('node-cron');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
@@ -35,7 +36,7 @@ if (SUPABASE_URL && SUPABASE_KEY) {
 
 // Initialize Nodemailer for Gmail Setup
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // Transitioned from Yahoo to Gmail
+    service: 'gmail', 
     auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASS // Requires Google App Password
@@ -54,6 +55,17 @@ function formatGhanaNumber(phone) {
     return formatted;
 }
 
+// Helper Function: Format 24hr string to 12hr AM/PM string for exact display
+function formatTime12h(timeStr) {
+    if (!timeStr) return '';
+    let [hours, minutes] = timeStr.split(':');
+    hours = parseInt(hours, 10);
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+    return `${hours}:${minutes} ${ampm}`;
+}
+
 // Helper to prevent 'undefined' string bugs in mapping
 const safeString = (val, fallback) => (val && val !== 'undefined' && val !== null) ? val : fallback;
 
@@ -62,7 +74,7 @@ const safeString = (val, fallback) => (val && val !== 'undefined' && val !== nul
 // ========================================================
 app.get('/', (req, res) => {
     const isConfigured = Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.ARKESEL_API_KEY && process.env.SUPABASE_KEY);
-    res.send(`Backend Status: ${isConfigured ? 'LIVE (Gmail Activated)' : 'MISSING VARIABLES'}`);
+    res.send(`Backend Status: ${isConfigured ? 'LIVE (Gmail Activated & Automation Running)' : 'MISSING VARIABLES'}`);
 });
 
 // ========================================================
@@ -160,10 +172,13 @@ app.post('/api/schedule-consultation', async (req, res) => {
         const formattedDate = new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         const formattedPhone = formatGhanaNumber(updatedRecord.phone);
         const refCode = updatedRecord.booking_ref || 'CONFIRMED';
+        
+        // Convert the 24hr time selected to 12hr format with AM/PM for SMS readability
+        const time12h = formatTime12h(time);
 
         // SMS to Client
         if (ARKESEL_API_KEY) {
-            const smsMessage = `Hello ${updatedRecord.first_name}, your consultation with Akoben Legal Services (Ref: ${refCode}) is confirmed for ${formattedDate} at ${time}. Please arrive on time.`;
+            const smsMessage = `Hello ${updatedRecord.first_name}, your consultation with Akoben Legal Services (Ref: ${refCode}) is confirmed for ${formattedDate} at ${time12h}. Please arrive on time.`;
             await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
                 sender: 'AKOBEN', message: smsMessage, recipients: [formattedPhone]
             }, { headers: { 'api-key': ARKESEL_API_KEY, 'Content-Type': 'application/json' } })
@@ -177,7 +192,7 @@ app.post('/api/schedule-consultation', async (req, res) => {
 });
 
 // ========================================================
-// 4. MANUAL STATUS UPDATE ENDPOINT (ATTENDANCE)
+// 4. MANUAL STATUS UPDATE ENDPOINT (ATTENDANCE & CANCEL SMS)
 // ========================================================
 app.post('/api/update-consultation-status', async (req, res) => {
     const { passcode, id, status } = req.body;
@@ -186,8 +201,32 @@ app.post('/api/update-consultation-status', async (req, res) => {
 
     try {
         if (!supabase) throw new Error('Database is not connected.');
-        const { error } = await supabase.from('consultations').update({ status: status }).eq('id', id);
+        
+        // Update and select the record to get details for SMS
+        const { data: updatedRecord, error } = await supabase
+            .from('consultations')
+            .update({ status: status })
+            .eq('id', id)
+            .select('first_name, phone, booking_ref')
+            .single();
+            
         if (error) throw error;
+
+        // If marked as Cancelled (Missed), send an immediate SMS to the client
+        if (status === 'Cancelled' && ARKESEL_API_KEY && updatedRecord.phone) {
+            setImmediate(async () => {
+                try {
+                    const formattedPhone = formatGhanaNumber(updatedRecord.phone);
+                    const cancelSms = `Hello ${updatedRecord.first_name}, you missed your scheduled legal consultation (Ref: ${updatedRecord.booking_ref}). It has been cancelled. You can now rebook a new session on our website when ready.`;
+                    
+                    await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
+                        sender: 'AKOBEN', message: cancelSms, recipients: [formattedPhone]
+                    }, { headers: { 'api-key': ARKESEL_API_KEY, 'Content-Type': 'application/json' } });
+                } catch(err) {
+                    console.log('Cancellation SMS warning:', err.message);
+                }
+            });
+        }
 
         res.status(200).json({ success: true, message: `Consultation marked as ${status}.` });
     } catch (err) {
@@ -243,22 +282,21 @@ app.post('/api/notify-consultation', async (req, res) => {
                     }, { headers: { 'api-key': ARKESEL_API_KEY, 'Content-Type': 'application/json' } });
                 } catch(err) { console.log('Background SMS Client warning:', err.message); }
 
-                // SMS 2: To the Legal Clerk (Administrator)
+                // SMS 2: To the Legal Clerk (Administrator) - EXACT REQUESTED MESSAGE
                 try {
-                    const adminSms = `AKOBEN ALERTS: New Booking (Ref: ${bookingId}). Client: ${first_name} ${last_name}. Phone: ${phone}. Area: ${practice_area}. Please check portal to confirm schedule.`;
+                    const adminSms = `hello Vic, there's being a booked consultation on the website check and confirm for the client.`;
                     await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
                         sender: 'AKOBEN', message: adminSms, recipients: [CLERK_PHONE]
                     }, { headers: { 'api-key': ARKESEL_API_KEY, 'Content-Type': 'application/json' } });
                 } catch(err) { console.log('Background SMS Admin warning:', err.message); }
             }
 
-            // Email Notification to the Clerk/Counsel at akobenlegalservices@gmail.com
-            // Make sure COUNSEL_EMAIL is set to akobenlegalservices@gmail.com in Render environment
+            // Email Notification to Counsel
             if (EMAIL_USER && EMAIL_PASS && COUNSEL_EMAIL) {
                 try {
                     const mailOptions = {
                         from: EMAIL_USER, 
-                        to: COUNSEL_EMAIL, // Notification sent here
+                        to: COUNSEL_EMAIL,
                         subject: `[${bookingId}] New Consultation Booking - ${first_name} ${last_name}`,
                         text: `New consultation booking submitted.\n\nBooking Reference: ${bookingId}\nClient: ${first_name} ${last_name}\nPhone: ${phone}\nEmail: ${email}\nArea: ${practice_area}\nType: ${consultation_type}\n\nClient Issue:\n${issue_description}\n\nPlease log in to the Counsel Portal to set an appointment schedule.`
                     };
@@ -302,6 +340,51 @@ app.post('/api/notify-contact', async (req, res) => {
     } catch (error) {
         res.status(500).json({ success: false, error: 'Failed to process contact message.' });
     }
+});
+
+// ========================================================
+// 7. AUTOMATED CRON JOB: 5:00 AM DAILY REMINDERS
+// ========================================================
+// This runs every day at 5:00 AM (Accra Time). It checks the DB 
+// for Confirmed appointments happening today and texts the client.
+cron.schedule('0 5 * * *', async () => {
+    console.log('Running daily 5:00 AM consultation SMS reminders...');
+    if (!supabase || !ARKESEL_API_KEY) return;
+
+    try {
+        // Get today's date formatted perfectly to match the HTML Date Input standard (YYYY-MM-DD)
+        const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Africa/Accra' });
+
+        const { data: appointments, error } = await supabase
+            .from('consultations')
+            .select('first_name, phone, appointment_time, booking_ref')
+            .eq('status', 'Confirmed')
+            .eq('appointment_date', today);
+
+        if (error) throw error;
+
+        if (appointments && appointments.length > 0) {
+            for (const appt of appointments) {
+                const formattedPhone = formatGhanaNumber(appt.phone);
+                if (formattedPhone) {
+                    // Make sure the reminder SMS uses the exact formatted 12h time (AM/PM)
+                    const time12h = formatTime12h(appt.appointment_time);
+                    const reminderSms = `Hello ${appt.first_name}, this is a reminder for your Akoben Legal consultation today at ${time12h} (Ref: ${appt.booking_ref}). Please be on time.`;
+                    
+                    await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
+                        sender: 'AKOBEN', message: reminderSms, recipients: [formattedPhone]
+                    }, { headers: { 'api-key': ARKESEL_API_KEY, 'Content-Type': 'application/json' } })
+                    .catch(err => console.log('Reminder SMS error:', err.message));
+                }
+            }
+            console.log(`Sent ${appointments.length} morning reminder(s).`);
+        }
+    } catch (err) {
+        console.error('Error running daily SMS reminder cron:', err.message);
+    }
+}, {
+    scheduled: true,
+    timezone: "Africa/Accra"
 });
 
 const PORT = process.env.PORT || 10000;

@@ -495,7 +495,7 @@
 
             <div class="home-section reveal-on-scroll">
                 <div class="home-summary">
-                    <h2>Excellence in Jurisprudence</h2>
+                    <h2>Our Goals </h2>
                     <p>Nana Gyasi, Emmanuel Yaw Hukpatsi, and the entire Akoben team are committed to providing legal services founded on professionalism, integrity, sound legal reasoning and practical results, with each matter approached with diligence and a clear understanding of the client's interests.</p>
                 </div>
                 <div class="home-features">
@@ -620,18 +620,27 @@
                     <div class="credentials">
                         <h3><i data-lucide="graduation-cap"></i> Education</h3>
                         <ul>
-                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Doctor of Philosophy - PhD</strong><br><span style="color: var(--text-muted);">University of South Africa (July 2026)</span></div></li>
-                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Barrister at Law</strong><br><span style="color: var(--text-muted);">Ghana School of Law (July 2026)</span></div></li>
-                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Bachelor of Laws - LLB</strong><br><span style="color: var(--text-muted);">Ghana Institute of Management and Public Administration (July 2026)</span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Doctor of Philosophy - PhD</strong><br><span style="color: var(--text-muted);">University of South Africa (Ongoing)</span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Barrister at Law</strong><br><span style="color: var(--text-muted);">Ghana School of Law </span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Bachelor of Laws - LLB</strong><br><span style="color: var(--text-muted);">Ghana Institute of Management and Public Administration </span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Master of Philosophy (M.Phil) English</strong><br><span style="color: var(--text-muted);">UNiversity Of Ghana </span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Bachelor of Arts - English / Religion</strong><br><span style="color: var(--text-muted);">University Of Ghana </span></div></li>
                         </ul>
                     </div>
 
                     <div class="credentials">
                         <h3><i data-lucide="star"></i> Expertise & Skills</h3>
                         <p style="color: var(--text-muted); line-height: 1.8; word-break: break-word;">
-                            Teaching &bull; Legal Writing &bull; Legal Advice &bull; Legal Assistance &bull; Legal Document Preparation &bull; Legal Compliance &bull; Legal Consulting
+                            Legal Writing &bull; Legal Advice &bull; Legal Assistance &bull; Legal Document Preparation &bull; Legal Compliance &bull; Legal Consulting
                         </p>
+                        <br>
+                         <div class="profile-contact">
+                        <div class="profile-contact-item"><i data-lucide="phone" width="18"></i> <a href="tel:+233556799253">+233 55 679 9253</a></div>
+                        <div class="profile-contact-item"><i data-lucide="mail" width="18"></i> <a href="mailto:dinagy@yahoo.com">dinagy@yahoo.com</a></div>
+                        <div class="profile-contact-item"><i data-lucide="linkedin" width="18"></i> <a href="#" target="_blank">LinkedIn Profile</a></div>
                     </div>
+                    </div>
+                    
                 </div>
 
                 <div class="founder-profile-col reveal-on-scroll" style="transition-delay: 0.2s;">
@@ -912,7 +921,7 @@
                     <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/vic_crop.jpeg" alt="Victoria Kotei" class="team-card-img">
                     <div class="team-card-content">
                         <h3>Victoria Kotei</h3>
-                        <div class="team-card-role">Legal Clerk</div>
+                        <div class="team-card-role">Administrator</div>
                         <div class="team-card-btn">View Profile ➔</div>
                     </div>
                 </div>
@@ -1316,7 +1325,7 @@
                         <img src="https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/vic_crop.jpeg" alt="Worker Avatar" class="team-member-avatar">
                         <div class="team-member-info">
                             <span class="team-member-name">Victoria Kotei </span>
-                            <span class="team-member-role">Legal Clerk</span>
+                            <span class="team-member-role">Administrator</span>
                         </div>
                     </div>
                     <div class="team-member-mini" style="cursor: pointer;" onclick="navigate('team-kofi')">
@@ -1617,6 +1626,17 @@
                    date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
         }
 
+        // Helper function for UI to show AM/PM format
+        function formatTime12h(timeStr) {
+            if (!timeStr) return 'TBD';
+            let [hours, minutes] = timeStr.split(':');
+            hours = parseInt(hours, 10);
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            return `${hours}:${minutes} ${ampm}`;
+        }
+
         // --- STREAMING_CHUNK: Portal Authentication and 3-Tab Logic ---
         let validPasscode = ""; 
         let counselClientsCache = [];
@@ -1695,8 +1715,9 @@
             counselClientsCache.forEach(client => {
                 const opt = document.createElement('option');
                 opt.value = client.id;
-                // Show name, phone, and status to help counsel
-                opt.textContent = `${client.name} (${client.phone}) — [${client.status}]`;
+                // Add NEW indicator for Pending clients
+                const isNew = client.status === 'Pending' ? '⭐ NEW ' : '';
+                opt.textContent = `${isNew}${client.name} (${client.phone}) — [${client.status}]`;
                 selectEl.appendChild(opt);
             });
         }
@@ -1726,15 +1747,37 @@
 
             let html = '';
             recordsToRender.forEach(item => {
+                const isPending = item.status === 'Pending';
+                const newBadge = isPending ? `<span style="background: #eab308; color: #fff; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.7rem; margin-left: 0.5rem; font-weight: bold;">NEW</span>` : '';
+                
+                const timeStr12h = formatTime12h(item.appointment_time);
+                
                 const scheduleInfo = item.appointment_date 
-                    ? `<div style="font-size: 0.85rem; color: #3b82f6; margin-top: 0.3rem;">Scheduled: ${item.appointment_date} at ${item.appointment_time || 'TBD'}</div>`
+                    ? `<div style="font-size: 0.85rem; color: #3b82f6; margin-top: 0.3rem;">Scheduled: ${item.appointment_date} at ${timeStr12h}</div>`
                     : `<div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">Not scheduled yet</div>`;
+
+                // Logic fix: Prevent Mark Attended/Cancelled if still pending
+                const actionButtons = isPending ? 
+                    `<div style="width: 100%; font-size: 0.8rem; color: #eab308; margin-bottom: 0.5rem; font-style: italic;">⚠️ Please schedule a date/time to send the SMS first, then you can mark attendance.</div>
+                     <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="prefillSchedule('${item.id}')">
+                        📅 Schedule Date & Time
+                     </button>` 
+                    : 
+                    `<button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-color: #22c55e; color: #22c55e;" onclick="updateStatus('${item.id}', 'Completed')">
+                        ✓ Mark Attended / Completed
+                     </button>
+                     <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-color: #ef4444; color: #ef4444;" onclick="updateStatus('${item.id}', 'Cancelled')">
+                        ✕ Mark No-Show / Cancelled
+                     </button>
+                     <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="prefillSchedule('${item.id}')">
+                        📅 Reschedule / Change Date
+                     </button>`;
 
                 html += `
                 <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.2rem; transition: all 0.3s ease;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem;">
                         <div>
-                            <strong style="font-size: 1.05rem;">${item.name}</strong>
+                            <strong style="font-size: 1.05rem;">${item.name} ${newBadge}</strong>
                             <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">Ref: ${item.ref} | Phone: ${item.phone} | Email: ${item.email || 'N/A'}</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted);">Area: ${item.practice_area} (${item.consultation_type})</div>
                             ${scheduleInfo}
@@ -1743,15 +1786,7 @@
                     </div>
 
                     <div style="display: flex; gap: 0.6rem; margin-top: 1rem; flex-wrap: wrap;">
-                        <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-color: #22c55e; color: #22c55e;" onclick="updateStatus('${item.id}', 'Completed')">
-                            ✓ Mark Attended / Completed
-                        </button>
-                        <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-color: #ef4444; color: #ef4444;" onclick="updateStatus('${item.id}', 'Cancelled')">
-                            ✕ Mark No-Show / Cancelled
-                        </button>
-                        <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="prefillSchedule('${item.id}')">
-                            📅 Schedule / Change Date
-                        </button>
+                        ${actionButtons}
                     </div>
                 </div>`;
             });
@@ -1782,6 +1817,10 @@
                     if (match) match.status = newStatus;
                     populateScheduleDropdown();
                     renderConsultationRecords('ALL'); // Refresh list
+                    
+                    if(newStatus === 'Cancelled') {
+                        showSuccessModal("Client Cancelled", "The client has been marked cancelled. An SMS has been sent informing them they can now rebook via the website.");
+                    }
                 } else {
                     alert(resData.error || "Failed to update status.");
                 }
