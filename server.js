@@ -184,6 +184,33 @@ app.post('/api/schedule-consultation', async (req, res) => {
             .catch(err => console.error('Arkesel SMS Schedule error:', err?.response?.data || err.message));
         }
 
+        // Email Alert to Counsel and Client upon scheduling
+        if (EMAIL_USER && EMAIL_PASS) {
+            try {
+                // Email to Counsel to notify them that they have set the schedule
+                const adminMailOptions = {
+                    from: EMAIL_USER,
+                    to: 'akobenlegalservices@gmail.com',
+                    subject: `[${refCode}] Booking Confirmed - ${clientName}`,
+                    text: `Hello Counsel,\n\nYou have successfully scheduled and confirmed the consultation for ${clientName}.\n\nDate: ${formattedDate}\nTime: ${time12h}\nReference: ${refCode}\n\nThe client has been notified via SMS.`
+                };
+                await transporter.sendMail(adminMailOptions);
+                
+                // Email to Client (if they provided an email address)
+                if (updatedRecord.email && updatedRecord.email !== 'N/A') {
+                    const clientMailOptions = {
+                        from: EMAIL_USER,
+                        to: updatedRecord.email,
+                        subject: `Consultation Confirmed - Akoben Legal Services`,
+                        text: `Hello ${updatedRecord.first_name},\n\nYour consultation with Akoben Legal Services (Ref: ${refCode}) is confirmed for ${formattedDate} at ${time12h}.\n\nPlease arrive on time.\n\nBest Regards,\nAkoben Legal Services`
+                    };
+                    await transporter.sendMail(clientMailOptions);
+                }
+            } catch(err) { 
+                console.error('Confirmation Email warning:', err.message); 
+            }
+        }
+
         res.status(200).json({ success: true, message: `Consultation confirmed and official SMS sent to ${clientName}.` });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message || 'Failed to schedule appointment.' });

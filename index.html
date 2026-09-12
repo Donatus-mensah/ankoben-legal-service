@@ -131,6 +131,12 @@
         }
         input:focus, textarea:focus, select:focus { outline: none; border-color: var(--text-color); box-shadow: 0 0 0 1px var(--text-color); background-color: var(--bg-color); }
         select option { background-color: var(--bg-color); color: var(--text-color); }
+        
+        /* Fix for Calendar and Time icons in Dark Mode */
+        [data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+        [data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
 
         header { 
             position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; background-color: transparent; border-bottom: 1px solid transparent; z-index: 1000; transition: all 0.4s ease; box-sizing: border-box;
@@ -158,23 +164,8 @@
         .section-header { text-align: center; margin-bottom: 3rem; }
         .section-header h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); }
 
-        /* HERO REDESIGN - Blurred Background */
+        /* HERO REDESIGN - Blurred Background Removed as requested */
         .hero { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; min-height: calc(100vh - 150px); align-items: center; padding-top: 2rem;}
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -100px; left: -5vw; right: -5vw; bottom: -50px; /* Expands to cover full width/height safely */
-            background-image: url("https://qbcjhoppnocrishsainc.supabase.co/storage/v1/object/public/PICTURS%20AND%20LEGAL%20DOC'S/wig.jpg");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            filter: blur(4px);
-            z-index: -1;
-            opacity: 0.18; /* Light mode opacity */
-            pointer-events: none;
-            transition: opacity var(--transition-speed);
-        }
-        [data-theme="dark"] .hero::before { opacity: 0.12; /* Dark mode opacity */ }
 
         .hero-text h1 { font-size: clamp(2.2rem, 5vw, 4.5rem); margin-bottom: 1.5rem; line-height: 1.1; }
         .hero-text p { font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted); margin-bottom: 2.5rem; max-width: 90%; }
@@ -283,7 +274,8 @@
         .gallery-grid.stacked { grid-template-columns: 1fr; place-items: center; min-height: 550px; gap: 0; padding: 2rem 0; cursor: pointer; }
         .gallery-grid.expanded .gallery-item { position: relative; cursor: pointer; overflow: hidden; border-radius: 12px; aspect-ratio: 1; background-color: var(--hover-bg); box-shadow: var(--shadow-light); border: 1px solid var(--border-color); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: none !important; grid-area: auto; width: 100%; }
         .gallery-grid.expanded .gallery-item:hover { transform: translateY(-10px) scale(1.02) !important; box-shadow: var(--shadow-deep); border-color: var(--text-color); }
-        .gallery-grid.stacked .gallery-item { grid-area: 1 / 1; width: 95%; max-width: 450px; aspect-ratio: 1; border: 12px solid var(--card-bg); box-shadow: var(--shadow-hover); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: 6px; overflow: hidden; background-color: var(--hover-bg); }
+        /* Removed border from stacked gallery items */
+        .gallery-grid.stacked .gallery-item { grid-area: 1 / 1; width: 95%; max-width: 450px; aspect-ratio: 1; box-shadow: var(--shadow-hover); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: 6px; overflow: hidden; background-color: var(--hover-bg); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; will-change: transform; transition: filter var(--transition-speed), transform 0.6s ease; }
         .gallery-grid.expanded .gallery-item:hover img, .gallery-grid.expanded .gallery-item:active img { transform: scale(1.08); filter: grayscale(0%); }
         [data-theme="dark"] .gallery-grid.expanded .gallery-item:hover img { filter: grayscale(0%) brightness(1.1); }
@@ -302,8 +294,7 @@
         .gallery-grid.stacked:hover .gallery-item:nth-child(4) { transform: rotate(10deg) translate(-30px, 40px); }
         .album-prompt { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); font-size: 1rem; color: var(--text-color); background: var(--card-bg); padding: 0.8rem 2rem; border-radius: 30px; font-weight: 600; pointer-events: none; box-shadow: var(--shadow-hover); border: 1px solid var(--border-color); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0.95; z-index: 10; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
         .gallery-grid.stacked:hover ~ .album-prompt { transform: translateX(-50%) translateY(5px); background: var(--text-color); color: var(--bg-color); }
-        [data-theme="dark"] .gallery-grid.stacked .gallery-item { border-color: #1a1a1a; }
-
+        
         .reviews-layout { display: grid; grid-template-columns: 1fr 350px; gap: 4rem; }
         .reviews-list-wrapper { position: relative; max-height: 600px; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent); mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent); }
         .reviews-list { display: flex; flex-direction: column; gap: 1.5rem; max-height: 600px; overflow-y: auto; padding-right: 0.5rem; padding-bottom: 2rem; -ms-overflow-style: none; scrollbar-width: none; will-change: scroll-position; }
@@ -670,7 +661,9 @@
                         <div style="display: flex; gap: 1rem; margin-top: 1rem; justify-content: center; flex-wrap: wrap;">
                             <a href="mailto:akobenlegalservices@gmail.com" class="icon-btn" title="Email"><i data-lucide="mail"></i></a>
                             <a href="tel:0244526944" class="icon-btn" title="Phone"><i data-lucide="phone"></i></a>
-                            <a href="https://www.linkedin.com/in/akoben-legal-services-7027a9355" target="_blank" class="icon-btn" title="LinkedIn"><i data-lucide="linkedin"></i></a>
+                            <a href="https://www.linkedin.com/in/akoben-legal-services-7027a9355" target="_blank" class="icon-btn" title="LinkedIn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -718,7 +711,9 @@
                         <div style="display: flex; gap: 1rem; margin-top: 1rem; justify-content: center; flex-wrap: wrap;">
                             <a href="mailto:akobenlegalservices@gmail.com" class="icon-btn" title="Email"><i data-lucide="mail"></i></a>
                             <a href="tel:0244526944" class="icon-btn" title="Phone"><i data-lucide="phone"></i></a>
-                            <a href="https://www.linkedin.com/in/akoben-legal-services-7027a9355" target="_blank" class="icon-btn" title="LinkedIn"><i data-lucide="linkedin"></i></a>
+                            <a href="https://www.linkedin.com/in/akoben-legal-services-7027a9355" target="_blank" class="icon-btn" title="LinkedIn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            </a>
                         </div>
                     </div>
                 </div>
