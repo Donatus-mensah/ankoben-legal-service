@@ -10,7 +10,7 @@ const app = express();
 
 // BULLETPROOF CORS CONFIGURATION
 app.use(cors({
-    origin: ['https://akobenlegalservices.com', 'https://www.akobenlegalservices.com'],
+    origin: ['https://akobenlegalservices.com', 'https://www.akobenlegalservices.com', 'https://ankoben-legal-service.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
