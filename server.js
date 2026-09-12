@@ -10,7 +10,7 @@ const app = express();
 
 // BULLETPROOF CORS CONFIGURATION
 app.use(cors({
-    origin: '*',
+    origin: ['https://akobenlegalservices.com', 'https://www.akobenlegalservices.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -21,7 +21,6 @@ app.use(express.json());
 const ARKESEL_API_KEY = process.env.ARKESEL_API_KEY;
 const EMAIL_USER = process.env.EMAIL_USER; 
 const EMAIL_PASS = process.env.EMAIL_PASS; 
-const COUNSEL_EMAIL = process.env.COUNSEL_EMAIL;
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_KEY; 
 const ADMIN_SECRET = process.env.ADMIN_SECRET || '2324';
@@ -178,7 +177,7 @@ app.post('/api/schedule-consultation', async (req, res) => {
 
         // SMS to Client
         if (ARKESEL_API_KEY) {
-            const smsMessage = `Hello ${updatedRecord.first_name}, your consultation with Akoben Legal Services (Ref: ${refCode}) is confirmed for ${formattedDate} at ${time12h}. Please arrive on time.`;
+            const smsMessage = `Hello ${updatedRecord.first_name}, your consultation with Akoben Legal Services (Ref:${refCode}) is confirmed for ${formattedDate} at ${time12h}. Please arrive on time.`;
             await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
                 sender: 'AKOBEN', message: smsMessage, recipients: [formattedPhone]
             }, { headers: { 'api-key': ARKESEL_API_KEY, 'Content-Type': 'application/json' } })
@@ -217,7 +216,7 @@ app.post('/api/update-consultation-status', async (req, res) => {
             setImmediate(async () => {
                 try {
                     const formattedPhone = formatGhanaNumber(updatedRecord.phone);
-                    const cancelSms = `Hello ${updatedRecord.first_name}, you missed your scheduled legal consultation (Ref: ${updatedRecord.booking_ref}). It has been cancelled. You can now rebook a new session on our website when ready.`;
+                    const cancelSms = `Hello ${updatedRecord.first_name}, you missed your scheduled legal consultation (Ref:${updatedRecord.booking_ref}). It has been cancelled. You can now rebook a new session on our website when ready.`;
                     
                     await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
                         sender: 'AKOBEN', message: cancelSms, recipients: [formattedPhone]
@@ -276,7 +275,7 @@ app.post('/api/notify-consultation', async (req, res) => {
             if (ARKESEL_API_KEY) {
                 // SMS 1: To the Client
                 try {
-                    const clientSms = `Hello ${first_name}, your consultation request (Ref: ${bookingId}) has been received. Our chambers will contact you shortly to confirm your schedule.`;
+                    const clientSms = `Hello ${first_name}, your consultation request (Ref:${bookingId}) has been received. Our chambers will contact you shortly to confirm your schedule.`;
                     await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
                         sender: 'AKOBEN', message: clientSms, recipients: [formattedPhone]
                     }, { headers: { 'api-key': ARKESEL_API_KEY, 'Content-Type': 'application/json' } });
@@ -291,14 +290,14 @@ app.post('/api/notify-consultation', async (req, res) => {
                 } catch(err) { console.log('Background SMS Admin warning:', err.message); }
             }
 
-            // Email Notification to Counsel
-            if (EMAIL_USER && EMAIL_PASS && COUNSEL_EMAIL) {
+            // Email Notification specifically to Lawyer Gyasi's requested email
+            if (EMAIL_USER && EMAIL_PASS) {
                 try {
                     const mailOptions = {
                         from: EMAIL_USER, 
-                        to: COUNSEL_EMAIL,
+                        to: 'akobenlegalservices@gmail.com', // Explicitly sent to requested email
                         subject: `[${bookingId}] New Consultation Booking - ${first_name} ${last_name}`,
-                        text: `New consultation booking submitted.\n\nBooking Reference: ${bookingId}\nClient: ${first_name} ${last_name}\nPhone: ${phone}\nEmail: ${email}\nArea: ${practice_area}\nType: ${consultation_type}\n\nClient Issue:\n${issue_description}\n\nPlease log in to the Counsel Portal to set an appointment schedule.`
+                        text: `Hello Lawyer Gyasi, there's being a booking on the website.\n\nBooking Reference: ${bookingId}\nClient: ${first_name} ${last_name}\nPhone: ${phone}\nEmail: ${email}\nArea: ${practice_area}\nType: ${consultation_type}\n\nClient Issue:\n${issue_description}\n\nPlease log in to the Counsel Portal to set an appointment schedule.`
                     };
                     await transporter.sendMail(mailOptions);
                 } catch(err) { console.log('Background Email warning:', err.message); }
@@ -328,13 +327,13 @@ app.post('/api/notify-contact', async (req, res) => {
                         text: `Hello ${name},\n\nThank you for reaching out to Akoben Legal Services. We have received your message. Counsel will review and respond shortly.\n\nBest Regards,\nAkoben Legal Services`
                     }).catch(err => console.log('Client mailer error:', err.message));
                 }
-                if (COUNSEL_EMAIL) {
-                    transporter.sendMail({
-                        from: EMAIL_USER, to: COUNSEL_EMAIL,
-                        subject: `Website Inquiry: ${subject}`,
-                        text: `New message from ${name} (${email}):\n\nSubject: ${subject}\n\n${message}`
-                    }).catch(err => console.log('Counsel mailer error:', err.message));
-                }
+                
+                // Route general contact to akobenlegalservices@gmail.com
+                transporter.sendMail({
+                    from: EMAIL_USER, to: 'akobenlegalservices@gmail.com',
+                    subject: `Website Inquiry: ${subject}`,
+                    text: `New message from ${name} (${email}):\n\nSubject: ${subject}\n\n${message}`
+                }).catch(err => console.log('Counsel mailer error:', err.message));
             }
         });
     } catch (error) {

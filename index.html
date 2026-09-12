@@ -114,6 +114,13 @@
         .btn:active { transform: scale(0.98); }
         .btn-outline { background-color: transparent; color: var(--text-color); }
         .btn-outline:hover { background-color: var(--text-color); color: var(--bg-color); }
+        
+        .icon-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px;
+            border-radius: 50%; border: 1px solid var(--border-color); color: var(--text-color);
+            background: transparent; transition: all 0.3s ease; cursor: pointer;
+        }
+        .icon-btn:hover { background: var(--text-color); color: var(--bg-color); border-color: var(--text-color); transform: translateY(-3px); box-shadow: var(--shadow-light); }
 
         input, textarea, select { 
             width: 100%; max-width: 100%; padding: 1rem; background-color: transparent; border: 1px solid var(--border-color); color: var(--text-color); font-family: var(--font-body); margin-bottom: 1rem; transition: all 0.3s ease; appearance: none; border-radius: 4px; box-sizing: border-box;
@@ -188,7 +195,7 @@
         .profile-intro p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.8; text-align: justify; }
 
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 4rem; }
-        .founder-profile-col { padding: 2.5rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: var(--shadow-light); }
+        .founder-profile-col { padding: 2.5rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: var(--shadow-light); display: flex; flex-direction: column; }
         
         .founder-header { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.5rem; }
         .founder-pic-wrapper { width: 100px; height: 100px; flex-shrink: 0; border-radius: 50%; overflow: hidden; border: 3px solid var(--border-color); position: relative; cursor: pointer; box-shadow: var(--shadow-light); transition: transform 0.4s ease, box-shadow 0.4s ease; background: var(--bg-color); }
@@ -215,6 +222,7 @@
         .interactive-card:hover { transform: translateY(-5px); background-color: var(--hover-bg); border-color: var(--text-color); box-shadow: var(--shadow-light); }
         .interactive-card:hover::after { opacity: 1; transform: translateX(0); }
         .interactive-card.expanded::after { content: 'Click to collapse ➔'; opacity: 0.8; transform: translateX(0); }
+        .interactive-card.no-expand::after { content: none !important; display: none !important; }
 
         .expandable-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in, margin 0.4s ease; will-change: max-height, opacity; }
         .expandable-content.expanded { max-height: 2000px; opacity: 1; margin-top: 1rem; transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-out, margin 0.4s ease; }
@@ -495,7 +503,7 @@
 
             <div class="home-section reveal-on-scroll">
                 <div class="home-summary">
-                    <h2>Our Goals </h2>
+                    <h2>OUR GOALS </h2>
                     <p>Nana Gyasi, Emmanuel Yaw Hukpatsi, and the entire Akoben team are committed to providing legal services founded on professionalism, integrity, sound legal reasoning and practical results, with each matter approached with diligence and a clear understanding of the client's interests.</p>
                 </div>
                 <div class="home-features">
@@ -623,7 +631,7 @@
                             <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Doctor of Philosophy - PhD</strong><br><span style="color: var(--text-muted);">University of South Africa (Ongoing)</span></div></li>
                             <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Barrister at Law</strong><br><span style="color: var(--text-muted);">Ghana School of Law </span></div></li>
                             <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Bachelor of Laws - LLB</strong><br><span style="color: var(--text-muted);">Ghana Institute of Management and Public Administration </span></div></li>
-                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Master of Philosophy (M.Phil) English</strong><br><span style="color: var(--text-muted);">UNiversity Of Ghana </span></div></li>
+                            <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Master of Philosophy (M.Phil) English</strong><br><span style="color: var(--text-muted);">University Of Ghana </span></div></li>
                             <li><i data-lucide="check" style="flex-shrink: 0; margin-top: 3px;"></i> <div><strong>Bachelor of Arts - English / Religion</strong><br><span style="color: var(--text-muted);">University Of Ghana </span></div></li>
                         </ul>
                     </div>
@@ -633,14 +641,16 @@
                         <p style="color: var(--text-muted); line-height: 1.8; word-break: break-word;">
                             Legal Writing &bull; Legal Advice &bull; Legal Assistance &bull; Legal Document Preparation &bull; Legal Compliance &bull; Legal Consulting
                         </p>
-                        <br>
-                         <div class="profile-contact">
-                        <div class="profile-contact-item"><i data-lucide="phone" width="18"></i> <a href="tel:+233556799253">+233 55 679 9253</a></div>
-                        <div class="profile-contact-item"><i data-lucide="mail" width="18"></i> <a href="mailto:dinagy@yahoo.com">dinagy@yahoo.com</a></div>
-                        <div class="profile-contact-item"><i data-lucide="linkedin" width="18"></i> <a href="#" target="_blank">LinkedIn Profile</a></div>
-                    </div>
                     </div>
                     
+                    <div class="credentials" style="margin-top: auto; padding-top: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; justify-content: center;"><i data-lucide="contact" width="20"></i> Connect with Counsel</h3>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <a href="mailto:akobenlegalservices@gmail.com" class="icon-btn" title="Email"><i data-lucide="mail"></i></a>
+                            <a href="tel:0244526944" class="icon-btn" title="Phone"><i data-lucide="phone"></i></a>
+                            <a href="https://www.linkedin.com/in/akoben-legal-services-7027a9355" target="_blank" class="icon-btn" title="LinkedIn"><i data-lucide="linkedin"></i></a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="founder-profile-col reveal-on-scroll" style="transition-delay: 0.2s;">
@@ -679,6 +689,15 @@
                         <p style="color: var(--text-muted); line-height: 1.8; word-break: break-word;">
                             Energy, Oil & Gas &bull; Corporate & Commercial Law &bull; Civil & Criminal Litigation &bull; Administrative & Regulatory Matters &bull; Labour & Industrial Relations &bull; Debt Recovery &bull; Energy Risk Assessment &bull; Investment Advisory
                         </p>
+                    </div>
+
+                    <div class="credentials" style="margin-top: auto; padding-top: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; justify-content: center;"><i data-lucide="contact" width="20"></i> Connect with Counsel</h3>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <a href="mailto:akobenlegalservices@gmail.com" class="icon-btn" title="Email"><i data-lucide="mail"></i></a>
+                            <a href="tel:0244526944" class="icon-btn" title="Phone"><i data-lucide="phone"></i></a>
+                            <a href="https://www.linkedin.com/in/akoben-legal-services-7027a9355" target="_blank" class="icon-btn" title="LinkedIn"><i data-lucide="linkedin"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1079,50 +1098,58 @@
                 <p style="color: var(--text-muted); margin-top: 1rem;">Reach out to our chambers or visit us in person. We are ready to assist you.</p>
             </div>
 
-            <div class="split-layout" style="margin-top: 3rem; align-items: start;">
-                <!-- Left: Professional Written Information -->
-                <div class="hours-container reveal-on-scroll" style="background: var(--card-bg); padding: 3rem; border: 1px solid var(--border-color); border-radius: 12px; backdrop-filter: blur(12px);">
-                    <h2 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">Chambers Profile</h2>
+            <div class="split-layout" style="margin-top: 3rem; align-items: stretch;">
+                
+                <div class="contact-info-column reveal-on-scroll" style="display: flex; flex-direction: column; gap: 1.5rem;">
                     
-                    <div style="margin-bottom: 2.5rem;">
+                    <div class="interactive-card no-expand" style="padding: 2rem; border-radius: 12px; cursor: default; transform: none;">
                         <h4 style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">
-                            <i data-lucide="map-pin" width="18"></i> Location
+                            <i data-lucide="map-pin" width="20"></i> Chambers Location
                         </h4>
-                        <p style="font-size: 1.1rem; line-height: 1.6;">KOFORIDUA OLD ESTATE<br>Enkaakyi junction<br>Eastern Region of Ghana</p>
+                        <p style="font-size: 1.15rem; line-height: 1.6; color: var(--text-color); font-weight: 500;">KOFORIDUA OLD ESTATE<br>Enkaakyi junction<br>Eastern Region of Ghana</p>
                     </div>
 
-                    <div style="margin-bottom: 2.5rem;">
-                        <h4 style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">
-                            <i data-lucide="phone" width="18"></i> Direct Communication
-                        </h4>
-                        <p style="font-size: 1.1rem; line-height: 1.6;"><a href="tel:0244526944">0244526944</a><br><a href="mailto:akobenlegalservices@gmail.com">akobenlegalservices@gmail.com</a></p>
-                    </div>
-
-                    <div style="margin-bottom: 2.5rem;">
+                    <div class="interactive-card no-expand" style="padding: 2rem; border-radius: 12px; cursor: default; transform: none;">
                         <h4 style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">
-                            <i data-lucide="clock" width="18"></i> Hours of Operation
+                            <i data-lucide="phone" width="20"></i> Direct Communication
+                        </h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                            <a href="tel:0244526944" style="display: flex; align-items: center; gap: 1rem; font-size: 1.1rem; color: var(--text-color); font-weight: 500;">
+                                <div style="background: var(--hover-bg); padding: 0.6rem; border-radius: 50%;"><i data-lucide="phone-call" width="18"></i></div>
+                                0244526944
+                            </a>
+                            <a href="mailto:akobenlegalservices@gmail.com" style="display: flex; align-items: center; gap: 1rem; font-size: 1.1rem; color: var(--text-color); font-weight: 500; word-break: break-all;">
+                                <div style="background: var(--hover-bg); padding: 0.6rem; border-radius: 50%;"><i data-lucide="mail" width="18"></i></div>
+                                akobenlegalservices@gmail.com
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="interactive-card no-expand" style="padding: 2rem; border-radius: 12px; cursor: default; transform: none;">
+                        <h4 style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">
+                            <i data-lucide="clock" width="20"></i> Hours of Operation
                         </h4>
                         <ul style="list-style: none; padding: 0;">
-                            <li style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed var(--border-color);"><span>Monday - Friday</span> <span>8:00 AM - 5:00 PM</span></li>
-                            <li style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed var(--border-color);"><span>Saturday</span> <span>By Appointment Only</span></li>
-                            <li style="display: flex; justify-content: space-between; padding: 0.5rem 0; color: var(--text-muted);"><span>Sunday & Public Holidays</span> <span>Closed</span></li>
+                            <li style="display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px dashed var(--border-color); font-weight: 500;"><span>Monday - Friday</span> <span>8:00 AM - 5:00 PM</span></li>
+                            <li style="display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px dashed var(--border-color); font-weight: 500;"><span>Saturday</span> <span>By Appointment</span></li>
+                            <li style="display: flex; justify-content: space-between; padding: 0.6rem 0; color: var(--text-muted);"><span>Sunday & Public Holidays</span> <span>Closed</span></li>
                         </ul>
                     </div>
 
-                    <div style="padding: 1.5rem; background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0;">
+                    <div style="padding: 1.5rem; background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0; box-shadow: var(--shadow-light);">
                         <h4 style="color: #ef4444; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem;">
                             <i data-lucide="alert-circle" width="20"></i> Emergency Representation
                         </h4>
-                        <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-color);">For extremely urgent legal matters (e.g., arrests, bail applications) outside of normal business hours, please call our emergency line directly.</p>
+                        <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-color);">For extremely urgent legal matters (e.g., arrests, bail applications) outside of normal business hours, please call our emergency line directly at <a href="tel:0244526944" style="font-weight: bold; text-decoration: underline; color: #ef4444;">0244526944</a>.</p>
                     </div>
+
                 </div>
 
-                <!-- Right: Map Container -->
-                <div class="map-container reveal-on-scroll" style="transition-delay: 0.2s; height: 100%;">
-                    <div class="map-wrapper" style="height: 100%; min-height: 400px;">
+                <div class="map-container reveal-on-scroll" style="transition-delay: 0.2s; display: flex; flex-direction: column;">
+                    <div class="map-wrapper" style="flex: 1; min-height: 500px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); box-shadow: var(--shadow-light);">
                         <iframe src="https://www.google.com/maps?q=Koforidua+Old+Estate,+Enkaakyi+junction,+Eastern+Region,+Ghana&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
-                    <a href="https://www.google.com/maps/dir/?api=1&destination=Koforidua+Old+Estate,+Enkaakyi+junction,+Eastern+Region,+Ghana" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="width: 100%; margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem;">
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Koforidua+Old+Estate,+Enkaakyi+junction,+Eastern+Region,+Ghana" target="_blank" rel="noopener noreferrer" class="btn" style="width: 100%; margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1.2rem;">
                         <i data-lucide="navigation"></i> Get Directions to Chambers
                     </a>
                 </div>
@@ -1637,7 +1664,6 @@
             return `${hours}:${minutes} ${ampm}`;
         }
 
-        // --- STREAMING_CHUNK: Portal Authentication and 3-Tab Logic ---
         let validPasscode = ""; 
         let counselClientsCache = [];
 
@@ -1722,7 +1748,6 @@
             });
         }
 
-        // --- STREAMING_CHUNK: Tab 3 (Attendance & Status) Logic ---
         function renderConsultationRecords(filterStatus) {
             const container = document.getElementById('consultations-records-list');
             
@@ -1748,7 +1773,8 @@
             let html = '';
             recordsToRender.forEach(item => {
                 const isPending = item.status === 'Pending';
-                const newBadge = isPending ? `<span style="background: #eab308; color: #fff; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.7rem; margin-left: 0.5rem; font-weight: bold;">NEW</span>` : '';
+                // Add specific NEW badge for pending clients
+                const newBadge = isPending ? `<span style="background: #eab308; color: #fff; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.7rem; margin-left: 0.5rem; font-weight: bold;">⭐ NEW</span>` : '';
                 
                 const timeStr12h = formatTime12h(item.appointment_time);
                 
@@ -1829,7 +1855,6 @@
             }
         };
 
-        // --- STREAMING_CHUNK: Tab 2 (Scheduling & SMS) Logic ---
         window.handleScheduleSubmit = async function(e) {
             e.preventDefault();
             const clientId = document.getElementById('schedule-client-select').value;
@@ -1882,7 +1907,6 @@
             }
         };
 
-        // --- STREAMING_CHUNK: Tab 1 (Publish Article with Media) Logic ---
         const publishForm = document.getElementById('publish-form');
         if (publishForm) {
             publishForm.addEventListener('submit', async (e) => {
@@ -1937,7 +1961,6 @@
             });
         }
 
-        // --- STREAMING_CHUNK: Fetching and Rendering Publications ---
         window.loadPublications = async function() {
             const feed = document.getElementById('publications-feed');
             if(!feed) return;
@@ -2040,7 +2063,6 @@
             finally { submitBtn.disabled = false; submitBtn.textContent = "Submit Comment"; }
         }
 
-        // --- STREAMING_CHUNK: General UI Modals ---
         function showSuccessModal(title, message) {
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-message').textContent = message;
@@ -2145,7 +2167,6 @@
             if (cardElement && cardElement.classList.contains('interactive-card')) { cardElement.classList.toggle('expanded'); }
         }
 
-        // --- STREAMING_CHUNK: Client Reputation and Reviews ---
         const reviewForm = document.getElementById('review-form');
         const reviewsContainer = document.getElementById('reviews-container');
 
@@ -2293,7 +2314,6 @@
             });
         }
 
-        // --- STREAMING_CHUNK: Contact and Booking Fetch Calls ---
         const bookingForm = document.getElementById('booking-form');
         if(bookingForm) {
             bookingForm.addEventListener('submit', async (e) => {
