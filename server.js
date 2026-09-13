@@ -73,7 +73,43 @@ const safeString = (val, fallback) => (val && val !== 'undefined' && val !== nul
 // ========================================================
 app.get('/', (req, res) => {
     const isConfigured = Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.ARKESEL_API_KEY && process.env.SUPABASE_KEY);
-    res.send(`Backend Status: ${isConfigured ? 'LIVE (Gmail Activated & Automation Running)' : 'MISSING VARIABLES'}`);
+    
+    const htmlResponse = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Akoben Backend Status</title>
+        <style>
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+            .container { background-color: #1e293b; padding: 3rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; max-width: 500px; width: 90%; border: 1px solid #334155; }
+            .status-icon { font-size: 4rem; margin-bottom: 1rem; }
+            .live { color: #22c55e; }
+            .error { color: #ef4444; }
+            h1 { margin-top: 0; font-size: 1.8rem; letter-spacing: 1px; }
+            p { color: #94a3b8; line-height: 1.6; }
+            .badge { display: inline-block; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; font-size: 0.9rem; margin-top: 1.5rem; }
+            .badge-live { background-color: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid #22c55e; }
+            .badge-error { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="status-icon ${isConfigured ? 'live' : 'error'}">
+                ${isConfigured ? '✓' : '⚠️'}
+            </div>
+            <h1>AKOBEN LEGAL BACKEND</h1>
+            <p>The secure API and background task runner for Akoben Legal Services.</p>
+            <div class="badge ${isConfigured ? 'badge-live' : 'badge-error'}">
+                ${isConfigured ? 'STATUS: LIVE & SECURE' : 'STATUS: MISSING CONFIGURATION'}
+            </div>
+            <p style="margin-top: 2rem; font-size: 0.8rem; color: #475569;">© ${new Date().getFullYear()} Akoben Legal Services</p>
+        </div>
+    </body>
+    </html>
+    `;
+    res.send(htmlResponse);
 });
 
 // ========================================================
