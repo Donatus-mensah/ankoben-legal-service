@@ -170,7 +170,7 @@
         .hero-text h1 { font-size: clamp(2.2rem, 5vw, 4.5rem); margin-bottom: 1.5rem; line-height: 1.1; }
         .hero-text p { font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted); margin-bottom: 2.5rem; max-width: 90%; }
         
-        .founders-dual-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .founders-dual-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; position: relative; }
         .hero-image-container { position: relative; cursor: pointer; overflow: hidden; border-radius: 8px; box-shadow: var(--shadow-light); transition: transform 0.4s ease; }
         .hero-image-container:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
         .hero-image { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/5; background-color: var(--hover-bg); }
@@ -178,6 +178,31 @@
         .hero-image-container:hover::after { opacity: 1; }
         .hero-overlay-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #ffffff; opacity: 0; transition: opacity 0.3s ease; z-index: 2; pointer-events: none; }
         .hero-image-container:hover .hero-overlay-icon { opacity: 1; }
+
+        /* The floating Logo badge inside the small space between images */
+        .hero-logo-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            box-shadow: var(--shadow-deep);
+            z-index: 5;
+            transition: transform 0.3s ease;
+            pointer-events: none;
+        }
+        .hero-logo-badge img { max-width: 100%; max-height: 100%; filter: none !important; }
+        [data-theme="dark"] .hero-logo-badge img { filter: invert(1) brightness(2) !important; }
 
         .home-section { margin-top: 6rem; padding-top: 4rem; border-top: 1px solid var(--border-color); }
         .home-summary { text-align: center; max-width: 800px; margin-left: auto; margin-right: auto; }
@@ -1292,7 +1317,7 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <h4>AKOBEN LEGAL SERVICES</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Founded by Nana Yaw Gyasi, Esq. & Emmanuel Yaw Hukpatsi, Esq.<br>Excellence, Integrity, and Unwavering Advocacy in the heart of Koforidua.</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Founded by Nana Yaw Ofori Gyasi, Esq. & Emmanuel Yaw Hukpatsi, Esq.<br>Excellence, Integrity, and Unwavering Advocacy in the heart of Koforidua.</p>
             </div>
             
             <div class="footer-col">
