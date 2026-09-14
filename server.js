@@ -127,7 +127,8 @@ app.post('/api/verify-counsel', async (req, res) => {
         if (supabase) {
             const { data, error } = await supabase
                 .from('consultations')
-                .select('id, first_name, last_name, phone, email, booking_ref, status, appointment_date, appointment_time, practice_area, consultation_type, issue_description, created_at')
+                // Include zoom_link in the fetch query
+                .select('id, first_name, last_name, phone, email, booking_ref, status, appointment_date, appointment_time, practice_area, consultation_type, issue_description, zoom_link, created_at')
                 .order('created_at', { ascending: false });
 
             if (!error && data) {
@@ -145,6 +146,7 @@ app.post('/api/verify-counsel', async (req, res) => {
                     practice_area: safeString(client.practice_area, 'General'),
                     consultation_type: safeString(client.consultation_type, 'In-Person'),
                     issue_description: safeString(client.issue_description, ''),
+                    zoom_link: safeString(client.zoom_link, ''),
                     created_at: client.created_at
                 }));
             }
@@ -185,7 +187,7 @@ app.post('/api/publish-article', async (req, res) => {
 // 3. SCHEDULE CONSULTATION (SMS & SET CONFIRMED STATUS)
 // ========================================================
 app.post('/api/schedule-consultation', async (req, res) => {
-    const { passcode, id, date, time } = req.body;
+    const { passcode, id, date, time, zoom_link } = req.body;
 
     if (passcode !== ADMIN_SECRET) return res.status(401).json({ success: false, error: 'Unauthorized.' });
     if (!id || !date || !time) return res.status(400).json({ success: false, error: 'Missing parameters.' });
@@ -193,10 +195,10 @@ app.post('/api/schedule-consultation', async (req, res) => {
     try {
         if (!supabase) throw new Error('Database is not connected.');
 
-        // Update status to Confirmed
+        // Update status to Confirmed and include the zoom_link
         const { data: updatedRecord, error: updateError } = await supabase
             .from('consultations')
-            .update({ appointment_date: date, appointment_time: time, status: 'Confirmed' })
+            .update({ appointment_date: date, appointment_time: time, status: 'Confirmed', zoom_link: zoom_link || null })
             .eq('id', id)
             .select()
             .single();
@@ -211,9 +213,14 @@ app.post('/api/schedule-consultation', async (req, res) => {
         // Convert the 24hr time selected to 12hr format with AM/PM for SMS readability
         const time12h = formatTime12h(time);
 
-        // SMS to Client
+        // Conditional SMS to Client (Includes zoom link if Virtual)
         if (ARKESEL_API_KEY) {
-            const smsMessage = `Hello ${updatedRecord.first_name}, your consultation with Akoben Legal Services (Ref:${refCode}) is confirmed for ${formattedDate} at ${time12h}. Please arrive on time.`;
+            let smsMessage = `Hello ${updatedRecord.first_name}, your consultation with Akoben Legal Services (Ref:${refCode}) is confirmed for ${formattedDate} at ${time12h}. Please arrive on time.`;
+            
+            if (updatedRecord.consultation_type === 'Virtual') {
+                smsMessage = `Hello ${updatedRecord.first_name}, your Virtual consultation (Ref:${refCode}) is confirmed for ${formattedDate} at ${time12h}. Meeting Link: ${zoom_link}. Please join on time.`;
+            }
+
             await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
                 sender: 'AKOBEN', message: smsMessage, recipients: [formattedPhone]
             }, { headers: { 'api-key': ARKESEL_API_KEY, 'Content-Type': 'application/json' } })
@@ -228,17 +235,23 @@ app.post('/api/schedule-consultation', async (req, res) => {
                     from: EMAIL_USER,
                     to: 'akobenlegalservices@gmail.com',
                     subject: `[${refCode}] Booking Confirmed - ${clientName}`,
-                    text: `Hello Counsel,\n\nYou have successfully scheduled and confirmed the consultation for ${clientName}.\n\nDate: ${formattedDate}\nTime: ${time12h}\nReference: ${refCode}\n\nThe client has been notified via SMS.`
+                    text: `Hello Counsel,\n\nYou have successfully scheduled and confirmed the consultation for ${clientName}.\n\nDate: ${formattedDate}\nTime: ${time12h}\nType: ${updatedRecord.consultation_type}\nReference: ${refCode}${updatedRecord.consultation_type === 'Virtual' ? '\nZoom Link: ' + zoom_link : ''}\n\nThe client has been notified via SMS.`
                 };
                 await transporter.sendMail(adminMailOptions);
                 
                 // Email to Client (if they provided an email address)
                 if (updatedRecord.email && updatedRecord.email !== 'N/A') {
+                    let clientMailText = `Hello ${updatedRecord.first_name},\n\nYour consultation with Akoben Legal Services (Ref: ${refCode}) is confirmed for ${formattedDate} at ${time12h}.\n\nPlease arrive on time.\n\nBest Regards,\nAkoben Legal Services`;
+                    
+                    if (updatedRecord.consultation_type === 'Virtual') {
+                        clientMailText = `Hello ${updatedRecord.first_name},\n\nYour Virtual consultation with Akoben Legal Services (Ref: ${refCode}) is confirmed for ${formattedDate} at ${time12h}.\n\nMeeting Link: ${zoom_link}\n\nPlease join on time.\n\nBest Regards,\nAkoben Legal Services`;
+                    }
+
                     const clientMailOptions = {
                         from: EMAIL_USER,
                         to: updatedRecord.email,
                         subject: `Consultation Confirmed - Akoben Legal Services`,
-                        text: `Hello ${updatedRecord.first_name},\n\nYour consultation with Akoben Legal Services (Ref: ${refCode}) is confirmed for ${formattedDate} at ${time12h}.\n\nPlease arrive on time.\n\nBest Regards,\nAkoben Legal Services`
+                        text: clientMailText
                     };
                     await transporter.sendMail(clientMailOptions);
                 }
@@ -419,7 +432,8 @@ cron.schedule('0 5 * * *', async () => {
 
         const { data: appointments, error } = await supabase
             .from('consultations')
-            .select('first_name, phone, appointment_time, booking_ref')
+            // Add consultation_type and zoom_link to the query
+            .select('first_name, phone, appointment_time, booking_ref, consultation_type, zoom_link')
             .eq('status', 'Confirmed')
             .eq('appointment_date', today);
 
@@ -431,7 +445,13 @@ cron.schedule('0 5 * * *', async () => {
                 if (formattedPhone) {
                     // Make sure the reminder SMS uses the exact formatted 12h time (AM/PM)
                     const time12h = formatTime12h(appt.appointment_time);
-                    const reminderSms = `Hello ${appt.first_name}, this is a reminder for your Akoben Legal consultation today at ${time12h} (Ref: ${appt.booking_ref}). Please be on time.`;
+                    
+                    let reminderSms = `Hello ${appt.first_name}, this is a reminder for your Akoben Legal consultation today at ${time12h} (Ref: ${appt.booking_ref}). Please be on time.`;
+                    
+                    // Virtual Consultation check
+                    if (appt.consultation_type === 'Virtual') {
+                        reminderSms = `Hello ${appt.first_name}, this is a reminder for your Virtual consultation today at ${time12h} (Ref: ${appt.booking_ref}). Meeting Link: ${appt.zoom_link}. Please be seated on time.`;
+                    }
                     
                     await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
                         sender: 'AKOBEN', message: reminderSms, recipients: [formattedPhone]

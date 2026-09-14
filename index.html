@@ -1497,6 +1497,10 @@
                             <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Appointment Time:</label>
                             <input type="time" id="schedule-time" required>
                         </div>
+                        <div id="virtual-link-container" class="form-full" style="display: none;">
+                            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Virtual Meeting Link (Zoom/Teams):</label>
+                            <input type="url" id="schedule-zoom-link" placeholder="Paste Meeting Link here">
+                        </div>
                         <div class="form-full">
                             <button type="submit" class="btn" style="width: 100%;">Send Confirmation SMS & Schedule</button>
                         </div>
@@ -1749,7 +1753,27 @@
                 opt.textContent = `${isNew}${client.name} (${client.phone}) — [${client.status}]`;
                 selectEl.appendChild(opt);
             });
+            
+            // Trigger change once loaded to ensure clean state
+            selectEl.dispatchEvent(new Event('change'));
         }
+
+        // Listener to toggle the Zoom link input based on client consultation type
+        document.getElementById('schedule-client-select').addEventListener('change', function(e) {
+            const clientId = e.target.value;
+            const client = counselClientsCache.find(c => c.id === clientId);
+            const zoomContainer = document.getElementById('virtual-link-container');
+            const zoomInput = document.getElementById('schedule-zoom-link');
+            
+            if (client && client.consultation_type === 'Virtual') {
+                zoomContainer.style.display = 'block';
+                zoomInput.required = true;
+            } else {
+                zoomContainer.style.display = 'none';
+                zoomInput.required = false;
+                zoomInput.value = '';
+            }
+        });
 
         function renderConsultationRecords(filterStatus) {
             const container = document.getElementById('consultations-records-list');
@@ -1825,7 +1849,9 @@
 
         window.prefillSchedule = function(clientId) {
             switchTab('sms-tab');
-            document.getElementById('schedule-client-select').value = clientId;
+            const selectEl = document.getElementById('schedule-client-select');
+            selectEl.value = clientId;
+            selectEl.dispatchEvent(new Event('change')); // Trigger visibility logic for zoom link
         }
 
         window.updateStatus = async function(clientId, newStatus) {
@@ -1859,6 +1885,7 @@
             const clientId = document.getElementById('schedule-client-select').value;
             const date = document.getElementById('schedule-date').value;
             const time = document.getElementById('schedule-time').value;
+            const zoomLink = document.getElementById('schedule-zoom-link').value.trim();
             const submitBtn = e.target.querySelector('button[type="submit"]');
 
             if (!clientId || !date || !time) {
@@ -1873,7 +1900,7 @@
                 const response = await fetch(`${RENDER_BACKEND_URL}/api/schedule-consultation`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ passcode: validPasscode, id: clientId, date, time })
+                    body: JSON.stringify({ passcode: validPasscode, id: clientId, date, time, zoom_link: zoomLink })
                 });
 
                 const resData = await response.json();
