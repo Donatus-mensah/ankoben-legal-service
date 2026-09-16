@@ -4,7 +4,6 @@ const axios = require('axios');
 const nodemailer = require('nodemailer');
 const cron = require('node-cron');
 const { createClient } = require('@supabase/supabase-js');
-const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const app = express();
@@ -70,21 +69,6 @@ function formatTime12h(timeStr) {
 const safeString = (val, fallback) => (val && val !== 'undefined' && val !== null) ? val : fallback;
 
 // ========================================================
-// RATE LIMITERS
-// ========================================================
-const apiLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // limit each IP to 5 requests per windowMs
-    message: { success: false, error: 'Too many requests from this IP, please try again after 15 minutes' }
-});
-
-const authLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 10, // limit each IP to 10 login attempts per windowMs
-    message: { success: false, error: 'Too many login attempts, please try again after 15 minutes' }
-});
-
-// ========================================================
 // HEALTH CHECK
 // ========================================================
 app.get('/', (req, res) => {
@@ -131,7 +115,7 @@ app.get('/', (req, res) => {
 // ========================================================
 // 1. AUTHENTICATION & FULL CLIENT FETCH ROUTE
 // ========================================================
-app.post('/api/verify-counsel', authLimiter, async (req, res) => {
+app.post('/api/verify-counsel', async (req, res) => {
     const { passcode } = req.body;
 
     if (passcode !== ADMIN_SECRET) {
@@ -328,7 +312,7 @@ app.post('/api/update-consultation-status', async (req, res) => {
 // ========================================================
 // 5. NOTIFICATIONS: Consultations (BACKGROUND PROCESSING)
 // ========================================================
-app.post('/api/notify-consultation', apiLimiter, async (req, res) => {
+app.post('/api/notify-consultation', async (req, res) => {
     const { first_name, last_name, email, phone, practice_area, consultation_type, issue_description } = req.body;
     const bookingId = `AKB-${Math.floor(10000 + Math.random() * 90000)}`;
     const formattedPhone = formatGhanaNumber(phone);
@@ -403,7 +387,7 @@ app.post('/api/notify-consultation', apiLimiter, async (req, res) => {
 // ========================================================
 // 6. NOTIFICATIONS: Contact Form (BACKGROUND PROCESSING)
 // ========================================================
-app.post('/api/notify-contact', apiLimiter, async (req, res) => {
+app.post('/api/notify-contact', async (req, res) => {
     const { name, email, subject, message } = req.body;
 
     try {
