@@ -1561,6 +1561,21 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
+        // XSS Sanitizer Function
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>'"]/g, tag => {
+                const chars = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                };
+                return chars[tag] || tag;
+            });
+        }
+
         const SUPABASE_URL = 'https://qbcjhoppnocrishsainc.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFiY2pob3Bwbm9jcmlzaHNhaW5jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzNzcyMjIsImV4cCI6MjEwMTk1MzIyMn0.chEgS3AjjXkKSJJ4VJXvLpkXJeHD2uXpgEe3IG62wqk'; 
         const RENDER_BACKEND_URL = 'https://ankoben-legal-service.onrender.com';
@@ -1619,7 +1634,7 @@
             document.body.style.overflow = isOpen ? 'hidden' : '';
         });
 
-        function navigate(pageId) {
+        function navigate(pageId, pushState = true) {
             if(navMenu.classList.contains('open')) {
                 navMenu.classList.remove('open');
                 hamburgerBtn.innerHTML = '<i data-lucide="menu"></i>';
@@ -1639,8 +1654,23 @@
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
+            // Push state to browser history if allowed
+            if (pushState) {
+                const newUrl = pageId === 'home' ? '/' : `/${pageId}`;
+                window.history.pushState({ pageId: pageId }, '', newUrl);
+            }
+
             if (pageId === 'publications') { loadPublications(); }
         }
+
+        // Handle Browser Forward & Back Button Navigation
+        window.addEventListener('popstate', (event) => {
+            if (event.state && event.state.pageId) {
+                navigate(event.state.pageId, false);
+            } else {
+                navigate('home', false);
+            }
+        });
 
         function formatExactDateTime(dateString) {
             if (!dateString) return '';
@@ -2000,13 +2030,15 @@
                     if(comments && comments.length > 0) {
                         comments.forEach(c => {
                             const exactTime = formatExactDateTime(c.created_at);
+                            const safeClientName = escapeHTML(c.client_name);
+                            const safeCommentText = escapeHTML(c.comment_text);
                             commentsHtml += `
                                 <div class="comment-item">
                                     <div class="comment-author" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-                                        <span>${c.client_name}</span>
+                                        <span>${safeClientName}</span>
                                         <span class="comment-date">${exactTime}</span>
                                     </div>
-                                    <div class="comment-text">${c.comment_text}</div>
+                                    <div class="comment-text">${safeCommentText}</div>
                                 </div>`;
                         });
                     } else {
@@ -2018,33 +2050,37 @@
                         if (pub.media_url.includes('youtube.com') || pub.media_url.includes('youtu.be')) {
                             const videoId = pub.media_url.split('v=')[1] || pub.media_url.split('/').pop();
                             const cleanId = videoId.split('&')[0];
-                            mediaHtml = `<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 1.5rem;"><iframe style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;" src="https://www.youtube.com/embed/${cleanId}" allowfullscreen></iframe></div>`;
+                            mediaHtml = `<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 1.5rem;"><iframe style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;" src="https://www.youtube.com/embed/${escapeHTML(cleanId)}" allowfullscreen></iframe></div>`;
                         } else if (pub.media_type === 'video') {
-                            mediaHtml = `<video controls style="width: 100%; border-radius: 8px; margin-bottom: 1.5rem;"><source src="${pub.media_url}"></video>`;
+                            mediaHtml = `<video controls style="width: 100%; border-radius: 8px; margin-bottom: 1.5rem;"><source src="${escapeHTML(pub.media_url)}"></video>`;
                         } else {
-                            mediaHtml = `<img src="${pub.media_url}" alt="Publication" style="width: 100%; max-height: 450px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;">`;
+                            mediaHtml = `<img src="${escapeHTML(pub.media_url)}" alt="Publication" style="width: 100%; max-height: 450px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;">`;
                         }
                     }
 
                     const exactPubTime = formatExactDateTime(pub.created_at);
+                    const safeTitle = escapeHTML(pub.title);
+                    const safeContent = escapeHTML(pub.content);
+                    const safeAuthor = escapeHTML(pub.author);
+                    
                     const pubCard = document.createElement('div');
                     pubCard.className = 'pub-card';
                     pubCard.innerHTML = `
                         <div class="pub-header">
                             <div>
-                                <h2 class="pub-title">${pub.title}</h2>
+                                <h2 class="pub-title">${safeTitle}</h2>
                                 <span style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-top: 0.3rem;">Published on: ${exactPubTime}</span>
                             </div>
-                            <span class="pub-author-badge">${pub.author}</span>
+                            <span class="pub-author-badge">${safeAuthor}</span>
                         </div>
                         ${mediaHtml}
-                        <div class="pub-content">${pub.content}</div>
+                        <div class="pub-content">${safeContent}</div>
                         
                         <div class="comments-section">
                             <h4 style="margin-bottom: 1rem; font-size: 1rem;">Client Comments (${comments.length})</h4>
                             ${commentsHtml}
 
-                            <form onsubmit="submitClientComment(event, '${pub.id}')" style="margin-top: 1rem;">
+                            <form onsubmit="submitClientComment(event, '${escapeHTML(pub.id)}')" style="margin-top: 1rem;">
                                 <input type="text" placeholder="Your Name" class="comment-name-input" required style="margin-bottom: 0.5rem; padding: 0.6rem;">
                                 <textarea placeholder="Share your legal perspective..." class="comment-text-input" rows="2" required style="margin-bottom: 0.5rem; padding: 0.6rem;"></textarea>
                                 <button type="submit" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Submit Comment</button>
@@ -2225,7 +2261,7 @@
                             
                             const newReview = document.createElement('div');
                             newReview.className = 'review-card';
-                            newReview.innerHTML = `<div class="stars">${stars}</div><p class="review-text">"${review.message}"</p><p class="review-author">— ${review.name}</p>`;
+                            newReview.innerHTML = `<div class="stars">${stars}</div><p class="review-text">"${escapeHTML(review.message)}"</p><p class="review-author">— ${escapeHTML(review.name)}</p>`;
                             reviewsContainer.appendChild(newReview);
                         });
                         
