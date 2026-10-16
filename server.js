@@ -40,7 +40,7 @@ const EMAIL_PASS = process.env.EMAIL_PASS;
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_KEY; 
 const ADMIN_SECRET = process.env.ADMIN_SECRET || '2324';
-const CLERK_PHONE = '233577780056'; // Victoria Kotei's Phone Number
+const CLERK_PHONE = ['233577780056', '233244526944']; // Victoria Kotei's Phone Number & Additional Number
 
 // Initialize Supabase Client
 let supabase = null;
@@ -377,7 +377,7 @@ app.post('/api/notify-consultation', apiLimiter, async (req, res) => {
                 try {
                     const adminSms = `hello Vic, there's being a booked consultation on the website check and confirm for the client.`;
                     await axios.post('https://sms.arkesel.com/api/v2/sms/send', {
-                        sender: 'AKOBEN', message: adminSms, recipients: [CLERK_PHONE]
+                        sender: 'AKOBEN', message: adminSms, recipients: CLERK_PHONE
                     }, { headers: { 'api-key': ARKESEL_API_KEY, 'Content-Type': 'application/json' } });
                 } catch(err) { console.log('Background SMS Admin warning:', err.message); }
             }
